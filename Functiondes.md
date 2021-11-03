@@ -1,67 +1,72 @@
-﻿**Bot.py**
+**Bot.py**
 
 1. Function: on\_ready
 
    Description: run on bot start-up
 
-1.Function: on\_guild\_join
+2. Function: on\_guild\_join
 
    Description: run when a user joins a guild with the bot present
 
    Inputs:
-      
-      * guild: the guild the user joined from 
-      
-      
-1. Function: on\_message
 
-Description: run when a message is sent to a discord the bot occupies
+   - guild: the guild the user joined from
 
-Inputs:	
+3. Function: on\_message
 
-`	`-message: the message the user sent to a channel
+   Description: run when a message is sent to a discord the bot occupies
 
-1. Function: on\_message\_edit
+   Inputs:	
 
-Description: run when a user edits a message
+   - message: the message the user sent to a channel
 
-Inputs:
+4. Function: on\_message\_edit
 
-`	`- before: the old message
+   Description: run when a user edits a message
 
-`	`- after: the new message
-
-1. Function: test
-   Description: Simple test command that shows commands are working.
    Inputs:
-   `     `- ctx: context of the command
-   Outputs:
-   `     `- Sends test successful message back to channel that called test
 
-1. Function: set\_instructor
+   - before: the old message
+   - after: the new message
+
+5. Function: test
+   
+   Description: Simple test command that shows commands are working.
+   
+   Inputs:
+   - ctx: context of the command
+
+   Outputs:
+   - Sends test successful message back to channel that called test
+
+6. Function: set\_instructor
    Description: Command used to give Instructor role out by instructors
    Inputs:
-   `     `- ctx: context of the command
-   `     `- member: user to give role
+   - ctx: context of the command
+   - member: user to give role
    Outputs:
-   `     `- Sends confirmation back to channel
+   - Sends confirmation back to channel
 
-1. Function: create\_event
+7. Function: create\_event
+   
    Description: command to create event and send to event\_creation module
+   
    Ensures command author is Instructor
+   
    Inputs:
-   `     `- ctx: context of the command
+   - ctx: context of the command
+   
    Outputs:
-   `     `- Options to create event
+   - Options to create event
 
-1. Function: oh
+8. Function: oh
    Description: command related office hour and send to office\_hours module
    Inputs:
-   `     `- ctx: context of the command
-   `     `- command: specific command to run
-   `     `- \*args: arguments for command
+   - ctx: context of the command
+   - command: specific command to run
+   - \*args: arguments for command
    Outputs:
-   `     `- Office hour details and options
+   - Office hour details and options
 
 
 1. Function: ask
@@ -153,28 +158,88 @@ Inputs:
 `	`- b: discord bot Outputs: None
 
 
-Office Hours
-Class: Group Description: contains information about an office hour group
+**Office Hours.py
+`	`Description:**
 
-Class: OfficeHourQueue Description: contains information about an office hour queue
+1. Class: Group 
 
-Method: enqueue Description: adds a student to the office hour queue Inputs: - student: student to add to the office hour queue Outputs: None
+Description: contains information about an office hour group
 
-Method: display\_queue Description: displays the office hour queue in the office hour channel Outputs: office hour queue as a message in the office hour channel
+1. Class: OfficeHourQueue
 
-Function: office\_hour\_command Description: handles a command given in an office hour channel Inputs: - ctx: context of this discord message - command: office hour command given - args: extra arguments given to command
+Description: contains information about an office hour queue
 
-Function: open\_oh Description: opens an office hour for students to get help from Inputs: - guild: discord guild this office hour is relevant for - ta: name of TA who is holding this office hour Outputs: creation of channels relevant to office hour
+1. Method: enqueue 
 
-Function: close\_oh Description: closes an office hour session Inputs: - guild: discord guild this office hour is relevant for - ta: name of TA who is holding this office hour Outputs: deletion of channels relevant to office hour
+Description: adds a student to the office hour queue 
 
-Class: TaOfficeHour Description: contains information about when an office hour is held
+Inputs: 
 
-Function: check\_office\_hour\_loop Description: runs intermittently to open or close office hours based on the current time
+- student: student to add to the office hour queue 
 
-Function: add\_office\_hour Description: adds a new TA office hour to the guild Inputs: - guild: discord guild this office hour is relevant for - ta\_office\_hour: TA office hour information Outputs: adds a new TA office hour to the system
+Outputs: None
 
-Function: init Description: initializes office hours module Inputs: - b: discord bot
+1. Method: display\_queue 
+
+Description: displays the office hour queue in the office hour channel 
+
+Outputs: office hour queue as a message in the office hour channel
+
+1. Function: office\_hour\_command 
+
+Description: handles a command given in an office hour channel 
+
+Inputs: 
+
+- ctx: context of this discord message 
+- command: office hour command given 
+- args: extra arguments given to command
+1. Function: open\_oh 
+
+Description: opens an office hour for students to get help from 
+
+Inputs: 
+
+- guild: discord guild this office hour is relevant for 
+- ta: name of TA who is holding this office hour 
+
+Outputs: creation of channels relevant to office hour
+
+1. Function: close\_oh 
+
+Description: closes an office hour session 
+
+Inputs: 
+
+- guild: discord guild this office hour is relevant for 
+- ta: name of TA who is holding this office hour 
+
+Outputs: deletion of channels relevant to office hour
+
+1. Class: TaOfficeHour 
+1. Description: contains information about when an office hour is held
+1. Function: check\_office\_hour\_loop 
+
+Description: runs intermittently to open or close office hours based on the current time
+
+1. Function: add\_office\_hour 
+
+Description: adds a new TA office hour to the guild
+
+Inputs: 
+
+- guild: discord guild this office hour is relevant for 
+- ta\_office\_hour: TA office hour information
+
+Outputs: adds a new TA office hour to the system
+
+1. Function: init 
+
+Description: initializes office hours module 
+
+Inputs: 
+
+- b: discord bot
 
 Profanity.py
 
