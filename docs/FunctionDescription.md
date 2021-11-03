@@ -212,9 +212,9 @@
 
 **Event\_creation.py**
 
-**Description:** What this does
+**Description:** Functionality for creating new events
 
-1. Function: get\_times 
+1. Function: get\_times ###Removed?
 
     Description: helper function for acquiring the times an instructor wants event to be held during 
 
@@ -251,7 +251,7 @@
 
 **Office Hours.py**
 
-**Description:** What this file does
+**Description:** Functionality related to administering office hours
 
 1. Class: Group 
 
@@ -360,7 +360,7 @@
 
 **qna.py**
 
-**Description:** What
+**Description:** Implements Q and A functionality
 
 1. Class: QuestionsAnswers 
    
