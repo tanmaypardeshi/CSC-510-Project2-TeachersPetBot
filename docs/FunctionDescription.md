@@ -16,6 +16,19 @@
    ***Inputs***:
 
    - *guild*: the guild the user joined from
+   
+3. ***Function***: on_member_join   
+  
+    Description: run when member joins a guild in which bot is alreay present 
+  
+    Inputs: 
+    - member: the user details
+4. Function: on_member_remove 
+    
+    Description: run when member leaves a guild in which bot is alreay present 
+    
+    Inputs: 
+    - guild: the guild the user joined from
 
 3. ***Function***: on\_message
 
@@ -27,9 +40,9 @@
 
 4. Function: on\_message\_edit
 
-   Description: run when a user edits a message
+    Description: run when a user edits a message
 
-   Inputs:
+     Inputs:
 
    - before: the old message
    - after: the new message
@@ -44,13 +57,36 @@
    Outputs:
    - Sends test successful message back to channel that called test
 
+6. Function: get_instructor 
+   
+    Description: Command used to give Instructor role out by instructors 
+   
+    Inputs: 
+    - ctx: context of the command 
+   - member: user to give role Outputs: 
+   - Sends confirmation back to channel
+
 6. Function: set\_instructor
+   
    Description: Command used to give Instructor role out by instructors
+   
    Inputs:
    - ctx: context of the command
    - member: user to give role
+   
    Outputs:
    - Sends confirmation back to channel
+ 
+ 9. Function: remove_instructor 
+   
+    Description: Command used to remove a user from Instructor role by instructors 
+   
+    Inputs: 
+    - ctx: context of the command 
+    - member: user to remove role 
+   
+    Outputs: 
+    - Sends confirmation back to channel
 
 7. Function: create\_event
    
@@ -97,6 +133,41 @@
    - answer: answer text
    Outputs:
    - User answer in question post
+
+1. Function: ping 
+   
+    Description: Shows latency for debugging
+
+1. Function: stats 
+   
+    Description: Shows stats like
+
+1. Function: poll 
+   
+    Description: Poll functionality for administrators 
+   
+    Inputs: 
+    - ctx: context of the command 
+   - minutes: minutes in integer 
+   - question: Enter the topic on which the poll is created 
+   - options: options for poll 
+     
+    Outputs: 
+    - Poll in discord channel. results after the specified time.
+    
+1.  Function: custom-profanity 
+    
+    Description: Define a word to be added to the profanity filter 
+    
+    Inputs: 
+    - ctx: context of the command
+
+1. Function: attendance 
+   
+    Description: Gets the attendance when requested by the instructor for audio channel 
+   
+    Inputs: 
+    - ctx: context of the command
 
 1. Function: begin\_tests
    
