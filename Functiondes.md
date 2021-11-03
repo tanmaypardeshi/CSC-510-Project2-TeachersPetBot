@@ -2,16 +2,17 @@
 
 1. Function: on\_ready
 
-Description: run on bot start-up
+   Description: run on bot start-up
 
-1. Function: on\_guild\_join
+1.Function: on\_guild\_join
 
-` 	`Description: run when a user joins a guild with the bot present
+   Description: run when a user joins a guild with the bot present
 
-Inputs:
-
-`    `-guild: the guild the user joined from
-
+   Inputs:
+      
+      * guild: the guild the user joined from 
+      
+      
 1. Function: on\_message
 
 Description: run when a message is sent to a discord the bot occupies
