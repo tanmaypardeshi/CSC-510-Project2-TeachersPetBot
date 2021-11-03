@@ -8,7 +8,7 @@ import test_office_hours
 import test_event_creation
 import test_qna
 import test_calendar
-
+import test_profanity
 if platform.system() == 'Windows':
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
