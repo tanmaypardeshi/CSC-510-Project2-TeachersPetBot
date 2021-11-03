@@ -103,14 +103,14 @@
     Description: Start the automated testing
    
     Inputs:
-   `     `- ctx: context of the command
+   - ctx: context of the command
 
 1. Function: end\_tests
    
     Description: Finalize automated testing
    
     Inputs:
-   `     `- ctx: context of the command
+   - ctx: context of the command
 
 1. Function: test\_dummy
    
