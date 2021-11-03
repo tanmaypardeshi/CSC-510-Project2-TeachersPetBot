@@ -1,26 +1,29 @@
-**Bot.py**
+*This File describes each source file and details of all classes, methods and functions in each file*
+
+
+### <u> Bot.py </u> ###
 
 **Description:** What this does
 
-1. Function: on\_ready
+1. ***Function***: on\_ready
 
-   Description: run on bot start-up
+   ***Description***: run on bot start-up
 
-2. Function: on\_guild\_join
+2. ***Function***: on\_guild\_join
 
-   Description: run when a user joins a guild with the bot present
+   ***Description***: run when a user joins a guild with the bot present
 
-   Inputs:
+   ***Inputs***:
 
-   - guild: the guild the user joined from
+   - *guild*: the guild the user joined from
 
-3. Function: on\_message
+3. ***Function***: on\_message
 
-   Description: run when a message is sent to a discord the bot occupies
+   ***Description***: run when a message is sent to a discord the bot occupies
 
-   Inputs:	
+   ***Inputs***:	
 
-   - message: the message the user sent to a channel
+   - *message*: the message the user sent to a channel
 
 4. Function: on\_message\_edit
 
