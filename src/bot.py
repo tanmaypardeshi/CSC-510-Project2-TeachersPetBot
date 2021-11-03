@@ -25,6 +25,7 @@ import event_creation
 import office_hours
 import cal
 import qna
+import attendance
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '1'
 
@@ -506,6 +507,16 @@ async def custom_profanity(ctx, pword):
     profanity.custom_words.append(pword)
     await ctx.message.delete()
 
+###########################
+# Function: attendance
+# Description: Gets the attendance when requested by the instructor for audio channel
+# Inputs:
+#      - ctx: context of the command
+###########################
+@bot.command(name='attendance', help='Gets the attendance of voice channel')
+@commands.has_role('Instructor')
+async def attend(ctx):
+    await attendance.compute(bot, ctx)
 
 ###########################
 # Function: begin_tests
