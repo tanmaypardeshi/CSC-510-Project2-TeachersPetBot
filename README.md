@@ -175,11 +175,11 @@ Using the Python package better-profanity, Teacher's Pet will catch profane word
 
 This bot has endless possibilities for functionality. Features which we are interested in adding but did not have time for include but are not limited to:
 
-* Cloud Hosting
+  * Cloud Hosting
 
 ```diff
- -` `Future scopes?
- ```
+-` `Future scopes?
+```
 
 For a full list of future features, upgrades, and bug fixes, please visit our [Phase 2 Board](https://github.com/Ashwinshankar98/TeachersPetBot/projects/1).
 
