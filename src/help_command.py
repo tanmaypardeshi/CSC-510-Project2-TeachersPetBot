@@ -189,11 +189,11 @@ async def oh(ctx):
     embed.add_field(name='*Syntax*', value='!oh <enter>', inline=True)
     embed.add_field(name='*Channel*', value='office-hour', inline=True)
     embed.add_field(name='*Authorization*', value='Anyone', inline=True)
-    
+
     embed.add_field(name='*Syntax*', value='!oh <exit>', inline=True)
     embed.add_field(name='*Channel*', value='office-hour', inline=True)
     embed.add_field(name='*Authorization*', value='Anyone', inline=True)
-    
+
     embed.add_field(name='*Syntax*', value='!oh <next>', inline=True)
     embed.add_field(name='*Channel*', value='office-hour', inline=True)
     embed.add_field(name='*Authorization*', value='Instructor', inline=True)
