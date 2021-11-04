@@ -171,16 +171,24 @@ Using the Python package better-profanity, Teacher's Pet will catch profane word
 -` `add examples, pics 
 ```
 
+#### Features added in Phase II
+```diff
+- add here
+```
+
 <h2 align="center"> Future Scope </h2>
 
 This bot has endless possibilities for functionality. Features which we are interested in adding but did not have time for include but are not limited to:
 
-  * Cloud Hosting
-
-```diff
--` `Future scopes?
-Lets add tom
-```
+  * Multi-Guild Handling
+  * Custom Events
+  * Sharding
+  * Edit Events and Office hours
+  * Handle command spamming
+  * Include more detailed role classification
+  * Track participation
+  * Refactor code to use cogs for better code quality
+  * Multiple Office hours for same person
 
 For a full list of future features, upgrades, and bug fixes, please visit our [Phase 2 Board](https://github.com/Ashwinshankar98/TeachersPetBot/projects/1).
 
