@@ -24,11 +24,11 @@ This project and everyone participating in it is governed by the [TeachersPetBot
 ## I don't want to read this whole thing I just have a question!!!
 
 Reach out to one of the main contributors on Discord using their IDs:
-* Shikha Nair: incorgnito#5402
-* Pradhan Chetan Venkataramaiah: PrymMinistah#4253
-* Steve Jones: SteveJones92#6974
-* Alex Snezkho: Apollo#4953
-* Tanya Chu: TC#1784
+* Ashwin Shankar: KillSwitcH#3065
+* Kailash: kailash98 s#4696
+* Shakthi Nandana : Shakthi#7711
+* Aswin: Aswin#0436
+* Kaushik: Jack$parr0w#0875
 
 *Note: Due to the dynamic nature of Discord IDs, these may change without prior notice on this page.*
 
