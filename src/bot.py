@@ -26,7 +26,7 @@ import office_hours
 import cal
 import qna
 import attendance
-import help
+import help_command
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '1'
 
@@ -528,67 +528,67 @@ async def attend(ctx):
 ###########################
 @bot.group(name='help', invoke_without_command=True)
 async def custom_help(ctx):
-    await help.helper(ctx)
+    await help_command.helper(ctx)
 
 
 @custom_help.command('answer')
 async def custom_answer(ctx):
-    await help.answer(ctx)
+    await help_command.answer(ctx)
 
 
 @custom_help.command('ask')
 async def custom_ask(ctx):
-    await help.ask(ctx)
+    await help_command.ask(ctx)
 
 
 @custom_help.command('attendance')
-async def custom_ask(ctx):
-    await help.attendance(ctx)
+async def custom_attendance(ctx):
+    await help_command.attendance(ctx)
 
 
 @custom_help.command('begin-tests')
-async def custom_ask(ctx):
-    await help.begin_tests(ctx)
+async def custom_begin_tests(ctx):
+    await help_command.begin_tests(ctx)
 
 
 @custom_help.command('create')
-async def custom_ask(ctx):
-    await help.create(ctx)
+async def custom_create(ctx):
+    await help_command.create(ctx)
 
 
 @custom_help.command('end-tests')
-async def custom_ask(ctx):
-    await help.end_tests(ctx)
+async def custom_end_tests(ctx):
+    await help_command.end_tests(ctx)
 
 
 @custom_help.command('oh')
-async def custom_ask(ctx):
-    await help.oh(ctx)
+async def custom_oh(ctx):
+    await help_command.oh(ctx)
 
 
 @custom_help.command('ping')
-async def custom_ask(ctx):
-    await help.ping(ctx)
+async def custom_ping(ctx):
+    await help_command.ping(ctx)
 
 
 @custom_help.command('poll')
-async def custom_ask(ctx):
-    await help.poll(ctx)
+async def custom_poll(ctx):
+    await help_command.poll(ctx)
 
 
 @custom_help.command('setInstructor')
-async def custom_ask(ctx):
-    await help.setInstructor(ctx)
+async def custom_setInstructor(ctx):
+    await help_command.setInstructor(ctx)
 
 
 @custom_help.command('stats')
-async def custom_ask(ctx):
-    await help.stats(ctx)
+async def custom_stats(ctx):
+    await help_command.stats(ctx)
 
 
 @custom_help.command('test')
-async def custom_ask(ctx):
-    await help.test(ctx)
+async def custom_test(ctx):
+    await help_command.test(ctx)
 
 ###########################
 # Function: begin_tests
