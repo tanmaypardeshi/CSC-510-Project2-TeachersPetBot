@@ -26,6 +26,7 @@ import office_hours
 import cal
 import qna
 import attendance
+import help
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '1'
 
@@ -46,6 +47,7 @@ TESTING_MODE = None
 
 intents=discord.Intents.all()
 bot = commands.Bot(command_prefix='!', description='This is TeachersPetBot!', intents=intents)
+bot.remove_command("help")
 
 ###########################
 # Function: on_ready
@@ -517,6 +519,76 @@ async def custom_profanity(ctx, pword):
 @commands.has_role('Instructor')
 async def attend(ctx):
     await attendance.compute(bot, ctx)
+
+###########################
+# Function: help
+# Description: Describes the help
+# Inputs:
+#      - ctx: context of the command
+###########################
+@bot.group(name='help', invoke_without_command=True)
+async def custom_help(ctx):
+    await help.helper(ctx)
+
+
+@custom_help.command('answer')
+async def custom_answer(ctx):
+    await help.answer(ctx)
+
+
+@custom_help.command('ask')
+async def custom_ask(ctx):
+    await help.ask(ctx)
+
+
+@custom_help.command('attendance')
+async def custom_ask(ctx):
+    await help.attendance(ctx)
+
+
+@custom_help.command('begin-tests')
+async def custom_ask(ctx):
+    await help.begin_tests(ctx)
+
+
+@custom_help.command('create')
+async def custom_ask(ctx):
+    await help.create(ctx)
+
+
+@custom_help.command('end-tests')
+async def custom_ask(ctx):
+    await help.end_tests(ctx)
+
+
+@custom_help.command('oh')
+async def custom_ask(ctx):
+    await help.oh(ctx)
+
+
+@custom_help.command('ping')
+async def custom_ask(ctx):
+    await help.ping(ctx)
+
+
+@custom_help.command('poll')
+async def custom_ask(ctx):
+    await help.poll(ctx)
+
+
+@custom_help.command('setInstructor')
+async def custom_ask(ctx):
+    await help.setInstructor(ctx)
+
+
+@custom_help.command('stats')
+async def custom_ask(ctx):
+    await help.stats(ctx)
+
+
+@custom_help.command('test')
+async def custom_ask(ctx):
+    await help.test(ctx)
 
 ###########################
 # Function: begin_tests
