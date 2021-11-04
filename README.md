@@ -30,13 +30,25 @@ Teacher's Pet is a Discord Bot for class instructors to streamline their Discord
 
 `!answer <question_number> "<answer>"` Answer a question  
 
+`!attendance` Find attendance from voice channel (Instructor command)
+
 `!oh enter` Enter an office hour queue as an individual student  
 
 `!oh enter <group_id>` Enter an office hour queue with a group of students  
 
 `!oh exit` Exit the office hour queue  
 
-`!oh next` Go to next student in queue as an instructor (Instructor command)  
+`!oh next` Go to next student in queue as an instructor (Instructor command)
+
+`!help` Gets the descriptions for all commands
+
+`!help <command>` Describes command in detail
+
+`!ping` Find the latency of network
+
+`!poll <command>` Run a poll for students (Instructor command)
+
+`!stats` Gets the statistics of system and softwares used
 
 `!create` Start creating an event (Instructor command) 
 
@@ -172,8 +184,31 @@ Using the Python package better-profanity, Teacher's Pet will catch profane word
 ```
 
 #### Features added in Phase II
-```diff
-- add here
+
+### Attendance
+
+This functionality can be used only by the instructor. instructor-commands is the channel used. The command checks the total students in the guild with the students currently available in the General voice channel. It then generates the number of attendees and absentees. Then the students list is pushed to the instructor-commands channel.
+
+When the attendance is requested by the instructor in the correct channel:
+
+![alt text](https://github.com/Ashwinshankar98/TeachersPetBot/blob/docs_main/images/attendance.png)
+
+When the attendance is requested by the instructor in the wrong channel:
+
+![alt text](https://github.com/Ashwinshankar98/TeachersPetBot/blob/docs_main/images/attendance_wrong_channel.png)
+
+### Help
+
+This is a custom help command which is describes the command and on demand of a specific command, it provides syntax of the command, permitted users and channels. This command can be executed in any channel and by anyone.
+
+General Help:
+
+![alt text](https://github.com/Ashwinshankar98/TeachersPetBot/blob/docs_main/images/help.png)
+
+Help for a specific command:
+
+![alt text](https://github.com/Ashwinshankar98/TeachersPetBot/blob/docs_main/images/help_command.png)
+
 ```
 
 <h2 align="center"> Future Scope </h2>
