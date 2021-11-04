@@ -223,6 +223,14 @@ Whenever the above word is used the below flow is triggered :
 ![alt text](https://github.com/Ashwinshankar98/TeachersPetBot/blob/readme-prof-reminders/images/custom-profanity3.png)
 
 
+### Detecting Close Calls (Upcoming Assignments and Exams)
+This task runs in the background, once a day it checks if there are any assignments and exams coming up and reminds students. It works as follows : 
+
+![alt text](https://github.com/Ashwinshankar98/TeachersPetBot/blob/readme-prof-reminders/images/close_calls1.png)
+
+Whenever there is nothing to remind : 
+
+![alt text](https://github.com/Ashwinshankar98/TeachersPetBot/blob/readme-prof-reminders/images/close-calls2.png)
 
 <h2 align="center"> Future Scope </h2>
 
