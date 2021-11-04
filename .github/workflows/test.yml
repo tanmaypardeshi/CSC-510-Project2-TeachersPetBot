@@ -43,7 +43,7 @@ jobs:
 #         pytest
     - name: Run tests and collect coverage
       run: |
-        (sleep 2; python3 test/tests.py) & (coverage run --source=./src -m pytest src/bot.py)
+        (coverage run --source=./src -m pytest src/bot.py) & (sleep 2; python3 test/tests.py)
         coverage xml
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v2
