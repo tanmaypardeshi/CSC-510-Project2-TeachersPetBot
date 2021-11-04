@@ -8,6 +8,11 @@ To create a Discord Bot, you must:
     ```
     # .env
     DISCORD_TOKEN={your-bot-token}
+    DICORD_BOT_NAME={your-bot-name}
+    TEST_GUILD_ID={your-guild-id}
+    TESTING_BOT_TOKEN={test-bot-token}
+    TEST_BOT_NAME={test-bot-name}
+    TEST_BOT_APP_ID={test-bot-application-id}
     ```
 
 NOTE: Run the bot before inviting it to your server in order for auto-initiate commands to run
@@ -35,7 +40,11 @@ To run tests on the Teacher's Pet Bot:
     ```
     # .env
     DISCORD_TOKEN={your-bot-token}
-    TESTING_BOT_TOKEN={your-testing-bot-token}
+    DICORD_BOT_NAME={your-bot-name}
+    TEST_GUILD_ID={your-guild-id}
+    TESTING_BOT_TOKEN={test-bot-token}
+    TEST_BOT_NAME={test-bot-name}
+    TEST_BOT_APP_ID={test-bot-application-id}
     ```
  3. In `test/tests.py`, update the `TEST_GUILD_ID` to be the id of the server/guild you are testing in.
  4. Start Teacher's Pet Bot by running one of the following commands in the root directory of the project:
