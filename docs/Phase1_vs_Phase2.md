@@ -2,8 +2,10 @@
 
 |  Improvements | Phase I   | Phase II  |
 | ------------ | ------------ | ------------ |
-| Error Handling| Multiple issues with error handling and Continous fails in running the test code in local | Fixed all the issues with test files and imlemented very detailed error handling for all existing and new features|
-|Hosted in Heroku|Had to run the bot locally | Hosted in heroku for better convenience and higher consistency|
+| Error Handling ( Test cases)| Multiple issues with error handling and Continous fails in running the test code in local | Fixed all the issues with test files and imlemented very detailed error handling for all existing and new features|
+|Hosted in Heroku (Deployment)|Had to run the bot locally | Hosted in heroku for better convenience and higher consistency|
+|QnA handling (Database)| Did not check for repeating questions| Storing the QnAs in DB to handle repetiton|
+| Read me and feature docs (Documentation)| Had phase 1 details in Read me but no deparate file explaining functions|The new docs have updated feature descriptions and function descriptions in isolation|
 
 |  New Commands/ Features | Details  |
 | ------------ |------------ |
