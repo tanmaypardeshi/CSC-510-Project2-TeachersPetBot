@@ -39,15 +39,19 @@ Teacher's Pet is a Discord Bot for class instructors to streamline their Discord
 `!oh next` Go to next student in queue as an instructor (Instructor command)  
 
 `!create` Start creating an event (Instructor command) 
-`ping`
-`stats`
-`poll`
-`attendance`
-`get instructor`
-`Remove instructor `
 
-` ` new actions durinf member join,remove and/or Quit
+```diff
+-`ping`
+-`stats`
+-`poll`
+-`attendance`
+-`get instructor`
+-`Remove instructor `
 
+- add the respective scrnshots in the right place like how its done for old cmds below!!!
+
+-` ` new actions during member join,remove and/or Quit
+```
 
 <h2 align="center"> Installation and Running </h2>
 
@@ -87,9 +91,10 @@ Student answer:
 Instructor answer:  
 ![image](https://user-images.githubusercontent.com/32313919/135383932-551850ef-6f6c-4349-b3a4-d36ce583de14.png)
 
-` `adding to db to avoid repeated questions? 
-` `examples , pics, more info
-
+```diff
+-` `adding to db to avoid repeated questions? 
+-` `examples , pics, more info
+```
 
 ### Events/Calendar
 Events are items relevant to a class that are time-sensitive. Currently, the types of events include office hours, exams, and assignments. Events in a class are kept track of, and assignments/exams are displayed in a calendar for students and instructors to see.
@@ -161,16 +166,20 @@ Using the Python package better-profanity, Teacher's Pet will catch profane word
 
 ![alt text](https://github.com/Ashwinshankar98/TeachersPetBot/blob/main/images/profanity_example.PNG)
 
-` `You can also add custom profanity words
-` `add examples, pics 
+```diff
+-` `You can also add custom profanity words
+-` `add examples, pics 
+```
 
 <h2 align="center"> Future Scope </h2>
 
 This bot has endless possibilities for functionality. Features which we are interested in adding but did not have time for include but are not limited to:
-* Class Polls
-* Multi-Guild Handling
+
 * Cloud Hosting
-* Detailed Error Handling
+
+```diff
+ -` `Future scopes?
+ ```
 
 For a full list of future features, upgrades, and bug fixes, please visit our [Phase 2 Board](https://github.com/Ashwinshankar98/TeachersPetBot/projects/1).
 
@@ -186,9 +195,9 @@ The project is licensed under the [MIT License](https://github.com/Ashwinshankar
 
 <h3> Team Members </h3>
 
-#### Ashwin Shankar
-#### Kailash
-#### Aswin
-#### Koushik
-#### Shakthi
+#### Ashwin Shankar Umasankar
+#### Itha Aswin
+#### Kailash Singaravelu
+#### Saikaushik Kalyanaraman
+#### Shakthi Nandana Govindan
 
