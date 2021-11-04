@@ -11,14 +11,14 @@
 |.5|Number of commits: by different people  |https://github.com/Ashwinshankar98/TeachersPetBot/graphs/contributors |
 |1|issues are being closed | https://github.com/Ashwinshankar98/TeachersPetBot/issues?q=is%3Aissue+is%3Aclosed|
 |.5|issues are discussed before they are closed| Discussed in person, whatsapp and discussions tab in GH|
-|.5|Use of syntax checkers. | config files iin GH showing this checker's config -? |
+|.5|Use of syntax checkers. | https://github.com/Ashwinshankar98/TeachersPetBot/blob/main/.pylintrc |
 |1|Issues reports: there are many  | https://github.com/Ashwinshankar98/TeachersPetBot/issues|
-|.5|Use of code formatters. | config files in GH showing your this formatter's config - ?|
-|.5|Use of style checkers | config files in GH showing your config -?|
+|.5|Use of code formatters. |https://github.com/Ashwinshankar98/TeachersPetBot/blob/main/.pylintrc|
+|.5|Use of style checkers | https://github.com/Ashwinshankar98/TeachersPetBot/blob/main/.pylintrc|
 |.5|Docs: short video, animated, hosted on your repo. That convinces people why they want to work on your code. | -? |
 |.5|test cases exist  | dozens of tests and those test cases are more than 30% of the code base  -?|
-|.5|Use of code coverage  | config files in GH -?|
-|.5|other automated analysis tools  | config files in GH-?|
+|.5|Use of code coverage  | Codecov tool |
+|.5|other automated analysis tools  | Codecov automation |
 |.5|test cases:.a large proportion of the issues related to handling failing cases. | https://github.com/Ashwinshankar98/TeachersPetBot/issues?q=label%3A%22test+case%22+is%3Aclosed|
 |.5|test cases are routinely executed | https://github.com/Ashwinshankar98/TeachersPetBot/actions |
 |1|Documentation describing how this version improves on the older version| https://github.com/Ashwinshankar98/TeachersPetBot/blob/main/docs/Phase1%20vs%20Phase2 |
