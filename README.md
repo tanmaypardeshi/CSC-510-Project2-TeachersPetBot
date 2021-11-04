@@ -191,11 +191,11 @@ This functionality can be used only by the instructor. instructor-commands is th
 
 When the attendance is requested by the instructor in the correct channel:
 
-![alt text](https://github.com/Ashwinshankar98/TeachersPetBot/blob/docs_main/images/attendance.png)
+![alt text](https://github.com/Ashwinshankar98/TeachersPetBot/blob/main/images/attendance.png)
 
 When the attendance is requested by the instructor in the wrong channel:
 
-![alt text](https://github.com/Ashwinshankar98/TeachersPetBot/blob/docs_main/images/attendance_wrong_channel.png)
+![alt text](https://github.com/Ashwinshankar98/TeachersPetBot/blob/main/images/attendance_wrong_channel.png)
 
 ### Help
 
@@ -203,13 +203,12 @@ This is a custom help command which is describes the command and on demand of a 
 
 General Help:
 
-![alt text](https://github.com/Ashwinshankar98/TeachersPetBot/blob/docs_main/images/help.png)
+![alt text](https://github.com/Ashwinshankar98/TeachersPetBot/blob/main/images/help.png)
 
 Help for a specific command:
 
-![alt text](https://github.com/Ashwinshankar98/TeachersPetBot/blob/docs_main/images/help_command.png)
+![alt text](https://github.com/Ashwinshankar98/TeachersPetBot/blob/main/images/help_command.png)
 
-```
 
 <h2 align="center"> Future Scope </h2>
 
