@@ -179,6 +179,7 @@ This bot has endless possibilities for functionality. Features which we are inte
 
 ```diff
 -` `Future scopes?
+Lets add tom
 ```
 
 For a full list of future features, upgrades, and bug fixes, please visit our [Phase 2 Board](https://github.com/Ashwinshankar98/TeachersPetBot/projects/1).
