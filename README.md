@@ -165,7 +165,7 @@ Check out our [CONTRIBUTING.md](https://github.com/shikhanair/TeachersPetBot/blo
 
 <h2 align="center"> License </h2>
 
-The project is licensed under the [MIT License](https://github.com/shikhanair/TeachersPetBot/blob/main/LICENSE).
+This project is licensed under the [MIT License](https://github.com/shikhanair/TeachersPetBot/blob/main/LICENSE).
 
 <h2></h2>
 
