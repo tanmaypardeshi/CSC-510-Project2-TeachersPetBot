@@ -138,7 +138,7 @@ async def init(b):
 #      - channel : the channel 'course-calendar'
 ###########################
 @tasks.loop(minutes=1440)
-async def closecalls(ctx):
+async def closecalls(ctx): # pragma: no cover
     global MSG_CC
     global MSG_CC_NONE
     global CLOSE_CALL_EMBED
@@ -215,5 +215,5 @@ async def closecalls(ctx):
             await MSG_CC_NONE.edit(embed=CLOSE_CALL_EMBED_NONE)
 
 @closecalls.before_loop
-async def before():
+async def before(): # pragma: no cover
     await BOT.wait_until_ready()
