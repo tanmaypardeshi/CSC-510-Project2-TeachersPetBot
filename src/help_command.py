@@ -186,9 +186,17 @@ async def end_tests(ctx):
 async def oh(ctx):
     embed = Embed(title='oh', description='Operations relevant for office hours',
                   colour=discord.Colour.orange())
-    embed.add_field(name='*Syntax*', value='!oh <>', inline=False)
-    embed.add_field(name='*Channel*', value='Any', inline=False)
-    embed.add_field(name='*Authorization*', value='Anyone', inline=False)
+    embed.add_field(name='*Syntax*', value='!oh <enter>', inline=True)
+    embed.add_field(name='*Channel*', value='office-hour', inline=True)
+    embed.add_field(name='*Authorization*', value='Anyone', inline=True)
+    
+    embed.add_field(name='*Syntax*', value='!oh <exit>', inline=True)
+    embed.add_field(name='*Channel*', value='office-hour', inline=True)
+    embed.add_field(name='*Authorization*', value='Anyone', inline=True)
+    
+    embed.add_field(name='*Syntax*', value='!oh <next>', inline=True)
+    embed.add_field(name='*Channel*', value='office-hour', inline=True)
+    embed.add_field(name='*Authorization*', value='Instructor', inline=True)
     await ctx.send(embed=embed)
     if ctx.author.id == Test_bot_application_ID:
         await ctx.send('oh')
@@ -224,7 +232,7 @@ async def poll(ctx):
                   colour=discord.Colour.orange())
     embed.add_field(name='*Syntax*', value='!poll', inline=False)
     embed.add_field(name='*Channel*', value='Any', inline=False)
-    embed.add_field(name='*Authorization*', value='Anyone', inline=False)
+    embed.add_field(name='*Authorization*', value='Instructor', inline=False)
     await ctx.send(embed=embed)
     if ctx.author.id == Test_bot_application_ID:
         await ctx.send('poll')
@@ -242,8 +250,8 @@ async def setInstructor(ctx):
                   description='Set Poll for a specified time and topic',
                   colour=discord.Colour.orange())
     embed.add_field(name='*Syntax*', value='!poll', inline=False)
-    embed.add_field(name='*Channel*', value='Any', inline=False)
-    embed.add_field(name='*Authorization*', value='Anyone', inline=False)
+    embed.add_field(name='*Channel*', value='instructor-commands', inline=False)
+    embed.add_field(name='*Authorization*', value='Instructor', inline=False)
     await ctx.send(embed=embed)
     if ctx.author.id == Test_bot_application_ID:
         await ctx.send('setInstructor')
