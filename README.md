@@ -12,7 +12,8 @@
 ![GitHub closed issues](https://img.shields.io/github/issues-closed/Ashwinshankar98/TeachersPetBot)
 ![Lines of code](https://img.shields.io/tokei/lines/github/Ashwinshankar98/TeachersPetBot)
 [![codecov](https://codecov.io/gh/Ashwinshankar98/TeachersPetBot/branch/main/graph/badge.svg?token=SK9PBZX2NM)](https://codecov.io/gh/Ashwinshankar98/TeachersPetBot)
-[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/Ashwinshankar98/TeachersPetBot/Test%20TeachersPetBot)](https://github.com/Ashwinshankar98/TeachersPetBot/actions)<br/>
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/Ashwinshankar98/TeachersPetBot/Test%20TeachersPetBot)](https://github.com/Ashwinshankar98/TeachersPetBot/actions)
+![GitHub deployments](https://img.shields.io/github/deployments/Ashwinshankar98/TeachersPetBot/discord-bot-phase2)<br/>
 
 ## Contents
 1. [ Description ](#desc)
