@@ -1,395 +1,457 @@
-*This File describes each source file and details of all classes, methods and functions in each file*
+_This File describes each source file and details of all classes, methods and functions in each file_
 
+### <u> bot.py </u>
 
-### <u> Bot.py </u> ###
+**Description**: What this does
 
-**Description:** What this does
+1. **_Function_**: on_ready
 
-1. ***Function***: on\_ready
+   **_Description_**: run on bot start-up
 
-   ***Description***: run on bot start-up
+2. **_Function_**: on_guild_join
 
-2. ***Function***: on\_guild\_join
+   **_Description_**: run when a user joins a guild with the bot present
 
-   ***Description***: run when a user joins a guild with the bot present
+   **_Inputs_**:
 
-   ***Inputs***:
+   - _guild_: the guild the user joined from
 
-   - *guild*: the guild the user joined from
-   
-3. ***Function***: on_member_join   
-  
-    Description: run when member joins a guild in which bot is alreay present 
-  
-    Inputs: 
-    - member: the user details
-4. Function: on_member_remove 
-    
-    Description: run when member leaves a guild in which bot is alreay present 
-    
-    Inputs: 
-    - guild: the guild the user joined from
+3. **_Function_**: on_member_join
 
-3. ***Function***: on\_message
+   Description: run when member joins a guild in which bot is alreay present
 
-   ***Description***: run when a message is sent to a discord the bot occupies
+   **_Inputs_**:
 
-   ***Inputs***:	
+   - member: the user details
 
-   - *message*: the message the user sent to a channel
+4. \***_Function_**: on_member_remove
 
-4. Function: on\_message\_edit
+   **_Description_**: run when member leaves a guild in which bot is alreay present
 
-    Description: run when a user edits a message
+   **_Inputs_**:
 
-     Inputs:
+   - guild: the guild the user joined from
+
+5. **_Function_**: on_message
+
+   **\*\***Description**\*\***: run when a message is sent to a discord the bot occupies
+
+   **_Inputs_**:
+
+   - _message_: the message the user sent to a channel
+
+6. **_Function_**: on_message_edit
+
+   **_Description_**: run when a user edits a message
+
+   **_Inputs_**:
 
    - before: the old message
    - after: the new message
 
-5. Function: test
-   
-   Description: Simple test command that shows commands are working.
-   
-   Inputs:
+7. **_Function_**: test
+
+   **_Description_**: Simple test command that shows commands are working.
+
+   **_Inputs_**:
+
    - ctx: context of the command
 
-   Outputs:
+   **_Outputs_**:
+
    - Sends test successful message back to channel that called test
 
-6. Function: get_instructor 
-   
-    Description: Command used to give Instructor role out by instructors 
-   
-    Inputs: 
-    - ctx: context of the command 
-   - member: user to give role Outputs: 
-   - Sends confirmation back to channel
+8. **_Function_**: get_instructor
 
-6. Function: set\_instructor
-   
-   Description: Command used to give Instructor role out by instructors
-   
-   Inputs:
+   **_Description_**: Command used to give Instructor role out by instructors
+
+   **_Inputs_**:
+
    - ctx: context of the command
    - member: user to give role
-   
-   Outputs:
+
+   **_Outputs_**:
+
    - Sends confirmation back to channel
- 
- 9. Function: remove_instructor 
-   
-    Description: Command used to remove a user from Instructor role by instructors 
-   
-    Inputs: 
-    - ctx: context of the command 
-    - member: user to remove role 
-   
-    Outputs: 
+
+9. **_Function_**: set_instructor
+
+   **_Description_**: Command used to give Instructor role out by instructors
+
+   **_Inputs_**:
+
+   - ctx: context of the command
+   - member: user to give role
+
+   **_Outputs_**:
+
+   - Sends confirmation back to channel
+
+10. **_Function_**: remove_instructor
+
+    **_Description_**: Command used to remove a user from Instructor role by instructors
+
+    **_Inputs_**:
+
+    - ctx: context of the command
+    - member: user to remove role
+
+    **_Outputs_**:
+
     - Sends confirmation back to channel
 
-7. Function: create\_event
-   
-   Description: command to create event and send to event\_creation module
-   
-   Ensures command author is Instructor
-   
-   Inputs:
-   - ctx: context of the command
-   
-   Outputs:
-   - Options to create event
+11. **_Function_**: create_event
 
-8. Function: oh
-   
-    Description: command related office hour and send to office\_hours module
-   
-    Inputs:
-   - ctx: context of the command
-   - command: specific command to run
-   - args: arguments for command
-   Outputs:
-   - Office hour details and options
+    **_Description_**: command to create event and send to event_creation module
 
+    Ensures command author is Instructor
 
-9. Function: ask
-   
-    Description: command to ask question and sends to qna module
-   
-    Inputs:
-   - ctx: context of the command
-   - question: question text
-   
-    Outputs:
-   - User question in new post
+    **_Inputs_**:
 
-1. Function: answer
-   
-    Description: command to answer question and sends to qna module
-   
-    Inputs:
-   - ctx: context of the command
-   - q\_num: question number to answer
-   - answer: answer text
-   Outputs:
-   - User answer in question post
+    - ctx: context of the command
 
-1. Function: ping 
-   
-    Description: Shows latency for debugging
+    **_Outputs_**:
 
-1. Function: stats 
-   
-    Description: Shows stats like
+    - Options to create event
 
-1. Function: poll 
-   
-    Description: Poll functionality for administrators 
-   
-    Inputs: 
-    - ctx: context of the command 
-   - minutes: minutes in integer 
-   - question: Enter the topic on which the poll is created 
-   - options: options for poll 
-     
-    Outputs: 
+12. **_Function_**: oh
+
+    **_Description_**: command related office hour and send to office_hours module
+
+    **_Inputs_**:
+
+    - ctx: context of the command
+    - command: specific command to run
+    - args: arguments for command
+
+    **_Outputs_**:
+
+    - Office hour details and options
+
+13. **_Function_**: ask
+
+    **_Description_**: command to ask question and sends to qna module
+
+    **_Inputs_**:
+
+    - ctx: context of the command
+    - question: question text
+
+      **_Outputs_**:
+
+    - User question in new post
+
+14. **_Function_**: answer
+
+    **_Description_**: command to answer question and sends to qna module
+
+    **_Inputs_**:
+
+    - ctx: context of the command
+    - q_num: question number to answer
+    - answer: answer text
+
+    **_Outputs_**:
+
+    - User answer in question post
+
+15. **_Function_**: ping
+
+    **_Description_**: Shows latency for debugging
+
+16. **_Function_**: stats
+
+    **_Description_**: Shows stats like
+
+17. **_Function_**: poll
+
+    **_Description_**: Poll functionality for administrators
+
+    **_Inputs_**:
+
+    - ctx: context of the command
+    - minutes: minutes in integer
+    - question: Enter the topic on which the poll is created
+    - options: options for poll
+      **_Outputs_**:
     - Poll in discord channel. results after the specified time.
-    
-1.  Function: custom-profanity 
-    
-    Description: Define a word to be added to the profanity filter 
-    
-    Inputs: 
+
+18. **_Function_**: custom-profanity
+
+    **_Description_**: Define a word to be added to the profanity filter
+
+    **_Inputs_**:
+
     - ctx: context of the command
 
-1. Function: attendance 
-   
-    Description: Gets the attendance when requested by the instructor for audio channel 
-   
-    Inputs: 
+19. **_Function_**: attendance
+
+    **_Description_**: Gets the attendance when requested by the instructor for audio channel
+
+    **_Inputs_**:
+
     - ctx: context of the command
 
-1. Function: begin\_tests
-   
-    Description: Start the automated testing
-   
-    Inputs:
-   - ctx: context of the command
+20. **_Function_**: begin_tests
 
-1. Function: end\_tests
-   
-    Description: Finalize automated testing
-   
-    Inputs:
-   - ctx: context of the command
+    **_Description_**: Start the automated testing
 
-1. Function: test\_dummy
-   
-    Description: Run the bot
+    **_Inputs_**:
 
-**Cal.py**
+    - ctx: context of the command
 
-**Description:** What this does
+21. **_Function_**: end_tests
 
-1. Function: display\_events 
+    **_Description_**: Finalize automated testing
 
-    Description: Sends or updates the embed for the calendar 
+    **_Inputs_**:
 
-    Inputs: 
+    - ctx: context of the command
 
-    `	`- ctx: context of function activation
+22. **_Function_**: test_dummy
 
-1. Function: update\_calendar 
+    **_Description_**: Run the bot
 
-    Description: Builds the calendar embed
+### <u> cal.py </u>
 
-1. Function: init 
+**\***Description**\*:** What this does
 
-    Description: Initializes the calendar, creating channel and embed call 
+1. **_Function_**: display_events
 
-    Inputs: 
-    - b: bot
+   **_Description_**: Sends or updates the embed for the calendar
 
-**Event\_creation.py**
+   **_Inputs_**:
 
-**Description:** Functionality for creating new events
+   - ctx: context of function activation
 
-1. Function: get\_times ###Removed?
+1. **_Function_**: update_calendar
 
-    Description: helper function for acquiring the times an instructor wants event to be held during 
+   **_Description_**: Builds the calendar embed
 
-    Inputs: 
+1. **_Function_**: init
 
-    - ctx: context of this discord message 
+   **_Description_**: Initializes the calendar, creating channel and embed call
 
-    - event\_type: type of event which times are being asked for 
+   **_Inputs_**:
 
-    - command\_invoker: discord user who is creating event
+   - b: bot
 
-    Outputs: the begin and end times for the event
+1. **_Function_**: closecalls
 
-1. Function: create\_event 
+   **_Description_**: checks if any deadlines are coming up within a day .
 
-    Description: creates an event by the specifications of the instructor creating the event 
+   This code runs in the background periodically
 
-    Inputs: 
+   **_Inputs_**:
 
-    - ctx: context of this discord message 
+   - channel : the channel 'course-calendar'
 
-    - testing\_mode: flag indicating whether this event is being created during a system 	test 
+### <u> event_creation.py </u>
 
-    Outputs: new event created in database
+**\***Description**\*:** Functionality for creating new events
 
-1. Function: init 
+1. **_Function_**: create_event
 
-    Description: initializes this module, giving it access to discord bot 
+   **_Description_**: creates an event by the specifications of the instructor creating the event
 
-    Inputs: 
+   **_Inputs_**:
 
-    - b: discord bot Outputs: None
+   - ctx: context of this discord message
 
+   - testing_mode: flag indicating whether this event is being created during a system test
 
-**Office Hours.py**
+   **_Outputs_**: new event created in database
 
-**Description:** Functionality related to administering office hours
+1. **_Function_**: init
 
-1. Class: Group 
+   **_Description_**: initializes this module, giving it access to discord bot
 
-    Description: contains information about an office hour group
+   **_Inputs_**:
+
+   - b: discord bot
+
+   **_Outputs_**: None
+
+### <u> office_hours.py </u>
+
+**_Description_**: functionality related to administering office hours
+
+1. Class: Group
+
+   **_Description_**: contains information about an office hour group
 
 1. Class: OfficeHourQueue
 
-    Description: contains information about an office hour queue
+   **_Description_**: contains information about an office hour queue
 
-1. Method: enqueue 
+1. Method: enqueue
 
-    Description: adds a student to the office hour queue 
+   **_Description_**: adds a student to the office hour queue
 
-    Inputs: 
+   **_Inputs_**:
 
-    - student: student to add to the office hour queue 
+   - student: student to add to the office hour queue
 
-    Outputs: None
+   **_Outputs_**: None
 
-1. Method: display\_queue 
+1. Method: display_queue
 
-    Description: displays the office hour queue in the office hour channel 
-    
-    Outputs: office hour queue as a message in the office hour channel
+   **_Description_**: displays the office hour queue in the office hour channel
 
-5. Function: office\_hour\_command 
+   **_Outputs_**: office hour queue as a message in the office hour channel
 
-    Description: handles a command given in an office hour channel 
-    
-    Inputs: 
-    
-    - ctx: context of this discord message 
-    - command: office hour command given 
-    - args: extra arguments given to command
-1. Function: open\_oh 
+1. **_Function_**: office_hour_command
 
-    Description: opens an office hour for students to get help from 
-    
-    Inputs: 
-    
-    - guild: discord guild this office hour is relevant for 
-    - ta: name of TA who is holding this office hour 
-    
-    Outputs: 
-   
-    - creation of channels relevant to office hour
+   **_Description_**: handles a command given in an office hour channel
 
-1. Function: close\_oh 
+   **_Inputs_**:
 
-    Description: closes an office hour session 
-    
-    Inputs: 
-    
-    - guild: discord guild this office hour is relevant for 
-    - ta: name of TA who is holding this office hour 
-    
-    Outputs: 
-   
-    - deletion of channels relevant to office hour
+   - ctx: context of this discord message
+   - command: office hour command given
+   - args: extra arguments given to command
 
-1. Class: TaOfficeHour 
-    
-    Description: contains information about when an office hour is held
-1. Function: check\_office\_hour\_loop 
+1. **_Function_**: open_oh
 
-    Description: runs intermittently to open or close office hours based on the current time
+   **_Description_**: opens an office hour for students to get help from
 
-1. Function: add\_office\_hour 
+   **_Inputs_**:
 
-    Description: adds a new TA office hour to the guild
+   - guild: discord guild this office hour is relevant for
+   - ta: name of TA who is holding this office hour
 
-    Inputs: 
-    
-    - guild: discord guild this office hour is relevant for 
-    - ta\_office\_hour: TA office hour information
-    
-    Outputs: 
-   
-    -   adds a new TA office hour to the system
+   **_Outputs_**:
 
-1. Function: init 
+   - creation of channels relevant to office hour
 
-    Description: initializes office hours module 
+1. **_Function_**: close_oh
 
-    Inputs: 
-    
-    - b: discord bot
-    
-**Profanity.py**
+   **_Description_**: closes an office hour session
 
-**Description:** What this does
+   **_Inputs_**:
 
-1. Function: check\_profanity 
-   
-    Description: Uses better\_profanity to check profanity in a message
-   
-    Inputs: 
-    - msg: message from user
+   - guild: discord guild this office hour is relevant for
+   - ta: name of TA who is holding this office hour
 
-2. Function: censor\_profanity 
-   
-    Description: censor the message per better\_profanity 
-   
-    Inputs: 
-    - msg: message from user
+   **_Outputs_**:
 
-**qna.py**
+   - deletion of channels relevant to office hour
 
-**Description:** Implements Q and A functionality
+1. Class: TaOfficeHour
 
-1. Class: QuestionsAnswers 
-   
-    Description: object with question details 
-   
-    Inputs: 
-    - q: question text 
-   - number: question number 
-   - message: id of the message associated with question 
-   - ans: answers to the question Outputs: None
+   **_Description_**: contains information about when an office hour is held
 
+1. **_Function_**: check_office_hour_loop
 
-2. Function: question 
-   
-    Description: takes question from user and reposts anonymously and numbered 
-   
-    Inputs: 
-    - ctx: context of the command 
-   - q: question text Outputs: 
+   **_Description_**: runs intermittently to open or close office hours based on the current time
+
+1. **_Function_**: add_office_hour
+
+   **_Description_**: adds a new TA office hour to the guild
+
+   **_Inputs_**:
+
+   - guild: discord guild this office hour is relevant for
+   - ta_office_hour: TA office hour information
+
+   **_Outputs_**:
+
+   - adds a new TA office hour to the system
+
+1. **_Function_**: init
+
+   **_Description_**: initializes office hours module
+
+   **_Inputs_**:
+
+   - b: discord bot
+
+### <u> profanity.py </u>
+
+**\***Description**\*:** What this does
+
+1. **_Function_**: check_profanity
+
+   **_Description_**: Uses better_profanity to check profanity in a message
+
+   **_Inputs_**:
+
+   - msg: message from user
+
+2. **_Function_**: censor_profanity
+
+   **_Description_**: censor the message per better_profanity
+
+   **_Inputs_**:
+
+   - msg: message from user
+
+### <u> qna.py </u>
+
+**\***Description**\*:** Implements Q and A functionality
+
+1. Class: QuestionsAnswers
+
+   **_Description_**: object with question details
+
+   **_Inputs_**:
+
+   - q: question text
+   - number: question number
+   - message: id of the message associated with question
+   - ans: answers to the question
+
+   **_Outputs_**: None
+
+2. **_Function_**: question
+
+   **_Description_**: takes question from user and reposts anonymously and numbered
+
+   **_Inputs_**:
+
+   - ctx: context of the command
+   - q: question text
+
+   **_Outputs_**:
+
    - User question in new post
 
-3. Function: answer 
-   
-    Description: adds user answer to specific question and post anonymously 
-   
-    Inputs: 
-    - ctx: context of the command 
-   - num: question number being answered 
-   - ans: answer text to question specified in num 
-     
-    Outputs: 
-    - User answer added to question post
+3. **_Function_**: answer
+
+   **_Description_**: adds user answer to specific question and post anonymously
+
+   **_Inputs_**:
+
+   - ctx: context of the command
+   - num: question number being answered
+   - ans: answer text to question specified in num
+     **_Outputs_**:
+   - User answer added to question post
+
+### <u> attendance.py </u>
+
+**\***Description**\*:** Attendance functionality
+
+1. **_Function_**: compute
+
+   **_Description_**: Finds attendees and absentees of class
+
+   **_Inputs_**:
+
+   - bot: bot that sends commands to test TeachersPetBot
+   - ctx: Context of the function activation
+
+   **_Outputs_**: None
+
+### <u> help_command.py </u>
+
+**\***Description**\*:** help command functionality
+
+1. **_Function_**: helper
+
+   **_Description_**: Directs the help functions when called and is executes !help command
+
+   **_Inputs_**:
+
+   - ctx: Context of the function activation
+
+   **_Outputs_**: Result of !help
