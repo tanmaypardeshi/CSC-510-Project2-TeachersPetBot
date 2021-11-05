@@ -12,7 +12,7 @@
 ![GitHub closed issues](https://img.shields.io/github/issues-closed/Ashwinshankar98/TeachersPetBot)
 ![Lines of code](https://img.shields.io/tokei/lines/github/Ashwinshankar98/TeachersPetBot)
 [![codecov](https://codecov.io/gh/Ashwinshankar98/TeachersPetBot/branch/main/graph/badge.svg?token=SK9PBZX2NM)](https://codecov.io/gh/Ashwinshankar98/TeachersPetBot)
-  
+[![test Actions Status](https://github.com/Ashwinshankar98/TeachersPetBot/workflows/test/badge.svg)](https://github.com/Ashwinshankar98/TeachersPetBot/actions)
 Click Below to Watch Our Video!
 [![Watch the video](https://github.com/Ashwinshankar98/TeachersPetBot/blob/main/images/teacherspetbot.png)](https://youtu.be/tExF88LHqgE)
   
@@ -53,10 +53,6 @@ Teacher's Pet is a Discord Bot for class instructors to streamline their Discord
 `!create` Start creating an event (Instructor command) 
 
 ```diff
--`ping`
--`stats`
--`poll`
--`attendance`
 -`get instructor`
 -`Remove instructor `
 
@@ -231,6 +227,27 @@ This task runs in the background, once a day it checks if there are any assignme
 Whenever there is nothing to remind : 
 
 ![alt text](https://github.com/Ashwinshankar98/TeachersPetBot/blob/main/images/close_calls1.png)
+
+### Poll Command
+This command allows the Instructors to create a custom poll for the class. The command takes the following as inputs - Duration of the poll, Topic on focus, Options . Once the poll duration is complete the the command ends and displays the result of the poll. Note: A student can only vote for single option.<br />
+Example: `!poll 2 "Topic for Tmrw's class" Physics chemistry biology maths`
+
+![alt text](https://github.com/Ashwinshankar98/TeachersPetBot/blob/main/images/close_calls2.png)
+
+### Utility Commands
+
+#### Ping Command
+Since the bot is hosted on cloud ( In this case Heroku ). Its crucial to know the latency of the bot. This command  `!ping` returns the ping and the corresponding response time.
+
+![alt text](https://github.com/Ashwinshankar98/TeachersPetBot/blob/main/images/close_calls2.png)
+
+
+#### Status Command
+For the purpose of Debugging and maintaining the bot `!status` command has been added to keep track of CPU usage, Bot up time, Bot version, No. of users and Memory usage.
+
+![alt text](https://github.com/Ashwinshankar98/TeachersPetBot/blob/main/images/close_calls2.png)
+
+
 
 <h2 align="center"> Future Scope </h2>
 
