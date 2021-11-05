@@ -40,13 +40,21 @@ Teacher's Pet is a Discord Bot for class instructors to streamline their Discord
 <a name="commands"></a>
 <h2 align="center"> Bot Commands </h2>
 
-`!setInstructor @<member>` Set a server member to be an instructor (Instructor command)
+`!setInstructor <@member>` Set a server member to be an instructor (Instructor command)
+
+`!removeInstructor <@member>` Remove a server member from the instructor role (Instructor command)
+
+`!getInstructor` Get the current instructors in the server
+
+`!attendance` Find attendance from voice channel (Instructor command)
 
 `!ask "<question>"` Ask a question  
 
-`!answer <question_number> "<answer>"` Answer a question  
+`!answer <question_number> "<answer>"` Answer a question
 
-`!attendance` Find attendance from voice channel (Instructor command)
+`!poll <command>` Run a poll for students (Instructor command)
+
+`!create` Start creating an event (Instructor command) 
 
 `!oh enter` Enter an office hour queue as an individual student  
 
@@ -58,24 +66,12 @@ Teacher's Pet is a Discord Bot for class instructors to streamline their Discord
 
 `!help` Gets the descriptions for all commands
 
-`!help <command>` Describes command in detail
+`!help <command>` Describes a command in detail
 
 `!ping` Find the latency of network
 
-`!poll <command>` Run a poll for students (Instructor command)
-
 `!stats` Gets the statistics of system and softwares used
 
-`!create` Start creating an event (Instructor command) 
-
-```diff
--`get instructor`
--`Remove instructor `
-
-- add the respective scrnshots in the right place like how its done for old cmds below!!!
-
--` ` new actions during member join,remove and/or Quit
-```
 <a name="instrun"></a>
 <h2 align="center"> Installation and Running </h2>
 
@@ -118,11 +114,6 @@ Student answer:
 ![image](https://user-images.githubusercontent.com/32313919/135383913-4a7431c3-9e14-466b-9a07-683df39bc1bc.png)  
 Instructor answer:  
 ![image](https://user-images.githubusercontent.com/32313919/135383932-551850ef-6f6c-4349-b3a4-d36ce583de14.png)
-
-```diff
--` `adding to db to avoid repeated questions? 
--` `examples , pics, more info
-```
 
 ### Events/Calendar
 Events are items relevant to a class that are time-sensitive. Currently, the types of events include office hours, exams, and assignments. Events in a class are kept track of, and assignments/exams are displayed in a calendar for students and instructors to see.
@@ -194,13 +185,28 @@ Using the Python package better-profanity, Teacher's Pet will catch profane word
 
 ![alt text](https://github.com/Ashwinshankar98/TeachersPetBot/blob/main/images/profanity_example.PNG)
 
-```diff
--` `You can also add custom profanity words
--` `add examples, pics 
-```
-
 <a name="fphase2"></a>
 <h2 align="center"> Features added in Phase 2 </h2>
+
+### New Member joining channel
+
+Upon a new member joining the channel the BOT send the member a welcome message to the member in a private chat:
+
+![alt text](https://github.com/Ashwinshankar98/TeachersPetBot/blob/main/images/member_addition.jpeg)
+
+### Instructor view/modification
+
+The remove instructor command can only be used by an instructor in the instructor commands channel. I removes a existing instructor from the role of an instructor and revokes the members permission to access the instructor commands channel.
+
+When the remove instructor command is used:
+
+![alt text](https://github.com/Ashwinshankar98/TeachersPetBot/blob/main/images/remove_Instructor.png)
+
+The getInstructor command can be used in any channel and list outs the members in the guild who have Instructor role.
+
+When the get instructor command is used:
+
+![alt text](https://github.com/Ashwinshankar98/TeachersPetBot/blob/main/images/get_Instructor.png)
 
 ### Attendance
 
@@ -278,12 +284,13 @@ This bot has endless possibilities for functionality. Features which we are inte
   * Multi-Guild Handling
   * Custom Events
   * Sharding
-  * Edit Events and Office hours
+  * Edit already created Events and office hours
   * Handle command spamming
   * Include more detailed role classification
   * Track participation
   * Refactor code to use cogs for better code quality
   * Multiple Office hours for same person
+  * Office hour channel extension
 
 For a full list of future features, upgrades, and bug fixes, please visit our [Phase 2 Board](https://github.com/Ashwinshankar98/TeachersPetBot/projects/1).
 
