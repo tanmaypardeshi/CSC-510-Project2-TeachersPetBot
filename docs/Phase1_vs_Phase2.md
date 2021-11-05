@@ -3,6 +3,8 @@
 |  Improvements | Phase I   | Phase II  |
 | ------------ | ------------ | ------------ |
 | Error Handling ( Test cases)| Multiple issues with error handling and Continous fails in running the test code in local | Fixed all the issues with test files and imlemented very detailed error handling for all existing and new features|
+|Handling all use cases (Test)|Test cases did not cover many existing use cases (Eg. Profanity)| Covered all the use cases from Phase I |
+|Restricting access (Feature)|Instructor channel were accessible and visible to all members | Restricted access to Instructors|
 |Hosted in Heroku (Deployment)|Had to run the bot locally | Hosted in heroku for better convenience and higher consistency|
 |QnA handling (Database)| Did not check for repeating questions| Storing the QnAs in DB to handle repetiton|
 | Read me and feature docs (Documentation)| Had phase 1 details in Read me but no deparate file explaining functions|The new docs have updated feature descriptions and function descriptions in isolation|
