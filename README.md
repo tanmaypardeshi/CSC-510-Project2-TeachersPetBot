@@ -14,6 +14,19 @@
 [![codecov](https://codecov.io/gh/Ashwinshankar98/TeachersPetBot/branch/main/graph/badge.svg?token=SK9PBZX2NM)](https://codecov.io/gh/Ashwinshankar98/TeachersPetBot)
 [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/Ashwinshankar98/TeachersPetBot/Test%20TeachersPetBot)](https://github.com/Ashwinshankar98/TeachersPetBot/actions)<br/>
 
+## Contents
+1. [ Description ](#desc)
+2. [ Bot Commands ](#commands)
+3. [ Installation and Running ](#instrun)
+4. [ Testing ](#testing)
+5. [ Features for Phase 1 ](#fphase1)
+6. [ New Features added in Phase 2 ](#fphase2)
+7. [ Future Scope ](#fscope)
+8. [ Want to contribute? ](#contribute)
+9. [ License ](#license)
+
+
+<a name="desc"></a>
 Click Below to Watch Our Video!
 
 [![Watch the video](https://github.com/Ashwinshankar98/TeachersPetBot/blob/main/images/teacherspetbot.png)](https://youtu.be/tExF88LHqgE)
@@ -24,6 +37,7 @@ Click Below to Watch Our Video!
 
 Teacher's Pet is a Discord Bot for class instructors to streamline their Discord servers. Discord is a great tool for communication and its functionalities can be enhanced by bots and integrations. There are many tools for organizing classes, but they are often hard to manage. They rarely have good communication mechanisms or ability to connect with other tools. This bot allows instructors to host their classes on Discord, combining communication tools with functionality for assignments, scheduling, and office hours. Instructors and students no longer have to go between platforms to view course details, forums, events, calls, and more.
 
+<a name="commands"></a>
 <h2 align="center"> Bot Commands </h2>
 
 `!setInstructor @<member>` Set a server member to be an instructor (Instructor command)
@@ -62,7 +76,7 @@ Teacher's Pet is a Discord Bot for class instructors to streamline their Discord
 
 -` ` new actions during member join,remove and/or Quit
 ```
-
+<a name="instrun"></a>
 <h2 align="center"> Installation and Running </h2>
 
 #### Tools and Libraries Used
@@ -72,10 +86,14 @@ In addition to the packages from [requirements.txt](https://github.com/Ashwinsha
 
 To install and run Teacher's Pet, follow instructions in the [Installation and Testing Guide](https://github.com/Ashwinshankar98/TeachersPetBot/blob/main/Installation.md).
 
+
+<a name="testing"></a>
 <h2 align="center"> Testing </h2>
 
 To run tests on the Teacher's Pet, follow instructions in the [Installation and Testing Guide](https://github.com/Ashwinshankar98/TeachersPetBot/blob/main/Installation.md#Run-Tests).
 
+
+<a name="fphase1"></a>
 <h2 align="center"> TeachersPetBot Features </h2>
 
 ### Initialization
@@ -181,6 +199,7 @@ Using the Python package better-profanity, Teacher's Pet will catch profane word
 -` `add examples, pics 
 ```
 
+<a name="fphase2"></a>
 <h2 align="center"> Features added in Phase 2 </h2>
 
 ### Attendance
@@ -250,6 +269,7 @@ For the purpose of Debugging and maintaining the bot `!stats` command has been a
 ![alt text](https://github.com/Ashwinshankar98/TeachersPetBot/blob/main/images/stats_command.png)
 
 
+<a name="fscope"></a>
 
 <h2 align="center"> Future Scope </h2>
 
@@ -267,10 +287,13 @@ This bot has endless possibilities for functionality. Features which we are inte
 
 For a full list of future features, upgrades, and bug fixes, please visit our [Phase 2 Board](https://github.com/Ashwinshankar98/TeachersPetBot/projects/1).
 
+<a name="contribute"></a>
 <h2 align="center"> How to Contribute? </h2>
 
 Check out our [CONTRIBUTING.md](https://github.com/Ashwinshankar98/TeachersPetBot/blob/main/CONTRIBUTING.md) for instructions on contributing to this repo and helping enhance this Discord Bot, as well as our [Code of Conduct](https://github.com/Ashwinshankar98/TeachersPetBot/blob/main/CODE_OF_CONDUCT.md) guidelines.
 
+
+<a name="license"></a>
 <h2 align="center"> License </h2>
 
 The project is licensed under the [MIT License](https://github.com/Ashwinshankar98/TeachersPetBot/blob/main/LICENSE).
