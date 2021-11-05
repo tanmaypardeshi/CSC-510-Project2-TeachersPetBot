@@ -83,4 +83,3 @@ You must have an account for Discord [[Link](https://discordapp.com/developers/a
   * Deployment Method => Connect your GitHub
   * App connected to GitHub => Search for the forked repository
   * Automatic Deploy => Enable Automatic Deploy (to redeploy after every commit)
-* once deployment is done do the following.
