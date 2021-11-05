@@ -30,7 +30,7 @@
 <a name="desc"></a>
 Click Below to Watch Our Video!
 
-[![Watch the video](https://github.com/Ashwinshankar98/TeachersPetBot/blob/main/images/teacherspetbot.png)](https://youtu.be/tExF88LHqgE)
+[![Watch the video](https://github.com/Ashwinshankar98/TeachersPetBot/blob/main/images/teacherspetbot.png)](https://youtu.be/BqNU2Rzehnw)
   
   
 
@@ -282,18 +282,17 @@ For the purpose of Debugging and maintaining the bot `!stats` command has been a
 
 This bot has endless possibilities for functionality. Features which we are interested in adding but did not have time for include but are not limited to:
 
-  * Multi-Guild Handling
   * Custom Events
-  * Sharding
-  * Edit already created Events and office hours
+  * Allow events to be edited
+  * Show error information on discord
   * Handle command spamming
-  * Include more detailed role classification
+  * Add new roles
   * Track participation
-  * Refactor code to use cogs for better code quality
-  * Multiple Office hours for same person
+  * Refactor code to use cogs
+  * Accomodate Multiple Office hours for an instructor
   * Office hour channel extension
 
-For a full list of future features, upgrades, and bug fixes, please visit our [Phase 2 Board](https://github.com/Ashwinshankar98/TeachersPetBot/projects/1).
+For a deatiled description of each of the above future enhancements listed visit [Phase 2 Board](https://github.com/Ashwinshankar98/TeachersPetBot/projects/1).
 
 <a name="contribute"></a>
 <h2 align="center"> How to Contribute? </h2>
