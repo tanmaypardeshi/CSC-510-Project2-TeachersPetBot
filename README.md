@@ -30,7 +30,7 @@
 <a name="desc"></a>
 Click Below to Watch Our Video!
 
-[![Watch the video](https://github.com/Ashwinshankar98/TeachersPetBot/blob/main/images/teacherspetbot.png)](https://youtu.be/BqNU2Rzehnw)
+[![Watch the video](https://github.com/Ashwinshankar98/TeachersPetBot/blob/main/images/placeholder.png)](https://youtu.be/BqNU2Rzehnw)
   
   
 
