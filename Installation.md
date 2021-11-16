@@ -28,7 +28,7 @@ To create a Discord Bot, you must:
 
 NOTE: Run the bot before inviting it to your server in order for auto-initiate commands to run
 
-This includes:
+This includes the following:
 * Creating Instructor Role
 * Adding server owner to Instructor Role
 * Creating Bot channels
