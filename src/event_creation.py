@@ -29,6 +29,7 @@ async def create_event(ctx, testing_mode):
             components=[
                 Button(style=ButtonStyle.blue, label='Assignment', custom_id='assignment'),
                 Button(style=ButtonStyle.green, label='Exam', custom_id='exam'),
+                Button(style=ButtonStyle.grey, label='Project', custom_id='project'),
                 Button(style=ButtonStyle.red, label='Office Hour', custom_id='office-hour')
             ],
         )
@@ -82,9 +83,42 @@ async def create_event(ctx, testing_mode):
                 [ctx.guild.id, title, link, description, deadline]
             )
 
-            # TODO add assignment to events list
             await ctx.send('Assignment successfully created!')
             await cal.display_events(None)
+        elif button_clicked == 'project':
+            await ctx.send('What is the title of this project?')
+            msg = await BOT.wait_for('message', timeout=60.0, check=check)
+            project_title = msg.content.strip()
+
+            await ctx.send(
+                'Please enter the due date of this project along with the time\n'
+                'Enter in 24-hour format for e.g. an project due at 11:59pm can be inputted '
+                'as 23:59\nEnter in format `MM-DD-YYYY %H:%M`')
+            msg = await BOT.wait_for('message', timeout=60.0, check=check)
+            date_str = msg.content.strip()
+            try:
+                due_date = datetime.datetime.strptime(date_str, '%m-%d-%Y %H:%M')
+            except ValueError:
+                await ctx.send('Invalid date format. Aborting, Please try again!.')
+                return
+
+            await ctx.send('Link associated with submission? Type N/A if none')
+            msg = await BOT.wait_for('message', timeout=60.0, check=check)
+            link = msg.content.strip() if msg.content.strip() != 'N/A' else None
+            if link and not validators.url(link):
+                await ctx.send('Invalid URL. Aborting, Please try again!.')
+                return
+
+            await ctx.send('Extra description for project? Type N/A if none')
+            msg = await BOT.wait_for('message', timeout=60.0, check=check)
+            description = msg.content.strip() if msg.content.strip() != 'N/A' else None
+
+            db.mutation_query(
+                'INSERT INTO assignments VALUES (?, ?, ?, ?, ?)',
+                [ctx.guild.id, project_title, link, description, due_date]
+            )
+            await ctx.send('Project successfully created!')
+
         elif button_clicked == 'exam':
             await ctx.send('What is the title of this exam?')
             msg = await BOT.wait_for('message', timeout = 60.0, check = check)
@@ -145,8 +179,6 @@ async def create_event(ctx, testing_mode):
                 'INSERT INTO exams VALUES (?, ?, ?, ?, ?, ?)',
                 [ctx.guild.id, title, description, duration, start, end]
             )
-
-            # TODO add exam to events list
 
             await ctx.send('Exam successfully created!')
             await cal.display_events(None)
