@@ -271,6 +271,29 @@ async def test_create_oh_invalid_end_time(testing_bot, commands_channel):
     await wait('Invalid Time format')
 
 
+async def test_create_project_valid(testing_bot, commands_channel):
+    async def wait(content):
+        await wait_for_msg(testing_bot, commands_channel, content)
+
+    await commands_channel.send('!create')
+    await wait('Which type of event')
+    await commands_channel.send('project')
+
+    await wait('What is the title of this project?')
+    await commands_channel.send('test')
+
+    await wait('Please enter the due date of this project along with the time')
+    await commands_channel.send('01-01-1999 12:45')
+
+    await wait('Link associated with submission? Type N/A if none')
+    await commands_channel.send('N/A')
+
+    await wait('Extra description for project? Type N/A if none')
+    await commands_channel.send('test project')
+
+    await wait('Project successfully created!')
+
+
 async def test(testing_bot, guild_id):
     commands_channel = next(ch for ch in testing_bot.get_guild(guild_id).text_channels if ch.name == 'instructor-commands')
 
@@ -294,6 +317,8 @@ async def test(testing_bot, guild_id):
     await test_create_oh_valid(testing_bot, commands_channel)
     await test_create_oh_invalid_start_time(testing_bot, commands_channel)
     await test_create_oh_invalid_end_time(testing_bot, commands_channel)
+
+    await test_create_project_valid(testing_bot, commands_channel)
     
     # remove instructor role from bot
     await member.remove_roles(role)
