@@ -1,7 +1,22 @@
+"""
+This file contains functions and logic related to email address configuration.
+"""
 import db
 
 
 async def create_email(ctx, email_address):
+    """
+        Configures the specified email address against user.
+
+        Parameters:
+            ctx: used to access the values passed through the current context
+            email_address: email address specified by the author
+
+        Returns:
+            returns either an error stating a reason for failure or returns a success message
+            indicating that the specified email address has been added.
+
+    """
     author_id = ctx.message.author.id
     fetch_query = 'SELECT author_id FROM email_address WHERE author_id=? and is_active=1'
     cur = db.select_query(fetch_query, (author_id,))
@@ -16,6 +31,18 @@ async def create_email(ctx, email_address):
 
 
 async def update_email(ctx, email_address):
+    """
+        Updates the configured email address in json with the specified one.
+
+        Parameters:
+            ctx: used to access the values passed through the current context
+            email_address: email address specified by the author
+
+        Returns:
+            returns either an error stating a reason for failure or returns a success message
+            indicating that the specified email address has been added.
+
+    """
     author_id = ctx.message.author.id
     fetch_query = 'SELECT author_id FROM email_address WHERE author_id=? and is_active=1'
     cur = db.select_query(fetch_query, (author_id,))
@@ -29,6 +56,17 @@ async def update_email(ctx, email_address):
 
 
 async def view_email(ctx):
+    """
+        Displays the configured email address against user.
+
+        Parameters:
+            ctx: used to access the values passed through the current context
+
+        Returns:
+            returns either an error stating a reason for failure or returns a configured email
+            address.
+
+    """
     author_id = ctx.message.author.id
     fetch_query = 'SELECT email_id FROM email_address WHERE author_id=? and is_active=1'
     cur = db.select_query(fetch_query, (author_id,))
@@ -40,6 +78,17 @@ async def view_email(ctx):
 
 
 async def delete_email(ctx):
+    """
+        Deletes the configured email address against user.
+
+        Parameters:
+            ctx: used to access the values passed through the current context
+
+        Returns:
+            returns either an error stating a reason for failure or returns a success message
+            indicating that the specified email address has been deleted.
+
+    """
     author_id = ctx.message.author.id
     fetch_query = 'SELECT author_id FROM email_address WHERE author_id=? and is_active=1'
     cur = db.select_query(fetch_query, (author_id,))
