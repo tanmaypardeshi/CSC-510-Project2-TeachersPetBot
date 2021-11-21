@@ -72,7 +72,7 @@ async def view_email(ctx):
     cur = db.select_query(fetch_query, (author_id,))
     email_address = cur.fetchone()
     if email_address:
-        await ctx.send('Configured email address : {0}'.format(email_address[0]))
+        await ctx.send(f'Configured email address : {email_address[0]}')
         return
     await ctx.send('There is no configured email address')
 
