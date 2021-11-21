@@ -38,3 +38,15 @@ async def view_email(ctx):
         return
     await ctx.send('There is no configured email address')
 
+
+async def delete_email(ctx):
+    author_id = ctx.message.author.id
+    fetch_query = 'SELECT author_id FROM email_address WHERE author_id=? and is_active=1'
+    cur = db.select_query(fetch_query, (author_id,))
+    data = cur.fetchone()
+    if data:
+        update_query = 'UPDATE email_address SET is_active=? WHERE author_id=?'
+        db.mutation_query(update_query, (0, author_id,))
+        await ctx.send('Email address has been deleted successfully')
+        return
+    await ctx.send('There is no configured email address')

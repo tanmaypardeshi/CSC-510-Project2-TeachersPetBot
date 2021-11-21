@@ -543,9 +543,11 @@ async def update_email(ctx, email_id):
 async def view_email(ctx):
     await email_address.view_email(ctx)
 
-# @bot.command(name='remove_email', help='deletes the configured email address against user.')
-# async def create_email(ctx):
-#     await
+
+@bot.command(name='remove_email', help='deletes the configured email address against user.')
+async def delete_email(ctx):
+    await email_address.delete_email(ctx)
+
 ###########################
 # Function: help
 # Description: Describes the help
