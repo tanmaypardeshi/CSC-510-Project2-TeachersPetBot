@@ -23,6 +23,7 @@ import db
 import profanity
 import event_creation
 import office_hours
+import email_address
 import cal
 import qna
 import attendance
@@ -527,6 +528,24 @@ async def custom_profanity(ctx, pword):
 async def attend(ctx):
     await attendance.compute(bot, ctx)
 
+
+@bot.command(name='create_email', help='Configures the specified email address against user.')
+async def create_email(ctx, email_id):
+    await email_address.create_email(ctx, email_id)
+
+
+@bot.command(name='update_email', help='Updates the configured email address against user.')
+async def update_email(ctx, email_id):
+    await email_address.update_email(ctx, email_id)
+
+
+@bot.command(name='view_email', help='displays the configured email address against user.')
+async def view_email(ctx):
+    await email_address.view_email(ctx)
+
+# @bot.command(name='remove_email', help='deletes the configured email address against user.')
+# async def create_email(ctx):
+#     await
 ###########################
 # Function: help
 # Description: Describes the help
