@@ -101,6 +101,13 @@ async def on_ready():
         )
     ''')
 
+    db.mutation_query('''
+        CREATE TABLE IF NOT EXISTS email_address (
+            author_id    INT,
+            email_id       VARCHAR(50),
+            is_active   BOOLEAN NOT NULL CHECK (is_active IN (0, 1))
+        )
+    ''')
 
     event_creation.init(bot)
     office_hours.init(bot)
