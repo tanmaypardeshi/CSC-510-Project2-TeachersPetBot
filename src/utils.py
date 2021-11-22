@@ -37,7 +37,7 @@ class EmailUtility:
 
          """
         # Recipient address are to be provided as list.
-        to_address = recipient if type(recipient) is list else [recipient]
+        to_address = recipient if isinstance(recipient, list) else [recipient]
 
         msg = MIMEMultipart()
         msg['Subject'] = subject if subject else self.subject
@@ -65,7 +65,7 @@ class EmailUtility:
             self.output_message = "successfully sent the mail to " + recipient
             print(self.output_message)
         except Exception as error:
-            with open("err.log", "a") as f:
+            with open("err.log", "a", encoding='utf8') as f:
                 f.write(f"Error while sending email : {str(error)}\n")
             raise error
 
