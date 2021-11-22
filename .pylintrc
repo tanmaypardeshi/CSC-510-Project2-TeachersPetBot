@@ -153,6 +153,7 @@ disable=print-statement,
         deprecated-sys-function,
         exception-escape,
         comprehension-escape,
+        W,
         C0114, # Missing module docstring (missing-module-docstring)
         C0115,
         C0116,
