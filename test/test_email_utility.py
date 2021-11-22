@@ -26,3 +26,8 @@ def test_send_email_utility_invalid():
         email_util = EmailUtility()
         email_util.send_email(recipient=recipient)
         assert email_util.output_message == "successfully sent the mail to " + recipient
+
+
+def test():
+    test_send_email_utility_valid()
+    test_send_email_utility_invalid()
