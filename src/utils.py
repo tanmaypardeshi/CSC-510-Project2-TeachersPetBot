@@ -15,8 +15,9 @@ class EmailUtility:
         # Accepting username and password from env file.
         self.username = os.getenv("USERNAME")
         self.password = os.getenv("PASSWORD")
-        self.from_address = 'no-reply@classmatebot.com'
-        self.subject = 'CLASSMATE BOT NOTIFICATION'
+        self.from_address = 'no-reply@teacherspetbot.com'
+        self.subject = 'TEACHERS PET BOT NOTIFICATION'
+        self.output_message = ''
 
     def send_email(self, recipient: str, attachment=None, subject: str = '', body: str = '',
                    filename: str = ''):
@@ -41,7 +42,7 @@ class EmailUtility:
         msg = MIMEMultipart()
         msg['Subject'] = subject if subject else self.subject
         msg['From'] = self.from_address
-        msg['To'] = recipient
+        msg['To'] = ''.join(to_address)
         body = body if body else "This mail was sent from TeachersPetBot notification service," \
                                  " Please unsubscribe through bot to stop notifications."
         msg.attach(MIMEText(body, 'plain'))
@@ -61,7 +62,8 @@ class EmailUtility:
             server.login(self.username, self.password)
             server.sendmail(list(self.from_address), to_address, msg.as_string())
             server.close()
-            print("successfully sent the mail to " + recipient)
+            self.output_message = "successfully sent the mail to " + recipient
+            print(self.output_message)
         except Exception as error:
             with open("err.log", "a") as f:
                 f.write(f"Error while sending email : {str(error)}\n")
