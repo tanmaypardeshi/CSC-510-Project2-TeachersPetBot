@@ -48,3 +48,28 @@ async def display_requests(ctx):
         else:
             await ctx.send('There are no regrade requests at the moment')
             break
+
+
+async def update_regrade_request(ctx, name: str, questions: str):
+    """
+        command to update an existing regrade request
+        Parameters:
+            ctx : context of function activation
+            name: name of the student
+            questions: question numbers to be regraded
+            output: updates an existing regrade request with any modifications
+    """
+
+    name = name.upper()
+
+    if not re.match(r"[Qq][0-9]+,[Qq][0-9]+", questions):
+        await ctx.send('Invalid Input. Enter valid question numbers \n '
+                       'Use !update-request <StudentName> <question numbers> \n \
+        ( Example: !regrade-request "Student 1" q1,q2,q3 )')
+    else:
+        db.mutation_query(
+            'UPDATE  regrade SET name = ? , questions = ?'
+            'WHERE guild_id = ? AND name = ? ',
+            [name, questions, ctx.guild.id, name]
+        )
+        await ctx.send(name + "'s regrade request updated successfully")
