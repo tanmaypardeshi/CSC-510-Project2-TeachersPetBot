@@ -441,7 +441,7 @@ async def display_regrade_request(ctx):
         await ctx.message.delete()
 
 
-@bot.command(name='update-request', help='regrade')
+@bot.command(name='update-request', help='update regrade request')
 async def update_regrade_request(ctx,name:str,questions:str):
 
     """
@@ -470,6 +470,35 @@ async def update_regrade_request_error(ctx, error):
         await ctx.send('Invalid command.\n Use !update-request <StudentName> <question numbers> \n \
         ( Example: !update-request "Student 1" q1,q2,q3 )')
 
+@bot.command(name='remove-request', help='remove regrade request')
+async def remove_regrade_request(ctx,name:str,questions:str):
+
+    """
+        Function: remove_regrade_request
+        Description: command to remove a regrade request
+        Inputs:
+            - ctx: context of function activation
+            - name: name of the student
+            - questions: question numbers to be regraded
+            - output: removes an existing regrade request from the database
+    """
+
+    if ctx.channel.name == 'regrade-requests':
+        await regrade.remove_regrade_request(ctx,name,questions)
+
+    else:
+        await ctx.author.send('Please submit requests in regrade channel.')
+        await ctx.message.delete()
+
+
+@remove_regrade_request.error
+async def remove_regrade_request_error(ctx, error):
+    """
+        this handles errors related to the remove regrade command
+    """
+    if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send('Invalid command.\n Use !remove-request <StudentName> <question numbers> \n \
+        ( Example: !remove-request "Student 1" q1,q2,q3 )')
 
 ###########################
 # Function: ping

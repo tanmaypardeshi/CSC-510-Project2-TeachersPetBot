@@ -73,3 +73,28 @@ async def update_regrade_request(ctx, name: str, questions: str):
             [name, questions, ctx.guild.id, name]
         )
         await ctx.send(name + "'s regrade request updated successfully")
+
+async def remove_regrade_request(ctx, name: str, questions: str):
+    """
+        command to remove a regrade request
+        Parameters:
+            ctx : context of function activation
+            name: name of the student
+            questions: question numbers to be regraded
+            output: removes an existing regrade request from the database
+    """
+
+    name = name.upper()
+
+    if not re.match(r"[Qq][0-9]+,[Qq][0-9]+", questions):
+        await ctx.send('Invalid Input. Enter valid question numbers \n '
+                       'Use !remove-request <StudentName> <question numbers> \n \
+        ( Example: !remove-request "Student 1" q1,q2,q3 )')
+
+    else:
+        db.mutation_query(
+            'DELETE FROM regrade '
+            'WHERE guild_id = ? AND name = ? ',
+            [ctx.guild.id, name]
+        )
+        await ctx.send(name + "'s regrade request removed successfully")
