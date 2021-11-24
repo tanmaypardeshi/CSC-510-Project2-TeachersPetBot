@@ -102,6 +102,14 @@ async def on_ready():
         )
     ''')
 
+    db.mutation_query('''
+        CREATE TABLE IF NOT EXISTS regrade (
+            guild_id    INT,
+            name        VARCHAR(50),
+            questions   VARCHAR(50)
+        )
+    ''')
+
 
     event_creation.init(bot)
     office_hours.init(bot)
