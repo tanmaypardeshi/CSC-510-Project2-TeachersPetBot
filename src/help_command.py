@@ -42,6 +42,14 @@ async def helper(ctx):
                     value='Shows bot stats')
     embed.add_field(name='test',
                     value='Simple sanity check')
+    embed.add_field(name='regrade-request',
+                    value='Add a regrade request')
+    embed.add_field(name='update-request',
+                    value='Update a regrade request')
+    embed.add_field(name='display-requests',
+                    value='display regrade requests')
+    embed.add_field(name='remove-request',
+                    value='remove a regrade request')
     await ctx.send(embed=embed)
     if ctx.author.id == Test_bot_application_ID:
         await ctx.send('help')
@@ -291,3 +299,108 @@ async def test(ctx):
     await ctx.send(embed=embed)
     if ctx.author.id == Test_bot_application_ID:
         await ctx.send('test')
+
+async def update_request(ctx):
+
+    """
+        Function: update_request
+        Description: Help for command update_request
+        Inputs:
+            - ctx: Context of the function activation
+        Outputs: Result of !help update_request
+
+    """
+
+    embed = Embed(title='update-request',
+                  description=' command to update a regrade request',
+                  colour=discord.Colour.orange())
+    embed.add_field(name='*Syntax*',
+                    value='!update-request <"Student name"> <q1,q2,q3>',
+                    inline=False)
+    embed.add_field(name='*Channel*',
+                    value='regrade-requests',
+                    inline=False)
+    embed.add_field(name='*Authorization*',
+                    value='Anyone',
+                    inline=False)
+    await ctx.send(embed=embed)
+    if ctx.author.id == Test_bot_application_ID:
+        await ctx.send('update-request')
+
+async def regrade_request(ctx):
+
+    """
+        Function: regrade_request
+        Description: Help for command regrade_request
+        Inputs:
+            - ctx: Context of the function activation
+        Outputs: Result of !help regrade_request
+
+    """
+    embed = Embed(title='regrade-request',
+                  description=' command to add regrade request',
+                  colour=discord.Colour.orange())
+    embed.add_field(name='*Syntax*',
+                    value='!regrade-request <"Student name"> <q1,q2,q3>',
+                    inline=False)
+    embed.add_field(name='*Channel*',
+                    value='regrade-requests',
+                    inline=False)
+    embed.add_field(name='*Authorization*',
+                    value='Anyone',
+                    inline=False)
+    await ctx.send(embed=embed)
+    if ctx.author.id == Test_bot_application_ID:
+        await ctx.send('regrade-request')
+
+async def remove_request(ctx):
+
+    """
+         Function: remove_request
+         Description: Help for command remove_request
+         Inputs:
+             - ctx: Context of the function activation
+         Outputs: Result of !help remove_request
+
+     """
+    embed = Embed(title='remove-request',
+                  description=' command to remove a regrade request',
+                  colour=discord.Colour.orange())
+    embed.add_field(name='*Syntax*',
+                    value='!remove-request <"Student name"> <q1,q2,q3>',
+                    inline=False)
+    embed.add_field(name='*Channel*',
+                    value='remove-requests',
+                    inline=False)
+    embed.add_field(name='*Authorization*',
+                    value='Anyone',
+                    inline=False)
+    await ctx.send(embed=embed)
+    if ctx.author.id == Test_bot_application_ID:
+        await ctx.send('remove-request')
+
+async def display_requests(ctx):
+    """
+         Function: display_requests
+         Description: Help for command display_requests
+         Inputs:
+             - ctx: Context of the function activation
+         Outputs: Result of !help display_requests
+
+     """
+
+    embed = Embed(title='display-requests',
+                  description=' command to remove a regrade request',
+                  colour=discord.Colour.orange())
+    embed.add_field(name='*Syntax*',
+                    value='!display-requests',
+                    inline=False)
+    embed.add_field(name='*Channel*',
+                    value='remove-requests',
+                    inline=False)
+    embed.add_field(name='*Authorization*',
+                    value='Anyone',
+                    inline=False)
+    await ctx.send(embed=embed)
+    if ctx.author.id == Test_bot_application_ID:
+        await ctx.send('display-requests')

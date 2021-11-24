@@ -715,6 +715,27 @@ async def custom_stats(ctx):
 async def custom_test(ctx):
     await help_command.test(ctx)
 
+
+@custom_help.command('regrade-request')
+async def custom_regrade_request(ctx):
+    await help_command.regrade_request(ctx)
+
+
+@custom_help.command('update-request')
+async def custom_update_request(ctx):
+    await help_command.update_request(ctx)
+
+
+@custom_help.command('display-requests')
+async def custom_display_requests(ctx):
+    await help_command.display_requests(ctx)
+
+
+@custom_help.command('remove-request')
+async def custom_remove_request(ctx):
+    await help_command.remove_request(ctx)
+
+
 ###########################
 # Function: begin_tests
 # Description: Start the automated testing
