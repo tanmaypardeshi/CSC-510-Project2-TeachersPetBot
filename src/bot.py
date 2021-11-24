@@ -164,6 +164,11 @@ async def on_guild_join(guild):
             await channel.send("course-calendar channel has been added!")
         else:
             await channel.send("course-calendar channel is already present!")
+        if get(guild.text_channels, name='regrade-requests') is None:
+            await guild.create_text_channel('regrade-requests')
+            await channel.send("regrade-requests channel has been added!")
+        else:
+            await channel.send("regrade-requests channel is already present!")
 
 ###########################
 # Function: on_member_join
