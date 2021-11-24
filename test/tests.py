@@ -11,6 +11,7 @@ import test_calendar
 import test_profanity
 import test_attendance
 import test_help
+import test_regrade
 
 if platform.system() == 'Windows':
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
@@ -39,6 +40,8 @@ async def run_tests():
         await test_attendance.test(testing_bot, TEST_GUILD_ID)
         print('testing help\n----------')
         await test_help.test(testing_bot, TEST_GUILD_ID)
+        print('testing regrade\n----------')
+        await test_regrade.test(testing_bot, TEST_GUILD_ID)
     except AssertionError as ex:
         print('exception: ', type(ex).__name__ + ':', ex)
         print('--')
