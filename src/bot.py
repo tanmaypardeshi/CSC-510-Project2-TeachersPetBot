@@ -388,6 +388,36 @@ async def answer_question(ctx, q_num, answer):
     else:
         await ctx.author.send('Please send answers to the #q-and-a channel.')
         await ctx.message.delete()
+
+
+@bot.command(name='regrade-request', help='add regrade-request')
+async def submit_regrade_request(ctx,name:str,questions:str):
+
+    """
+        Function: submit_regrade_request
+        Description: command to add a request request
+        Inputs:
+            - ctx: context of the command
+            - name: name of the student
+            - questions: question numbers to be regraded
+        Outputs:
+            - adds the regrade request to the database
+    """
+
+    if ctx.channel.name == 'regrade-requests':
+        await regrade.add_request(ctx,name,questions)
+    else:
+        await ctx.author.send('Please submit requests in regrade channel.')
+        await ctx.message.delete()
+
+@submit_regrade_request.error
+async def submit_regrade_request_error(ctx, error):
+    """
+        this handles errors related to the submit_regrade command
+    """
+    if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send('Invalid command.\n Use !regrade-request <StudentName> <question numbers> \n \
+        ( Example: !regrade-request "Student 1" q1,q2,q3 )')
 ###########################
 # Function: ping
 # Description: Shows latency for debugging
