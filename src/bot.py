@@ -415,23 +415,23 @@ async def ping(ctx):
 
 
 @bot.command(name='chart', help='Creates a custom chart')
-async def custom_chart(ctx, title: str, chart: str, data_count: int, *args):
+@commands.has_role('Instructor')
+async def custom_chart(ctx, title: str, chart: str, *args):
     """
         Creates a custom chart with given specs
         Parameters:
             ctx: used to access the values passed through the current context.
             title: the name of the chart
             chart: the type of the chart
-            data_count: number of data points
             *args: a list of data labels and data numbers for each label
         Returns:
             returns a graph in the chat box
     """
 
-    if len(args) / 2 != data_count:
-        print("Make sure data count matches the number of ")
+    if len(args) % 2 != 0:
+        print("Make sure every data-label singularly matches a datapoint (A B C 1 2 3")
         return
-
+    data_count = len(args) / 2
     with open('data/charts/chartstorage.json', 'r', encoding='utf-8') as file:
         storage = json.load(file)
 
