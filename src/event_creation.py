@@ -96,6 +96,7 @@ async def create_event(ctx, testing_mode):
                 'as 23:59\nEnter in format `MM-DD-YYYY %H:%M`')
             msg = await BOT.wait_for('message', timeout=60.0, check=check)
             date_str = msg.content.strip()
+
             try:
                 due_date = datetime.datetime.strptime(date_str, '%m-%d-%Y %H:%M')
             except ValueError:
