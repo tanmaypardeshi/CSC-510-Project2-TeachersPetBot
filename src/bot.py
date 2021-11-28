@@ -29,6 +29,7 @@ import qna
 import attendance
 import help_command
 import regrade
+import utils
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '1'
 

@@ -10,6 +10,8 @@ async def test_create_email_valid(testing_bot, commands_channel):
     async def wait(content):
         await wait_for_msg(testing_bot, commands_channel, content)
 
+    await commands_channel.send('!remove_email')
+
     await commands_channel.send('!create_email no-reply-test@example.com')
     await wait('Email has been configured successfully!')
 
@@ -63,6 +65,9 @@ async def test_create_email_invalid(testing_bot, commands_channel):
     await commands_channel.send('!create_email no-reply-test@example.com')
     await wait('There is already an email address configured for this user. '
                'Please update it using update_email command')
+
+    await commands_channel.send('!remove_email')
+    await wait('Email address has been deleted successfully')
 
 
 async def test_remove_email_invalid(testing_bot, commands_channel):
