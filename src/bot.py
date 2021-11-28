@@ -202,11 +202,10 @@ async def on_message(message):
     ctx = await bot.get_context(message)
     print(message.content)
     count = 0
-    with open("spam.txt", "a") as f:
+    with open("spam.txt", "a",encoding='utf-8') as f:
         f.writelines(f"{str(message.author.id)}\n")
 
-
-    with open("spam.txt","r+") as f:
+    with open("spam.txt","r+",encoding='utf-8') as f:
         for line in f:
             if line.strip("\n") == str(message.author.id):
                 count = count+1
