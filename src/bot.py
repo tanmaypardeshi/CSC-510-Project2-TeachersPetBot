@@ -431,7 +431,7 @@ async def custom_chart(ctx, title: str, chart: str, *args):
     if len(args) % 2 != 0:
         print("Make sure every data-label singularly matches a datapoint (A B C 1 2 3")
         return
-    data_count = len(args) / 2
+    data_count = int(len(args) / 2)
     with open('data/charts/chartstorage.json', 'r', encoding='utf-8') as file:
         storage = json.load(file)
 
@@ -451,11 +451,11 @@ async def custom_chart(ctx, title: str, chart: str, *args):
     quick_chart.height = 300
     quick_chart.device_pixel_ratio = 2.0
     quick_chart.config = {
-        "type": "{}".format(chart),
+        "type": f"{chart}",
         "data": {
             "labels": labels_list,
             "datasets": [{
-                "label": "{}".format(title),
+                "label": f"{title}",
                 "data": dataset_list
             }]
         }
@@ -468,6 +468,23 @@ async def custom_chart(ctx, title: str, chart: str, *args):
     with open('data/charts/chartstorage.json', 'w', encoding='utf-8') as file:
         json.dump(storage, file, indent=4)
     await ctx.send(f"{shortened_link}")
+
+@bot.command(name='check_chart', help='View a custom chart by giving title name')
+async def checkchart(ctx, name: str):
+    """
+        Lets students check the a custom chart
+        Parameters:
+            ctx: used to access the values passed through the current context.
+            name: the name of the chart they are looking for
+        Returns:
+            returns the custom chart in the chat box if it exists
+    """
+    with open('data/charts/chartstorage.json', 'r', encoding='utf-8') as file:
+        storage = json.load(file)
+        if not storage or storage[name] == '':
+            await ctx.send("No chart with that name!")
+        else:
+            await ctx.send(f"Your requested chart: {storage[name]['URL']}")
 
 
 async def update_chart(storage, name, link):
