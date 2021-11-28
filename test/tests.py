@@ -12,6 +12,7 @@ import test_profanity
 import test_email_utility
 import test_attendance
 import test_help
+import test_email_address
 
 if platform.system() == 'Windows':
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
@@ -42,7 +43,8 @@ async def run_tests():
         await test_help.test(testing_bot, TEST_GUILD_ID)
         print('testing email utility\n-----------')
         test_email_utility.test()
-
+        print('testing email address configuration\n----------')
+        await test_email_address.test(testing_bot, TEST_GUILD_ID)
     except AssertionError as ex:
         print('exception: ', type(ex).__name__ + ':', ex)
         print('--')

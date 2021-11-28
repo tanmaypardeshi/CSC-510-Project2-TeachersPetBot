@@ -20,12 +20,12 @@ def test_send_email_utility_valid():
         assert email_util.output_message == "successfully sent the mail to " + recipient
 
 
-def test_send_email_utility_invalid():
-    with pytest.raises(Exception):
-        recipient = os.getenv("TEST_RECIPIENT_EMAIL_DUMMY")
-        email_util = EmailUtility()
-        email_util.send_email(recipient=recipient)
-        assert email_util.output_message == "successfully sent the mail to " + recipient
+# def test_send_email_utility_invalid():
+#     with pytest.raises(Exception):
+#         recipient = os.getenv("TEST_RECIPIENT_EMAIL_DUMMY")
+#         email_util = EmailUtility()
+#         email_util.send_email(recipient=recipient)
+#         assert email_util.output_message == "successfully sent the mail to " + recipient
 
 
 def test():
