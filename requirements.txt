@@ -9,3 +9,5 @@ pytest==6.2.5
 pylint==2.11.1
 psutil==5.8.0
 apscheduler==3.8.1
+pyshorteners~=1.0.1
+quickchart.io==1.0.0

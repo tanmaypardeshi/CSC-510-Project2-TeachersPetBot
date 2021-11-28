@@ -7,7 +7,6 @@ from datetime import datetime, timedelta
 from psutil import Process, virtual_memory
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
-
 import discord
 from discord import Embed
 from discord.ext import commands
@@ -17,7 +16,9 @@ from discord_components import DiscordComponents
 
 from dotenv import load_dotenv
 
-
+import json
+from quickchart import QuickChart
+import pyshorteners
 
 import db
 import profanity
@@ -31,7 +32,7 @@ import help_command
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '1'
 
 numbers = ("1️⃣", "2⃣", "3⃣", "4⃣", "5⃣",
-		   "6⃣", "7⃣", "8⃣", "9⃣", "🔟")
+           "6⃣", "7⃣", "8⃣", "9⃣", "🔟")
 
 if platform.system() == 'Windows':
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
@@ -39,15 +40,16 @@ if platform.system() == 'Windows':
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 print(TOKEN)
-BOT_VERSION=os.getenv('VERSION')
+BOT_VERSION = os.getenv('VERSION')
 print(BOT_VERSION)
 Test_bot_application_ID = int(os.getenv('TEST_BOT_APP_ID'))
 
 TESTING_MODE = None
 
-intents=discord.Intents.all()
+intents = discord.Intents.all()
 bot = commands.Bot(command_prefix='!', description='This is TeachersPetBot!', intents=intents)
 bot.remove_command("help")
+
 
 ###########################
 # Function: on_ready
@@ -101,7 +103,6 @@ async def on_ready():
         )
     ''')
 
-
     event_creation.init(bot)
     office_hours.init(bot)
     await cal.init(bot)
@@ -109,6 +110,7 @@ async def on_ready():
     print(bot.user.name)
     print(bot.user.id)
     print('------')
+
 
 ###########################
 # Function: on_guild_join
@@ -125,11 +127,11 @@ async def on_guild_join(guild):
         channel = get(guild.text_channels, name='general')
     if channel.permissions_for(guild.me).send_messages:
         await channel.send('Hi there, I\'m TeachersPetBot, and I\'m here' +
-            'to help you manage your class discord! Let\'s do some quick setup.')
+                           'to help you manage your class discord! Let\'s do some quick setup.')
         await guild.create_role(name="Instructor", colour=discord.Colour(0x0062ff),
-                                    permissions=discord.Permissions.all())
+                                permissions=discord.Permissions.all())
         leadrole = get(guild.roles, name='Instructor')
-         #Assign Instructor role to admin is there is no Instructor
+        # Assign Instructor role to admin is there is no Instructor
         if len(leadrole.members) == 0:
             leader = guild.owner
             leadrole = get(guild.roles, name='Instructor')
@@ -144,11 +146,12 @@ async def on_guild_join(guild):
             else:
                 await channel.send(instructors + " are the Instructors!")
         await channel.send("To add Instructors, type \"!setInstructor @<member>\"")
-        #await channel.send("To remove instructors, type \"!removeInstructor @<member>\"")
-        #Create Text channels if they don't exist
+        # await channel.send("To remove instructors, type \"!removeInstructor @<member>\"")
+        # Create Text channels if they don't exist
         overwrites = {guild.default_role: discord.PermissionOverwrite(read_messages=False,
-            send_messages=False), leadrole: discord.PermissionOverwrite(read_messages=True,
-            send_messages=True)}
+                                                                      send_messages=False),
+                      leadrole: discord.PermissionOverwrite(read_messages=True,
+                                                            send_messages=True)}
         if get(guild.text_channels, name='instructor-commands') is None:
             await guild.create_text_channel('instructor-commands', overwrites=overwrites)
             await channel.send("instructor-commands channel has been added!")
@@ -165,6 +168,7 @@ async def on_guild_join(guild):
         else:
             await channel.send("course-calendar channel is already present!")
 
+
 ###########################
 # Function: on_member_join
 # Description: run when member joins a guild in which bot is alreay present
@@ -177,6 +181,7 @@ async def on_member_join(member):
     await channel.send(f"Hello {member}!")
     await member.send(f'You have joined {member.guild.name}!')
 
+
 ###########################
 # Function: on_member_remove
 # Description: run when member leaves a guild in which bot is alreay present
@@ -187,6 +192,7 @@ async def on_member_join(member):
 async def on_member_remove(member):
     channel = get(member.guild.text_channels, name='general')
     await channel.send(f"{member.name} has left")
+
 
 ###########################
 # Function: on_message
@@ -207,7 +213,7 @@ async def on_message(message):
 
     if profanity.check_profanity(message.content):
         await message.channel.send(message.author.name + ' says: ' +
-            profanity.censor_profanity(message.content))
+                                   profanity.censor_profanity(message.content))
         await message.delete()
 
     await bot.process_commands(message)
@@ -215,6 +221,7 @@ async def on_message(message):
     if message.content == 'hey bot':
         response = 'hey yourself ;)'
         await message.channel.send(response)
+
 
 ###########################
 # Function: on_message_edit
@@ -228,8 +235,9 @@ async def on_message_edit(before, after):
     ''' run on message edited '''
     if profanity.check_profanity(after.content):
         await after.channel.send(after.author.name + ' says: ' +
-            profanity.censor_profanity(after.content))
+                                 profanity.censor_profanity(after.content))
         await after.delete()
+
 
 ###########################
 # Function: test
@@ -243,6 +251,7 @@ async def on_message_edit(before, after):
 async def test(ctx):
     ''' simple sanity check '''
     await ctx.send('test successful')
+
 
 ###########################
 # Function: get_instructor
@@ -263,6 +272,7 @@ async def get_instructor(ctx):
     else:
         await ctx.send(instructors + " are the Instructors!")
 
+
 ###########################
 # Function: set_instructor
 # Description: Command used to give Instructor role out by instructors
@@ -274,7 +284,7 @@ async def get_instructor(ctx):
 ###########################
 @bot.command(name='setInstructor', help='Set member to Instructor.')
 @commands.has_role('Instructor')
-async def set_instructor(ctx, member:discord.Member):
+async def set_instructor(ctx, member: discord.Member):
     ''' set instructor role command '''
     if ctx.channel.name == 'instructor-commands':
         irole = get(ctx.guild.roles, name='Instructor')
@@ -285,9 +295,10 @@ async def set_instructor(ctx, member:discord.Member):
             await ctx.channel.send(member.name + " has been given Instructor role!")
             channel = get(ctx.guild.text_channels, name='instructor-commands')
             await channel.set_permissions(member, read_messages=True,
-            send_messages=True,read_message_history=False)
+                                          send_messages=True, read_message_history=False)
     else:
         await ctx.channel.send('Not a valid command for this channel')
+
 
 ###########################
 # Function: remove_instructor
@@ -300,7 +311,7 @@ async def set_instructor(ctx, member:discord.Member):
 ###########################
 @bot.command(name='removeInstructor', help='Remove member from Instructor.')
 @commands.has_role('Instructor')
-async def remove_instructor(ctx, member:discord.Member):
+async def remove_instructor(ctx, member: discord.Member):
     ''' remove instructor role command '''
     if ctx.channel.name == 'instructor-commands':
         irole = get(ctx.guild.roles, name='Instructor')
@@ -313,6 +324,7 @@ async def remove_instructor(ctx, member:discord.Member):
             await channel.set_permissions(member, overwrite=None)
     else:
         await ctx.channel.send('Not a valid command for this channel')
+
 
 ###########################
 # Function: create_event
@@ -330,6 +342,7 @@ async def create_event(ctx):
     ''' run event creation interface '''
     await event_creation.create_event(ctx, TESTING_MODE)
 
+
 ###########################
 # Function: oh
 # Description: command related office hour and send to office_hours module
@@ -344,6 +357,7 @@ async def create_event(ctx):
 async def office_hour_command(ctx, command, *args):
     ''' run office hour commands with various args '''
     await office_hours.office_hour_command(ctx, command, *args)
+
 
 ###########################
 # Function: ask
@@ -364,6 +378,7 @@ async def ask_question(ctx, question):
         await ctx.author.send('Please send questions to the #q-and-a channel.')
         await ctx.message.delete()
 
+
 ###########################
 # Function: answer
 # Description: command to answer question and sends to qna module
@@ -383,37 +398,108 @@ async def answer_question(ctx, q_num, answer):
     else:
         await ctx.author.send('Please send answers to the #q-and-a channel.')
         await ctx.message.delete()
+
+
 ###########################
 # Function: ping
 # Description: Shows latency for debugging
 ###########################
 
 @bot.command(name='ping', help='Returns Latency')
-
 async def ping(ctx):
-    start=time()
-    message=await ctx.send(f"Pong! : {bot.latency*1000:,.0f} ms")
-    end=time()
-    await message.edit(content="Pong! : "+str(int(bot.latency*1000))+" ms."+
-    " Response time : "+str(int((end-start)*1000))+" ms.")
+    start = time()
+    message = await ctx.send(f"Pong! : {bot.latency * 1000:,.0f} ms")
+    end = time()
+    await message.edit(content="Pong! : " + str(int(bot.latency * 1000)) + " ms." +
+                               " Response time : " + str(int((end - start) * 1000)) + " ms.")
+
+
+@bot.command(name='chart', help='Creates a custom chart')
+async def custom_chart(ctx, title: str, chart: str, data_count: int, *args):
+    """
+        Creates a custom chart with given specs
+        Parameters:
+            ctx: used to access the values passed through the current context.
+            title: the name of the chart
+            chart: the type of the chart
+            data_count: number of data points
+            *args: a list of data labels and data numbers for each label
+        Returns:
+            returns a graph in the chat box
+    """
+
+    if len(args) / 2 != data_count:
+        print("Make sure data count matches the number of ")
+        return
+
+    with open('data/charts/chartstorage.json', 'r', encoding='utf-8') as file:
+        storage = json.load(file)
+
+    labels_list = []
+    dataset_list = []
+
+    for data_label in range(data_count):
+        labels_list.append(args[data_label])
+        print(args[data_label])
+
+    for data_point in range(data_count, len(args)):
+        dataset_list.append(args[data_point])
+        print(args[data_point])
+
+    quick_chart = QuickChart()
+    quick_chart.width = 500
+    quick_chart.height = 300
+    quick_chart.device_pixel_ratio = 2.0
+    quick_chart.config = {
+        "type": "{}".format(chart),
+        "data": {
+            "labels": labels_list,
+            "datasets": [{
+                "label": "{}".format(title),
+                "data": dataset_list
+            }]
+        }
+    }
+    link = quick_chart.get_url()
+    shortener = pyshorteners.Shortener()
+    shortened_link = shortener.tinyurl.short(link)
+
+    await update_chart(storage, title, shortened_link)
+    with open('data/charts/chartstorage.json', 'w', encoding='utf-8') as file:
+        json.dump(storage, file, indent=4)
+    await ctx.send(f"{shortened_link}")
+
+
+async def update_chart(storage, name, link):
+    """
+        Updates the URL of the chart
+        Parameters:
+            storage: the json file
+            name: the name of the chart
+            link: the link to the chart
+    """
+    if not str(name) in storage:
+        storage[str(name)] = {}
+    storage[str(name)]['URL'] = link
+
+
 ###########################
 # Function: stats
 # Description: Shows stats like
 ###########################
 
 @bot.command(name='stats', help='shows bot stats')
-
 async def show_stats(ctx):
     embed = Embed(title="Bot stats",
-                    colour=ctx.author.colour,
-                    thumbnail=bot.user.avatar_url,
-                    timestamp=datetime.utcnow())
+                  colour=ctx.author.colour,
+                  thumbnail=bot.user.avatar_url,
+                  timestamp=datetime.utcnow())
 
     proc = Process()
     with proc.oneshot():
-        uptime = timedelta(seconds=time()-proc.create_time())
+        uptime = timedelta(seconds=time() - proc.create_time())
         cpu_time = timedelta(seconds=(cpu := proc.cpu_times()).system + cpu.user)
-        mem_total = virtual_memory().total / (1024**2)
+        mem_total = virtual_memory().total / (1024 ** 2)
         mem_of_total = proc.memory_percent()
         mem_usage = mem_total * (mem_of_total / 100)
 
@@ -431,6 +517,8 @@ async def show_stats(ctx):
         embed.add_field(name=name, value=value, inline=inline)
 
     await ctx.send(embed=embed)
+
+
 ###########################
 # Function: poll
 # Description: Poll functionality for  administrators
@@ -442,26 +530,27 @@ async def show_stats(ctx):
 # Outputs:
 #      - Poll in discord channel. results after the specified time.
 ###########################
-polls=[]
+polls = []
 scheduler = AsyncIOScheduler()
+
+
 @bot.command(name='poll', help='Set Poll for a specified time and topic.')
 @commands.has_role('Instructor')
-
 async def create_poll(ctx, hours: int, question: str, *options):
-
     if len(options) > 10:
         await ctx.send("You can only supply a maximum of 10 options.")
 
     else:
         embed = Embed(title="Poll ‼",
-                        description=question,
-                        colour=ctx.author.colour,
-                        timestamp=datetime.utcnow())
+                      description=question,
+                      colour=ctx.author.colour,
+                      timestamp=datetime.utcnow())
 
         fields = [("Options", "\n".join([f"{numbers[idx]} {option}" for idx,
-        option in enumerate(options)]), False),
-        ("Instructions", "React to cast a vote!", False),
-        ("Duration","The Voting will end in "+str(hours)+" Minutes",False)]
+                                                                        option in
+                                         enumerate(options)]), False),
+                  ("Instructions", "React to cast a vote!", False),
+                  ("Duration", "The Voting will end in " + str(hours) + " Minutes", False)]
 
         for name, value, inline in fields:
             embed.add_field(name=name, value=value, inline=inline)
@@ -473,18 +562,21 @@ async def create_poll(ctx, hours: int, question: str, *options):
 
         polls.append((message.channel.id, message.id))
         scheduler.add_job(complete_poll, "interval",
-        minutes=hours,args=(message.channel.id, message.id))
+                          minutes=hours, args=(message.channel.id, message.id))
         scheduler.start()
+
 
 async def complete_poll(channel_id, message_id):
     message = await bot.get_channel(channel_id).fetch_message(message_id)
 
     most_voted = max(message.reactions, key=lambda r: r.count)
 
-    await message.channel.send("The results are in and option "+most_voted.emoji+
-    " was the most popular with "+str(most_voted.count-1)+" votes!")
+    await message.channel.send("The results are in and option " + most_voted.emoji +
+                               " was the most popular with " + str(
+        most_voted.count - 1) + " votes!")
     polls.remove((message.channel.id, message.id))
     scheduler.shutdown()
+
 
 @bot.event
 async def on_raw_reaction_add(payload):
@@ -493,9 +585,10 @@ async def on_raw_reaction_add(payload):
 
         for reaction in message.reactions:
             if (not payload.member.bot
-                and payload.member in await reaction.users().flatten()
-                and reaction.emoji != payload.emoji.name):
+                    and payload.member in await reaction.users().flatten()
+                    and reaction.emoji != payload.emoji.name):
                 await message.remove_reaction(reaction.emoji, payload.member)
+
 
 ###########################
 # Function: custom-profanity
@@ -503,11 +596,12 @@ async def on_raw_reaction_add(payload):
 # Inputs:
 #      - ctx: context of the command
 ###########################
-@bot.command(name = 'custom', help = 'Add word to profanity filter')
+@bot.command(name='custom', help='Add word to profanity filter')
 async def custom_profanity(ctx, pword):
     ''' adding custom word to profanity list '''
     profanity.custom_words.append(pword)
     await ctx.message.delete()
+
 
 ###########################
 # Function: attendance
@@ -519,6 +613,7 @@ async def custom_profanity(ctx, pword):
 @commands.has_role('Instructor')
 async def attend(ctx):
     await attendance.compute(bot, ctx)
+
 
 ###########################
 # Function: help
@@ -590,6 +685,7 @@ async def custom_stats(ctx):
 async def custom_test(ctx):
     await help_command.test(ctx)
 
+
 ###########################
 # Function: begin_tests
 # Description: Start the automated testing
@@ -607,11 +703,12 @@ async def begin_tests(ctx):
     TESTING_MODE = True
 
     test_oh_chan = next((ch for ch in ctx.guild.text_channels
-        if 'office-hour-test' in ch.name), None)
+                         if 'office-hour-test' in ch.name), None)
     if test_oh_chan:
         await office_hours.close_oh(ctx.guild, 'test')
 
     await office_hours.open_oh(ctx.guild, 'test')
+
 
 ###########################
 # Function: end_tests
@@ -630,8 +727,12 @@ async def end_tests(ctx):
     # TODO maybe use ctx.bot.logout()
     await ctx.bot.close()
     # quit(0)
+
+
 if __name__ == '__main__':
     bot.run(TOKEN)
+
+
 ###########################
 # Function: test_dummy
 # Description: Run the bot
