@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-def test_send_email_utility_valid():
+async def test_send_email_utility_valid():
     recipient = os.getenv("TEST_RECIPIENT_EMAIL")
     email_util = EmailUtility()
     email_util.send_email(recipient=recipient)
@@ -28,6 +28,6 @@ def test_send_email_utility_valid():
 #         assert email_util.output_message == "successfully sent the mail to " + recipient
 
 
-def test():
-    test_send_email_utility_valid()
-    test_send_email_utility_invalid()
+async def test():
+    await test_send_email_utility_valid()
+    # test_send_email_utility_invalid()
