@@ -2,8 +2,6 @@
 This file contains functions and logic related to email address configuration.
 """
 import db
-import datetime
-from datetime import timedelta
 
 
 async def create_email(ctx, email_address):
