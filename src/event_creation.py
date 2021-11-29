@@ -274,10 +274,8 @@ async def create_event(ctx, testing_mode):
         await ctx.author.send('`!create` can only be used in the `instructor-commands` channel')
         await ctx.message.delete()
 
-# on=datetime.time(21, 0, 0)
 
-
-@tasks.loop(seconds=5)
+@tasks.loop(hours=24)
 async def check_reminders_due_today():
     current_time = datetime.datetime.now()
     current_day = datetime.datetime(day=current_time.day, month=current_time.month,
