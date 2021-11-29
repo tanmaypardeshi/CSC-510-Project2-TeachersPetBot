@@ -4,6 +4,7 @@ import os
 from time import time
 from platform import python_version
 from datetime import datetime, timedelta
+import json
 from psutil import Process, virtual_memory
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
@@ -17,8 +18,6 @@ from discord_components import DiscordComponents
 
 from dotenv import load_dotenv
 
-
-import json
 from quickchart import QuickChart
 import pyshorteners
 import db
