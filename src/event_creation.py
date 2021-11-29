@@ -304,7 +304,9 @@ async def check_reminders_due_today():
 # Outputs: None
 ###########################
 def init(b):
-    ''' initialize event creation '''
+    '''
+        initialize event creation
+    '''
     global BOT
     BOT = b
     check_reminders_due_today.start()
