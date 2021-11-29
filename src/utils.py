@@ -19,7 +19,7 @@ class EmailUtility:
         self.subject = 'TEACHERS PET BOT NOTIFICATION'
         self.output_message = ''
 
-    def send_email(self, recipient: str, attachment=None, subject: str = '', body: str = '',
+    def send_email(self, recipient: list, attachment=None, subject: str = '', body: str = '',
                    filename: str = ''):
         """
              Sends email to the specified recipients.
@@ -62,7 +62,7 @@ class EmailUtility:
             server.login(self.username, self.password)
             server.sendmail(list(self.from_address), to_address, msg.as_string())
             server.close()
-            self.output_message = "successfully sent the mail to " + recipient
+            self.output_message = "successfully sent the mail to " + ''.join(recipient)
             print(self.output_message)
         except Exception as error:
             with open("err.log", "a", encoding='utf8') as f:
