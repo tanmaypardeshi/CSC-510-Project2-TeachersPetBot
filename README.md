@@ -8,9 +8,9 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5640178.svg)](https://doi.org/10.5281/zenodo.5640178)
 ![Python](https://img.shields.io/badge/python-v3.7+-brightgreen.svg)
 ![GitHub](https://img.shields.io/github/license/Ashwinshankar98/TeachersPetBot)
-![GitHub issues](https://img.shields.io/github/issues/Ashwinshankar98/TeachersPetBot)
-![GitHub closed issues](https://img.shields.io/github/issues-closed/Ashwinshankar98/TeachersPetBot)
-![Lines of code](https://img.shields.io/tokei/lines/github/Ashwinshankar98/TeachersPetBot)
+![GitHub issues](https://img.shields.io/github/issues/chandur626/TeachersPetBot)
+![GitHub closed issues](https://img.shields.io/github/issues-closed/chandur626/TeachersPetBot)
+![Lines of code](https://img.shields.io/tokei/lines/github/chandur626/TeachersPetBot)
 [![codecov](https://codecov.io/gh/Ashwinshankar98/TeachersPetBot/branch/main/graph/badge.svg?token=SK9PBZX2NM)](https://codecov.io/gh/Ashwinshankar98/TeachersPetBot)
 [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/Ashwinshankar98/TeachersPetBot/Test%20TeachersPetBot)](https://github.com/Ashwinshankar98/TeachersPetBot/actions)
 ![GitHub deployments](https://img.shields.io/github/deployments/Ashwinshankar98/TeachersPetBot/discord-bot-phase2)<br/>
