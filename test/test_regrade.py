@@ -33,13 +33,15 @@ async def  test_regrade_request(testing_bot):
     """
 
     print('testing regrade request')
-    regrade_channel = discord.utils.get(testing_bot.get_all_channels(), name='regrade_channel')
+    regrade_channel = discord.utils.get(testing_bot.get_all_channels(), name='regrade-requests')
     await regrade_channel.send('!regrade-request "Student 1" q1,q2,q3')
     sleep(5.0)
     messages = await regrade_channel.history(limit=1).flatten()
 
     for m in messages:
-        assert "Student 1's regrade request successfully submitted" in m.content
+        new_request = "STUDENT 1's regrade request successfully submitted" in m.content
+        duplicate_request = "Duplicate regrade request.Use !regrade-update command to make updates to request"
+        assert (new_request or duplicate_request)
 
 
 async def test_update_request(testing_bot):
@@ -52,13 +54,13 @@ async def test_update_request(testing_bot):
         Outputs: None
     """
     print('testing update request')
-    regrade_channel = discord.utils.get(testing_bot.get_all_channels(), name='regrade_channel')
+    regrade_channel = discord.utils.get(testing_bot.get_all_channels(), name='regrade-requests')
     await regrade_channel.send('!update-request "Student 1" q4,q5,q6')
     sleep(5.0)
     messages = await regrade_channel.history(limit=1).flatten()
 
     for m in messages:
-        assert "Student 1's regrade request updated successfully" in m.content
+        assert "STUDENT 1's regrade request updated successfully" in m.content
 
 
 async def test_display_requests(testing_bot):
@@ -71,13 +73,13 @@ async def test_display_requests(testing_bot):
         Outputs: None
     """
     print('testing display requests')
-    regrade_channel = discord.utils.get(testing_bot.get_all_channels(), name='regrade_channel')
+    regrade_channel = discord.utils.get(testing_bot.get_all_channels(), name='regrade-requests')
     await regrade_channel.send('!display-requests')
     sleep(5.0)
     messages = await regrade_channel.history(limit=1).flatten()
 
     for m in messages:
-        assert 'Student 1 q4,q5,q6' in m.content
+        assert 'STUDENT 1 q4,q5,q6' in m.content
 
 
 async def test_remove_request(testing_bot):
@@ -90,10 +92,10 @@ async def test_remove_request(testing_bot):
         Outputs: None
     """
     print('testing remove request')
-    regrade_channel = discord.utils.get(testing_bot.get_all_channels(), name='regrade_channel')
+    regrade_channel = discord.utils.get(testing_bot.get_all_channels(), name='regrade-requests')
     await regrade_channel.send('!remove-request "Student 1" q4,q5,q6')
     sleep(5.0)
     messages = await regrade_channel.history(limit=1).flatten()
 
     for m in messages:
-        assert "Student 1's regrade request removed successfully" in m.content
+        assert "STUDENT 1's regrade request removed successfully" in m.content
