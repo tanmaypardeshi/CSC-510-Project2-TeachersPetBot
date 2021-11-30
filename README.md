@@ -95,10 +95,14 @@ To run tests on the Teacher's Pet, follow instructions in the [Installation and 
 <h3> Bot commands from iteration III </h3>
 
 
-:open_file_folder: [!regrade-request command](https://github.com/chandur626/ClassMateBot/blob/main/docs/Regrade/Regrade.md)
-:open_file_folder: [!update-request command](https://github.com/chandur626/ClassMateBot/blob/main/docs/Regrade/Regrade.md)
-:open_file_folder: [!remove-request command](https://github.com/chandur626/ClassMateBot/blob/main/docs/Regrade/Regrade.md)
-:open_file_folder: [!display-requests command](https://github.com/chandur626/ClassMateBot/blob/main/docs/Regrade/Regrade.md)
+:open_file_folder: [!regrade-request command](https://github.com/chandur626/TeachersPetBot/blob/main/docs/Regrade/Regrade.md)
+
+:open_file_folder: [!update-request command](https://github.com/chandur626/TeachersPetBot/blob/main/docs/Regrade/Regrade.md)
+
+:open_file_folder: [!remove-request command](https://github.com/chandur626/TeachersPetBot/blob/main/docs/Regrade/Regrade.md)
+
+:open_file_folder: [!display-requests command](https://github.com/chandur626/TeachersPetBot/blob/main/docs/Regrade/Regrade.md)
+
 :open_file_folder: [!chart command](https://github.com/chandur626/ClassMateBot/blob/main/docs/charts/grades.md)
 
 <br>
