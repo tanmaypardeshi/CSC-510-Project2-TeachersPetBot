@@ -234,7 +234,7 @@ async def on_message(message):
                 count = count+1
 
         if count>5:
-            await ctx.send("spam;too many messages")
+            #await ctx.send("spam;too many messages")
             f.truncate(0)
 
     # allow messages from test bot
