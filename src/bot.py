@@ -210,7 +210,6 @@ async def on_message(message):
             if line.strip("\n") == str(message.author.id):
                 count = count+1
 
-        print(count)
         if count>5:
             await ctx.send("spam;too many messages")
             f.truncate(0)
