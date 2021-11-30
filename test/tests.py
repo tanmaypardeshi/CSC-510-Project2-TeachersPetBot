@@ -12,6 +12,7 @@ import test_profanity
 import test_email_utility
 import test_attendance
 import test_help
+import test_regrade
 import test_email_address
 
 if platform.system() == 'Windows':
@@ -41,6 +42,8 @@ async def run_tests():
         await test_attendance.test(testing_bot, TEST_GUILD_ID)
         print('testing help\n----------')
         await test_help.test(testing_bot, TEST_GUILD_ID)
+        print('testing regrade\n----------')
+        await test_regrade.test(testing_bot, TEST_GUILD_ID)
         print('testing email address configuration\n----------')
         await test_email_address.test(testing_bot, TEST_GUILD_ID)
         print('testing email utility\n-----------')

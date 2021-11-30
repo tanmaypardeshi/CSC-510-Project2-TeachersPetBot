@@ -28,6 +28,7 @@ import cal
 import qna
 import attendance
 import help_command
+import regrade
 import utils
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '1'
@@ -104,6 +105,14 @@ async def on_ready():
     ''')
 
     db.mutation_query('''
+        CREATE TABLE IF NOT EXISTS regrade (
+            guild_id    INT,
+            name        VARCHAR(50),
+            questions   VARCHAR(50)
+        )
+    ''')
+
+    db.mutation_query('''
         CREATE TABLE IF NOT EXISTS email_address (
             author_id    INT,
             email_id       VARCHAR(50),
@@ -173,6 +182,11 @@ async def on_guild_join(guild):
             await channel.send("course-calendar channel has been added!")
         else:
             await channel.send("course-calendar channel is already present!")
+        if get(guild.text_channels, name='regrade-requests') is None:
+            await guild.create_text_channel('regrade-requests')
+            await channel.send("regrade-requests channel has been added!")
+        else:
+            await channel.send("regrade-requests channel is already present!")
 
 ###########################
 # Function: on_member_join
@@ -392,6 +406,117 @@ async def answer_question(ctx, q_num, answer):
     else:
         await ctx.author.send('Please send answers to the #q-and-a channel.')
         await ctx.message.delete()
+
+
+@bot.command(name='regrade-request', help='add regrade-request')
+async def submit_regrade_request(ctx,name:str,questions:str):
+
+    """
+        Function: submit_regrade_request
+        Description: command to add a regrade request
+        Inputs:
+            - ctx: context of function activation
+            - name: name of the student
+            - questions: question numbers to be regraded
+        Outputs:
+            - adds the regrade request to the database
+    """
+
+    if ctx.channel.name == 'regrade-requests':
+        await regrade.add_request(ctx,name,questions)
+    else:
+        await ctx.author.send('Please submit requests in regrade channel.')
+        await ctx.message.delete()
+
+@submit_regrade_request.error
+async def submit_regrade_request_error(ctx, error):
+    """
+        this handles errors related to the submit_regrade command
+    """
+    if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send('Invalid command.\n '\
+        'Use !regrade-request <StudentName> <question numbers> \n \
+        ( Example: !regrade-request "Student 1" q1,q2,q3 )')
+
+@bot.command(name='display-requests', help='displays existing regrade-requests')
+async def display_regrade_request(ctx):
+
+    """
+        Function: display_regrade_request
+        Description: command to display all the regrade requests
+        Inputs:
+            - ctx: context of function activation
+        Outputs:
+            - displays regrade requests present in the database
+    """
+
+    if ctx.channel.name == 'regrade-requests':
+        await regrade.display_requests(ctx)
+
+    else:
+        await ctx.author.send('Please submit requests in regrade channel.')
+        await ctx.message.delete()
+
+
+@bot.command(name='update-request', help='update regrade request')
+async def update_regrade_request(ctx,name:str,questions:str):
+
+    """
+        Function: update_regrade_request
+        Description: command to display all the regrade requests
+        Inputs:
+            - ctx: context of function activation
+        Output:
+            - updates an existing regrade request with any modifications
+    """
+
+    if ctx.channel.name == 'regrade-requests':
+        await regrade.update_regrade_request(ctx,name,questions)
+
+    else:
+        await ctx.author.send('Please submit requests in regrade channel.')
+        await ctx.message.delete()
+
+
+@update_regrade_request.error
+async def update_regrade_request_error(ctx, error):
+    """
+        this handles errors related to the update_request command
+    """
+    if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send('Invalid command.\n Use !update-request <StudentName> <question numbers> \n \
+        ( Example: !update-request "Student 1" q1,q2,q3 )')
+
+@bot.command(name='remove-request', help='remove regrade request')
+async def remove_regrade_request(ctx,name:str,questions:str):
+
+    """
+        Function: remove_regrade_request
+        Description: command to remove a regrade request
+        Inputs:
+            - ctx: context of function activation
+            - name: name of the student
+            - questions: question numbers to be regraded
+            - output: removes an existing regrade request from the database
+    """
+
+    if ctx.channel.name == 'regrade-requests':
+        await regrade.remove_regrade_request(ctx,name,questions)
+
+    else:
+        await ctx.author.send('Please submit requests in regrade channel.')
+        await ctx.message.delete()
+
+
+@remove_regrade_request.error
+async def remove_regrade_request_error(ctx, error):
+    """
+        this handles errors related to the remove regrade command
+    """
+    if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send('Invalid command.\n Use !remove-request <StudentName> <question numbers> \n \
+        ( Example: !remove-request "Student 1" q1,q2,q3 )')
+
 ###########################
 # Function: ping
 # Description: Shows latency for debugging
@@ -618,6 +743,27 @@ async def custom_stats(ctx):
 @custom_help.command('test')
 async def custom_test(ctx):
     await help_command.test(ctx)
+
+
+@custom_help.command('regrade-request')
+async def custom_regrade_request(ctx):
+    await help_command.regrade_request(ctx)
+
+
+@custom_help.command('update-request')
+async def custom_update_request(ctx):
+    await help_command.update_request(ctx)
+
+
+@custom_help.command('display-requests')
+async def custom_display_requests(ctx):
+    await help_command.display_requests(ctx)
+
+
+@custom_help.command('remove-request')
+async def custom_remove_request(ctx):
+    await help_command.remove_request(ctx)
+
 
 ###########################
 # Function: begin_tests
