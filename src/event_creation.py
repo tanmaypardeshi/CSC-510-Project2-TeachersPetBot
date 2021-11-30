@@ -2,9 +2,12 @@
 # Functionality for creating new events
 ###########################
 import datetime
+from datetime import timedelta
 from discord_components import Button, ButtonStyle, Select, SelectOption
 import validators
 from discord.utils import get
+from discord.ext import tasks
+from utils import EmailUtility
 
 import office_hours
 import cal
@@ -29,6 +32,7 @@ async def create_event(ctx, testing_mode):
             components=[
                 Button(style=ButtonStyle.blue, label='Assignment', custom_id='assignment'),
                 Button(style=ButtonStyle.green, label='Exam', custom_id='exam'),
+                Button(style=ButtonStyle.grey, label='Project', custom_id='project'),
                 Button(style=ButtonStyle.red, label='Office Hour', custom_id='office-hour')
             ],
         )
@@ -82,9 +86,43 @@ async def create_event(ctx, testing_mode):
                 [ctx.guild.id, title, link, description, deadline]
             )
 
-            # TODO add assignment to events list
             await ctx.send('Assignment successfully created!')
             await cal.display_events(None)
+        elif button_clicked == 'project':
+            await ctx.send('What is the title of this project?')
+            msg = await BOT.wait_for('message', timeout=60.0, check=check)
+            project_title = msg.content.strip()
+
+            await ctx.send(
+                'Please enter the due date of this project along with the time\n'
+                'Enter in 24-hour format for e.g. an project due at 11:59pm can be inputted '
+                'as 23:59\nEnter in format `MM-DD-YYYY %H:%M`')
+            msg = await BOT.wait_for('message', timeout=60.0, check=check)
+            date_str = msg.content.strip()
+
+            try:
+                due_date = datetime.datetime.strptime(date_str, '%m-%d-%Y %H:%M')
+            except ValueError:
+                await ctx.send('Invalid date format. Aborting, Please try again!.')
+                return
+
+            await ctx.send('Link associated with submission? Type N/A if none')
+            msg = await BOT.wait_for('message', timeout=60.0, check=check)
+            link = msg.content.strip() if msg.content.strip() != 'N/A' else None
+            if link and not validators.url(link):
+                await ctx.send('Invalid URL. Aborting, Please try again!.')
+                return
+
+            await ctx.send('Extra description for project? Type N/A if none')
+            msg = await BOT.wait_for('message', timeout=60.0, check=check)
+            description = msg.content.strip() if msg.content.strip() != 'N/A' else None
+
+            db.mutation_query(
+                'INSERT INTO assignments VALUES (?, ?, ?, ?, ?)',
+                [ctx.guild.id, project_title, link, description, due_date]
+            )
+            await ctx.send('Project successfully created!')
+
         elif button_clicked == 'exam':
             await ctx.send('What is the title of this exam?')
             msg = await BOT.wait_for('message', timeout = 60.0, check = check)
@@ -145,8 +183,6 @@ async def create_event(ctx, testing_mode):
                 'INSERT INTO exams VALUES (?, ?, ?, ?, ?, ?)',
                 [ctx.guild.id, title, description, duration, start, end]
             )
-
-            # TODO add exam to events list
 
             await ctx.send('Exam successfully created!')
             await cal.display_events(None)
@@ -238,6 +274,28 @@ async def create_event(ctx, testing_mode):
         await ctx.author.send('`!create` can only be used in the `instructor-commands` channel')
         await ctx.message.delete()
 
+
+@tasks.loop(hours=24)
+async def check_reminders_due_today():
+    current_time = datetime.datetime.now()
+    current_day = datetime.datetime(day=current_time.day, month=current_time.month,
+                                    year=current_time.year)
+    next_day = current_day + timedelta(days=1)
+    cur = db.select_query(
+        'SELECT title, link, desc, date FROM assignments WHERE date BETWEEN ? AND ?',
+        [current_day, next_day])
+    due_today_records = cur.fetchall()
+    fetch_query = 'SELECT email_id FROM email_address WHERE is_active=1'
+    cur = db.select_query(fetch_query)
+    email_address = cur.fetchall()
+    email_address = [x[0] for x in email_address]
+    for title, link, desc, date in due_today_records:
+        subject = " REMINDER FROM TEACHERS PET BOT"
+        body = f'This is to remind you about assignment {title} deadline.'
+        body += f'Assignment is due on {date}'+'\n'+desc
+        EmailUtility().send_email(subject=subject, body=body, recipient=email_address)
+
+
 ###########################
 # Function: init
 # Description: initializes this module, giving it access to discord bot
@@ -246,6 +304,9 @@ async def create_event(ctx, testing_mode):
 # Outputs: None
 ###########################
 def init(b):
-    ''' initialize event creation '''
+    '''
+        initialize event creation
+    '''
     global BOT
     BOT = b
+    check_reminders_due_today.start()

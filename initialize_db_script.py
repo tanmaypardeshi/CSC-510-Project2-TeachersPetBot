@@ -65,6 +65,14 @@ SQL_STATEMENT = """INSERT INTO assignments VALUES(
 
 c.execute(SQL_STATEMENT)
 
+SQL_STATEMENT = """CREATE TABLE IF NOT EXISTS email_address (
+                        author_id    INT,
+                        email_id       VARCHAR(50),
+                        is_active   BOOLEAN NOT NULL CHECK (is_active IN (0, 1))
+                    );"""
+
+c.execute(SQL_STATEMENT)
+
 SQL_STATEMENT = """INSERT INTO assignments VALUES(
                         1,
                         "Assignment #2",
