@@ -2,9 +2,12 @@
 # Functionality for creating new events
 ###########################
 import datetime
+from datetime import timedelta
 from discord_components import Button, ButtonStyle, Select, SelectOption
 import validators
 from discord.utils import get
+from discord.ext import tasks
+from utils import EmailUtility
 
 import office_hours
 import cal
@@ -271,6 +274,28 @@ async def create_event(ctx, testing_mode):
         await ctx.author.send('`!create` can only be used in the `instructor-commands` channel')
         await ctx.message.delete()
 
+
+@tasks.loop(hours=24)
+async def check_reminders_due_today():
+    current_time = datetime.datetime.now()
+    current_day = datetime.datetime(day=current_time.day, month=current_time.month,
+                                    year=current_time.year)
+    next_day = current_day + timedelta(days=1)
+    cur = db.select_query(
+        'SELECT title, link, desc, date FROM assignments WHERE date BETWEEN ? AND ?',
+        [current_day, next_day])
+    due_today_records = cur.fetchall()
+    fetch_query = 'SELECT email_id FROM email_address WHERE is_active=1'
+    cur = db.select_query(fetch_query)
+    email_address = cur.fetchall()
+    email_address = [x[0] for x in email_address]
+    for title, link, desc, date in due_today_records:
+        subject = " REMINDER FROM TEACHERS PET BOT"
+        body = f'This is to remind you about assignment {title} deadline.'
+        body += f'Assignment is due on {date}'+'\n'+desc
+        EmailUtility().send_email(subject=subject, body=body, recipient=email_address)
+
+
 ###########################
 # Function: init
 # Description: initializes this module, giving it access to discord bot
@@ -279,6 +304,9 @@ async def create_event(ctx, testing_mode):
 # Outputs: None
 ###########################
 def init(b):
-    ''' initialize event creation '''
+    '''
+        initialize event creation
+    '''
     global BOT
     BOT = b
+    check_reminders_due_today.start()
