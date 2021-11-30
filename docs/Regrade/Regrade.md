@@ -1,8 +1,11 @@
 # Commands in Regrade Feature
 
 !regrade-request
+
 !update-request
+
 !display-requests
+
 !remove-request
 
 # Location of Codehttps:
