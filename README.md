@@ -58,6 +58,10 @@ Instructors (like TAs, and Professors) can quickly make graphcs and charts direc
 
 <h4>Re-Grading</h4>
 
+
+This feature provides a way for students to submit regrade requests and Instructors can collect information of the requests submitted. There are various commands included to add, update, display and remove regrade requests.
+This usecase was based on regrade request submission for CSE 510 SE FALL21 mid examination.
+
 <h4>Link Saving</h4>
 
 <h4>Project Event</h4>
@@ -89,6 +93,11 @@ To run tests on the Teacher's Pet, follow instructions in the [Installation and 
 <h2> Bot Commands </h2>
 
 <h3> Bot commands from iteration III </h3>
+
+`!regrade-request "<Student Name>" "<questions"` To a regrade request from a student
+`!update-request "<Student Name>" "<questions"` To update an existing regrade request
+`!remove-request "<Student Name>" "<questions"` To remove an existing request
+`!display-requests` To display all the regrade requests
 
 :open_file_folder: [!chart command](https://github.com/chandur626/ClassMateBot/blob/main/docs/charts/grades.md)
 
