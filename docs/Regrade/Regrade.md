@@ -1,9 +1,9 @@
 # Commands in Regrade Feature
 
-## !regrade-request
-## !update-request
-## !display-requests
-## !remove-request
+# !regrade-request
+# !update-request
+# !display-requests
+# !remove-request
 
 # Location of Codehttps:
 The code that implements the above commands is located [here](https://github.com/chandur626/TeachersPetBot/blob/main/src/regrade.py)
