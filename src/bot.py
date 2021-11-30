@@ -461,6 +461,7 @@ async def custom_chart(ctx, title: str, chart: str, *args):
     await update_chart(storage, title, shortened_link)
     with open('data/charts/chartstorage.json', 'w', encoding='utf-8') as file:
         json.dump(storage, file, indent=4)
+    await ctx.send("Here is your chart:")
     await ctx.send(f"{shortened_link}")
 
 
@@ -479,7 +480,8 @@ async def checkchart(ctx, name: str):
         if not storage or storage[name] == '':
             await ctx.send("No chart with that name!")
         else:
-            await ctx.send(f"Your requested chart: {storage[name]['URL']}")
+            await ctx.send(f"Your requested chart:")
+            await ctx.send(f"{storage[name]['URL']}")
 
 
 async def update_chart(storage, name, link):

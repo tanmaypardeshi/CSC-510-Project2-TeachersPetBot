@@ -8,6 +8,7 @@ import test_office_hours
 import test_event_creation
 import test_qna
 import test_calendar
+import test_chart
 import test_profanity
 import test_email_utility
 import test_attendance
@@ -45,6 +46,8 @@ async def run_tests():
         await test_email_address.test(testing_bot, TEST_GUILD_ID)
         print('testing email utility\n-----------')
         await test_email_utility.test()
+        print('testing chart\n-----------')
+        await test_chart.test(testing_bot, TEST_GUILD_ID)
     except AssertionError as ex:
         print('exception: ', type(ex).__name__ + ':', ex)
         print('--')
