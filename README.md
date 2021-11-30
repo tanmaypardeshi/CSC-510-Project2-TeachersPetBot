@@ -61,7 +61,7 @@ Instructors (like TAs, and Professors) can quickly make graphcs and charts direc
 This feature provides a way for students to submit regrade requests and Instructors can collect information of the requests submitted. There are various commands included to add, update, display and remove regrade requests.
 This usecase was based on regrade request submission for CSE 510 SE FALL21 mid examination.
 
-![readme](https://user-images.githubusercontent.com/31122274/143983949-c55bf740-87b5-4f55-97dc-7abefc010830.gif)
+<p align="left"><img width=65% src="https://github.com/chandur626/TeachersPetBot/blob/update-readme/docs/media/Regrade.gif"></p>
 
 
 <h4>Link Saving</h4>
