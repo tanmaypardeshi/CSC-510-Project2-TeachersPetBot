@@ -36,15 +36,21 @@ https://user-images.githubusercontent.com/60410421/143972105-f5aabb10-73e3-454a-
 
 
   
+<h2>Software Engineering Project for CSC 510 : Phase III</h2>
 
-**Software Engineering Project for CSC 510 : Phase II**
 
 Teacher's Pet is a Discord Bot for class instructors to streamline their Discord servers. Discord is a great tool for communication and its functionalities can be enhanced by bots and integrations. 
 
 For 3.0, we created new tools for instructors and students to use to improve course communication. Some of our implemented features were partly suggested by iteration 2 such as regrade requests, project event, and live spam checking. We implemented other features we thought would be helpful such as email interactions, link saving, and data visualization.
 
 <a name="commands"></a>
-<h2 align="center"> Bot Commands </h2>
+<h2> Bot Commands </h2>
+
+<h3> Bot commands from iteration III </h3>
+
+`!chart <@member>` Set a server member to be an instructor (Instructor command)
+
+<h3> Bot commands from iteration I and II </h3>
 
 `!setInstructor <@member>` Set a server member to be an instructor (Instructor command)
 
@@ -79,7 +85,7 @@ For 3.0, we created new tools for instructors and students to use to improve cou
 `!stats` Gets the statistics of system and softwares used
 
 <a name="instrun"></a>
-<h2 align="center"> Installation and Running </h2>
+<h2> Installation and Running </h2>
 
 #### Tools and Libraries Used
 In addition to the packages from [requirements.txt](https://github.com/Ashwinshankar98/TeachersPetBot/blob/main/requirements.txt) which need to be installed, please have the following installed on your machine:
@@ -90,13 +96,15 @@ To install and run Teacher's Pet, follow instructions in the [Installation and T
 
 
 <a name="testing"></a>
-<h2 align="center"> Testing </h2>
+
+<h2>Testing </h2>
 
 To run tests on the Teacher's Pet, follow instructions in the [Installation and Testing Guide](https://github.com/Ashwinshankar98/TeachersPetBot/blob/main/Installation.md#Run-Tests).
 
 
 <a name="fphase1"></a>
-<h2 align="center"> TeachersPetBot Features </h2>
+
+<h2> TeachersPetBot Features </h2>
 
 ### Initialization
 
@@ -192,7 +200,7 @@ Using the Python package better-profanity, Teacher's Pet will catch profane word
 ![alt text](https://github.com/Ashwinshankar98/TeachersPetBot/blob/main/images/profanity_example.PNG)
 
 <a name="fphase2"></a>
-<h2 align="center"> Features added in Phase 2 </h2>
+<h2> Features added in Phase 2 </h2>
 
 ### New Member joining channel
 
@@ -283,7 +291,8 @@ For the purpose of Debugging and maintaining the bot `!stats` command has been a
 
 <a name="fscope"></a>
 
-<h2 align="center"> Future Scope </h2>
+
+<h2> Future Scope </h2>
 
 This bot has endless possibilities for functionality. Features which we are interested in adding but did not have time for include but are not limited to:
 
@@ -300,13 +309,15 @@ This bot has endless possibilities for functionality. Features which we are inte
 For a deatiled description of each of the above future enhancements listed visit [Phase 2 Board](https://github.com/Ashwinshankar98/TeachersPetBot/projects/1).
 
 <a name="contribute"></a>
-<h2 align="center"> How to Contribute? </h2>
+
+<h2>How to Contribute? </h2>
 
 Check out our [CONTRIBUTING.md](https://github.com/Ashwinshankar98/TeachersPetBot/blob/main/CONTRIBUTING.md) for instructions on contributing to this repo and helping enhance this Discord Bot, as well as our [Code of Conduct](https://github.com/Ashwinshankar98/TeachersPetBot/blob/main/CODE_OF_CONDUCT.md) guidelines.
 
 
 <a name="license"></a>
-<h2 align="center"> License </h2>
+
+<h2> License </h2>
 
 The project is licensed under the [MIT License](https://github.com/Ashwinshankar98/TeachersPetBot/blob/main/LICENSE).
 
