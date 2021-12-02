@@ -2,7 +2,7 @@
 This command lets admins make a custom chart of any type with any size of dataset
 
 # Location of Code
-The code that implements the above mentioned gits functionality is located [here](https://github.com/chandur626/ClassMateBot/blob/main/cogs/charts.py).
+The code that implements the above mentioned gits functionality is located [here](https://github.com/chandur626/TeachersPetBot/blob/update-readme/src/bot.py).
 
 # Code Description
 ## Functions
