@@ -105,7 +105,9 @@ To run tests on the Teacher's Pet, follow instructions in the [Installation and 
 
 :open_file_folder: [!display-requests command](https://github.com/chandur626/TeachersPetBot/blob/main/docs/Regrade/Regrade.md)
 
-:open_file_folder: [!chart command](https://github.com/chandur626/ClassMateBot/blob/main/docs/charts/grades.md)
+:open_file_folder: [!chart command](https://github.com/chandur626/TeachersPetBot/blob/update-readme/docs/charts/charts.md)
+
+:open_file_folder: [!check_chart command](https://github.com/chandur626/TeachersPetBot/blob/update-readme/docs/charts/check_chart.md)
 
 <br>
 <h3> Bot commands from iteration I and II </h3>
