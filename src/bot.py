@@ -782,6 +782,26 @@ async def custom_remove_request(ctx):
     await help_command.remove_request(ctx)
 
 
+@custom_help.command('create_email')
+async def custom_create_email(ctx):
+    await help_command.create_email(ctx)
+
+
+@custom_help.command('update_email')
+async def custom_update_email(ctx):
+    await help_command.update_email(ctx)
+
+
+@custom_help.command('remove_email')
+async def custom_remove_email(ctx):
+    await help_command.remove_email(ctx)
+
+
+@custom_help.command('view_email')
+async def custom_view_email(ctx):
+    await help_command.view_email(ctx)
+
+
 ###########################
 # Function: begin_tests
 # Description: Start the automated testing

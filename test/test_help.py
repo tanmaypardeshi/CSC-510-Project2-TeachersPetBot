@@ -150,6 +150,37 @@ async def test(testing_bot, guild_id):
             assert 'remove-request' in m.content
             await m.delete()
 
+    async def create_email():
+        await commands_channel.send('!help create_email')
+        sleep(5)
+        msg = await commands_channel.history(limit=1).flatten()
+        for m in msg:
+            assert 'create_email' in m.content
+            await m.delete()
+
+    async def update_email():
+        await commands_channel.send('!help update_email')
+        sleep(5)
+        msg = await commands_channel.history(limit=1).flatten()
+        for m in msg:
+            assert 'update_email' in m.content
+            await m.delete()
+
+    async def view_email():
+        await commands_channel.send('!help view_email')
+        sleep(5)
+        msg = await commands_channel.history(limit=1).flatten()
+        for m in msg:
+            assert 'view_email' in m.content
+            await m.delete()
+
+    async def remove_email():
+        await commands_channel.send('!help remove_email')
+        sleep(5)
+        msg = await commands_channel.history(limit=1).flatten()
+        for m in msg:
+            assert 'remove_email' in m.content
+            await m.delete()
 
     async def test_end():
         await commands_channel.send('!help test')
@@ -175,3 +206,7 @@ async def test(testing_bot, guild_id):
     await update_request()
     await display_requests()
     await remove_request()
+    await create_email()
+    await update_email()
+    await view_email()
+    await remove_email()
