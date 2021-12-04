@@ -88,6 +88,9 @@ This feature allows instructors or teaching assistants to create a project event
 
 
 <h4>Spam Detection</h4>
+This feature is used to detect spam in message channels. When a user tries to send too many messages in the channel, it gives a warning. This is useful when multiple users are trying to send mutiple messages. The warning lets the student know that they have sent too many messages. 
+
+<p align="left"><img width=65% src="https://github.com/chandur626/TeachersPetBot/blob/update-readme/docs/media/Spam-Detection.gif"></p>
 
 <hr />
 
