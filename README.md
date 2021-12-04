@@ -7,12 +7,12 @@
 
 [![DOI](https://zenodo.org/badge/429658277.svg)](https://zenodo.org/badge/latestdoi/429658277)
 ![Python](https://img.shields.io/badge/python-v3.7+-brightgreen.svg)
-![GitHub](https://img.shields.io/github/license/Ashwinshankar98/TeachersPetBot)
+![GitHub](https://img.shields.io/github/license/chandur626/TeachersPetBot)
 ![GitHub issues](https://img.shields.io/github/issues/chandur626/TeachersPetBot)
 ![GitHub closed issues](https://img.shields.io/github/issues-closed/chandur626/TeachersPetBot)
 ![Lines of code](https://img.shields.io/tokei/lines/github/chandur626/TeachersPetBot)
 [![codecov](https://codecov.io/gh/Ashwinshankar98/TeachersPetBot/branch/main/graph/badge.svg?token=SK9PBZX2NM)](https://codecov.io/gh/Ashwinshankar98/TeachersPetBot)
-[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/Ashwinshankar98/TeachersPetBot/Test%20TeachersPetBot)](https://github.com/Ashwinshankar98/TeachersPetBot/actions)
+[![GitHub Workflow Status](https://github.com/chandur626/TeachersPetBot/actions/workflows/test.yml/badge.svg)](https://github.com/chandur626/TeachersPetBot/actions/workflows/test.yml)
 ![GitHub deployments](https://img.shields.io/github/deployments/Ashwinshankar98/TeachersPetBot/discord-bot-phase2)<br/>
 
 ## Contents
@@ -54,7 +54,17 @@ Instructors (like TAs, and Professors) can quickly make graphcs and charts direc
 
 <p align="left"><img width=65% src="https://github.com/chandur626/TeachersPetBot/blob/update-readme/docs/media/charts.gif"></p>
 
+<h4>Email Configuration</h4>
+
+This feature enables users to configure their email address in the system to receive important notifications, attachments from professors, assignment reminders. Users can also update, view and unconfigure a configured email address through the system.
+
+<p align="left"><img width=65% src="https://github.com/chandur626/TeachersPetBot/blob/update-readme/docs/media/email-address.gif"></p>
+
 <h4>Email Interaction</h4>
+
+This feature notifies all students regarding the next assignment deadline which is due for a day through email.
+
+<p align="left"><img width=65% src="https://github.com/chandur626/TeachersPetBot/blob/update-readme/docs/media/email-reminder.gif"></p>
 
 <h4>Re-Grading</h4>
 
@@ -67,6 +77,11 @@ This usecase was based on regrade request submission for CSE 510 SE FALL21 mid e
 <h4>Link Saving</h4>
 
 <h4>Project Event</h4>
+
+This feature allows instructors or teaching assistants to create a project event by providing information such as description, link for project submission and deadline. The deadline reminder is taken care of Email Interaction feature.
+
+<p align="left"><img width=65% src="https://github.com/chandur626/TeachersPetBot/blob/update-readme/docs/media/project-event.gif"></p>
+
 
 <h4>Spam Detection</h4>
 
@@ -162,7 +177,7 @@ This bot has endless possibilities for functionality. Features which we are inte
   * Save data charts on DB rather than locally in json
   * Store data based on user emote reactions to instructor messages
 
-For a deatiled description of each of the above future enhancements listed visit [Phase 3 Board](https://github.com/Ashwinshankar98/TeachersPetBot/projects/1).
+For a detailed description of each of the above future enhancements listed visit [Phase 3 Board](https://github.com/Ashwinshankar98/TeachersPetBot/projects/1).
 
 <hr />
 
