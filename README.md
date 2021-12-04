@@ -10,7 +10,7 @@
 ![GitHub](https://img.shields.io/github/license/chandur626/TeachersPetBot)
 ![GitHub issues](https://img.shields.io/github/issues/chandur626/TeachersPetBot)
 ![GitHub closed issues](https://img.shields.io/github/issues-closed/chandur626/TeachersPetBot)
-![Lines of code](https://img.shields.io/tokei/lines/github/chandur626/TeachersPetBot)
+![Lines of code](https://tokei.rs/b1/github/chandur626/TeachersPetBot)
 [![codecov](https://codecov.io/gh/Ashwinshankar98/TeachersPetBot/branch/main/graph/badge.svg?token=SK9PBZX2NM)](https://codecov.io/gh/Ashwinshankar98/TeachersPetBot)
 [![GitHub Workflow Status](https://github.com/chandur626/TeachersPetBot/actions/workflows/test.yml/badge.svg)](https://github.com/chandur626/TeachersPetBot/actions/workflows/test.yml)
 ![GitHub deployments](https://img.shields.io/github/deployments/Ashwinshankar98/TeachersPetBot/discord-bot-phase2)<br/>
