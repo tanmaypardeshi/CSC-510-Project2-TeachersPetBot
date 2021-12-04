@@ -124,6 +124,16 @@ To run tests on the Teacher's Pet, follow instructions in the [Installation and 
 
 :open_file_folder: [!check_chart command](https://github.com/chandur626/TeachersPetBot/blob/update-readme/docs/charts/check_chart.md)
 
+:open_file_folder: [!create_email_command](https://github.com/chandur626/TeachersPetBot/blob/update-readme/docs/email_address/create_email.md)
+
+:open_file_folder: [!view_email_command](https://github.com/chandur626/TeachersPetBot/blob/update-readme/docs/email_address/view_email.md)
+
+:open_file_folder: [!update_email_command](https://github.com/chandur626/TeachersPetBot/blob/update-readme/docs/email_address/update_email.md)
+
+:open_file_folder: [!remove_email_command](https://github.com/chandur626/TeachersPetBot/blob/update-readme/docs/email_address/remove_email.md)
+
+:open_file_folder: [!project_event command](https://github.com/chandur626/TeachersPetBot/blob/update-readme/docs/events/project_event.md)
+
 <br>
 <h3> Bot commands from iteration I and II </h3>
 
