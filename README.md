@@ -76,6 +76,10 @@ This usecase was based on regrade request submission for CSE 510 SE FALL21 mid e
 
 <h4>Link Saving</h4>
 
+This feature is helpful to save all the messages which contain important URLs. we have built a user command "!send_links"  This command lets users access all messages which contain URLs. The messages Containing URLs are automatically get appended in a file and the file is attached when the "!send_links" command is input.
+
+<p align="left"><img width=65% src="https://github.com/chandur626/TeachersPetBot/blob/update-readme/docs/media/link-saving.gif"></p>
+
 <h4>Project Event</h4>
 
 This feature allows instructors or teaching assistants to create a project event by providing information such as description, link for project submission and deadline. The deadline reminder is taken care of Email Interaction feature.
