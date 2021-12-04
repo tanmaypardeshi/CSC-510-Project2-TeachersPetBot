@@ -15,7 +15,11 @@ The following is a set of guidelines for contributing to TeachersPetBot. These a
   * [Pull Requests](#pull-requests)
 
 [Styleguides](#styleguides)
+  * [Git branch naming format](#python-styleguide)
+  * [Git commit messages](#python-styleguide)
   * [Python Styleguide](#python-styleguide)
+
+[References](#References)
 
 ## Code of Conduct
 
@@ -24,11 +28,11 @@ This project and everyone participating in it is governed by the [TeachersPetBot
 ## I don't want to read this whole thing I just have a question!!!
 
 Reach out to one of the main contributors on Discord using their IDs:
-* Ashwin Shankar: KillSwitcH#3065
-* Kailash: kailash98 s#4696
-* Shakthi Nandana : Shakthi#7711
-* Aswin: Aswin#0436
-* Kaushik: Jack$parr0w#0875
+* Chandrahas Reddy Mandapati: Chandrahas_Reddy_Mandapati#9201
+* Harini Bharata: Harini Bharata#7221
+* Sri Pallavi Damuluri : Sri Pallavi#8748
+* Niraj Lavani: Benpoindexter#4486
+* Sandesh Aladhalli Shivarudre Gowda: sandesh#1990
 
 *Note: Due to the dynamic nature of Discord IDs, these may change without prior notice on this page.*
 
@@ -38,7 +42,7 @@ We do not have an official message board at this time, however, we plan to have 
 
 ### Reporting Bugs
 
-This section guides you through submitting a bug report for TeachersPetBot. Following these guidelines helps maintainers and the community understand your report :pencil:, reproduce the behavior :computer: :computer:, and find related reports :mag_right:.
+This section guides you through submitting a bug report for TeachersPetBot. Before submitting a bug, make sure you have all the information with you. Following these guidelines helps maintainers and the community understand your report :pencil:, reproduce the behavior :computer: :computer:, and find related reports :mag_right:.
 
 #### How Do I Submit A (Good) Bug Report?
 
@@ -51,6 +55,14 @@ Explain the problem and include additional details to help maintainers reproduce
 * **Provide specific examples to demonstrate the steps**.
 * **Describe the behavior you observed after following the steps** and point out what exactly is the problem with that behavior.
 * **Explain which behavior you expected to see instead and why.**
+
+#### Start Your Contribution
+
+`beginner` and `help-wanted` issues can help you get started to contribute your first contribution:
+
+* [Beginner issues][beginner] - issues which are pretty simple and should only require a few lines of code, and a couple of tests.
+* [Help wanted issues][help-wanted] - issues which should be a bit more involved than `beginner` issues.
+
 
 ### Pull Requests
 
@@ -69,6 +81,22 @@ While the prerequisites above must be satisfied prior to having your pull reques
 
 ## Styleguides
 
+#### Git Branch Naming format
+
+* The github branch names must be of the form `issue-{issue#}/{doc/task/bug}/description`.
+* Branch name must start by specifying the issue number and must specify the type of issue i.e documentation/task/bug and a small description of issue.
+* Below specified are few examples of how a branch name must be
+* If the issue raised is related to enhancement then branch name would be `issue-39/task/email_attachment`.
+* If the issue raised id related to a bug then branch name would be `issue-39/bug/email_validation`.
+
+#### Git Commit Messages
+
+* Use the present tense ("Add feature" not "Added feature")
+* Use the imperative mood ("Move cursor to..." not "Moves cursor to...")
+* Limit the first line to 72 characters or less
+* Reference issues and pull requests liberally after the first line
+* When only changing documentation, include `[ci skip]` in the commit title
+
 ### Python Styleguide
 
 Changes to TeachersPetBot Python code should conform to [Google Python Style Guide](https://github.com/google/styleguide/blob/gh-pages/pyguide.md)
@@ -76,4 +104,6 @@ Changes to TeachersPetBot Python code should conform to [Google Python Style Gui
 All Python code is linted with Pylint. Ensure that before you commit any changes, your code passes all default pylint checks. Pylint can be installed with
 `pip install pylint`
 
-*This document is adapted from the [Atom Code of Conduct](https://github.com/atom/atom/blob/master/CONTRIBUTING.md#code-of-conduct)*
+## References
+[transcriptor](https://github.com/secheaper/transcriptor/blob/main/CONTRIBUTING.md#start-your-contribution)
+[Atom Code of Conduct](https://github.com/atom/atom/blob/master/CONTRIBUTING.md#code-of-conduct)*
