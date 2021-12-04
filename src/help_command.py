@@ -50,6 +50,14 @@ async def helper(ctx):
                     value='display regrade requests')
     embed.add_field(name='remove-request',
                     value='remove a regrade request')
+    embed.add_field(name='create_email',
+                    value='configure email address')
+    embed.add_field(name='remove_email',
+                    value='unconfigure email address')
+    embed.add_field(name='view_email',
+                    value='display configured email address')
+    embed.add_field(name='update_email',
+                    value='update configured email address')
     await ctx.send(embed=embed)
     if ctx.author.id == Test_bot_application_ID:
         await ctx.send('help')
@@ -404,3 +412,107 @@ async def display_requests(ctx):
     await ctx.send(embed=embed)
     if ctx.author.id == Test_bot_application_ID:
         await ctx.send('display-requests')
+
+
+async def create_email(ctx):
+    """
+         Function: create_email
+         Description: Help for command create_email
+         Inputs:
+             - ctx: Context of the function activation
+         Outputs: Result of !help create_email
+
+     """
+    embed = Embed(title='create_email',
+                  description=' command to configure email address',
+                  colour=discord.Colour.orange())
+    embed.add_field(name='*Syntax*',
+                    value='!create_email <"email_address">',
+                    inline=False)
+    embed.add_field(name='*Channel*',
+                    value='Any',
+                    inline=False)
+    embed.add_field(name='*Authorization*',
+                    value='Anyone',
+                    inline=False)
+    await ctx.send(embed=embed)
+    if ctx.author.id == Test_bot_application_ID:
+        await ctx.send('create_email')
+
+
+async def update_email(ctx):
+    """
+         Function: update_email
+         Description: Help for command update_email
+         Inputs:
+             - ctx: Context of the function activation
+         Outputs: Result of !help update_email
+
+     """
+    embed = Embed(title='update_email',
+                  description=' command to update configured email address',
+                  colour=discord.Colour.orange())
+    embed.add_field(name='*Syntax*',
+                    value='!update_email <"email_address">',
+                    inline=False)
+    embed.add_field(name='*Channel*',
+                    value='Any',
+                    inline=False)
+    embed.add_field(name='*Authorization*',
+                    value='Anyone',
+                    inline=False)
+    await ctx.send(embed=embed)
+    if ctx.author.id == Test_bot_application_ID:
+        await ctx.send('update_email')
+
+
+async def view_email(ctx):
+    """
+         Function: view_email
+         Description: Help for command view_email
+         Inputs:
+             - ctx: Context of the function activation
+         Outputs: Result of !help view_email
+
+     """
+    embed = Embed(title='view_email',
+                  description=' command to view email address',
+                  colour=discord.Colour.orange())
+    embed.add_field(name='*Syntax*',
+                    value='!view_email',
+                    inline=False)
+    embed.add_field(name='*Channel*',
+                    value='Any',
+                    inline=False)
+    embed.add_field(name='*Authorization*',
+                    value='Anyone',
+                    inline=False)
+    await ctx.send(embed=embed)
+    if ctx.author.id == Test_bot_application_ID:
+        await ctx.send('view_email')
+
+
+async def remove_email(ctx):
+    """
+         Function: remove_email
+         Description: Help for command remove_email
+         Inputs:
+             - ctx: Context of the function activation
+         Outputs: Result of !help remove_email
+
+     """
+    embed = Embed(title='remove_email',
+                  description=' command to unconfigure email address',
+                  colour=discord.Colour.orange())
+    embed.add_field(name='*Syntax*',
+                    value='!remove_email',
+                    inline=False)
+    embed.add_field(name='*Channel*',
+                    value='Any',
+                    inline=False)
+    embed.add_field(name='*Authorization*',
+                    value='Anyone',
+                    inline=False)
+    await ctx.send(embed=embed)
+    if ctx.author.id == Test_bot_application_ID:
+        await ctx.send('remove_email')
