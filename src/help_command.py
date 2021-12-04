@@ -57,7 +57,7 @@ async def helper(ctx):
     embed.add_field(name='view_email',
                     value='display configured email address')
     embed.add_field(name='update_email',
-                    value='update a configured email address')
+                    value='update configured email address')
     await ctx.send(embed=embed)
     if ctx.author.id == Test_bot_application_ID:
         await ctx.send('help')
