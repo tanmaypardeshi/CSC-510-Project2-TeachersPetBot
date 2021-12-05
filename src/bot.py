@@ -224,6 +224,9 @@ async def on_message(message):
     ''' run on message sent to a channel '''
     #spam detection
 
+    url_data=[]
+    message_links = []
+    temp=[]
     ctx = await bot.get_context(message)
     print(message.content)
     count = 0
