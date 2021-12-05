@@ -9,7 +9,6 @@ import test_event_creation
 import test_qna
 import test_calendar
 import test_chart
-import test_links
 import test_profanity
 import test_email_utility
 import test_attendance
