@@ -1,6 +1,7 @@
 import platform
 import asyncio
 import os
+import re
 from time import time
 from platform import python_version
 from datetime import datetime, timedelta
@@ -223,6 +224,9 @@ async def on_message(message):
     ''' run on message sent to a channel '''
     #spam detection
 
+    url_data=[]
+    message_links = []
+    temp=[]
     ctx = await bot.get_context(message)
     print(message.content)
     count = 0
@@ -256,6 +260,21 @@ async def on_message(message):
     if message.content == 'hey bot':
         response = 'hey yourself ;)'
         await message.channel.send(response)
+
+    regex = r"(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s" \
+            r"()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};" \
+            r":'.,<>?«»“”‘’]))"
+    url_data = re.findall(regex, message.content)
+    for url_count in url_data:
+        temp.append(url_count[0])
+    if temp:
+        message_links.append(message.content)
+        with open('images/links/links.txt', mode='a', encoding='utf-8') as text_file:
+            text_file.write("Message containing url :-  " + message.content + "\n")
+            text_file.close()
+    else:
+        pass
+
 
 ###########################
 # Function: on_message_edit
@@ -404,6 +423,21 @@ async def ask_question(ctx, question):
     else:
         await ctx.author.send('Please send questions to the #q-and-a channel.')
         await ctx.message.delete()
+
+###########################
+# Function: send_links
+# Description: command to fetch all the links posted in the group
+# Inputs:
+#      - ctx: context of the command
+# Outputs:
+#      - Bot posts all the links posted in group.
+###########################
+
+@bot.command(name='send_links', help='Command will output all the messages which contain url')
+async def send_links(ctx):
+    """To display all messages which contain url."""
+    await ctx.send("The below list of messages contains URLs")
+    await ctx.send(file=discord.File('images/links/links.txt'))
 
 ###########################
 # Function: answer
