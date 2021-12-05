@@ -194,7 +194,7 @@ This bot has endless possibilities for functionality. Features which we are inte
   * Save data charts on DB rather than locally in json
   * Store data based on user emote reactions to instructor messages
 
-For a detailed description of each of the above future enhancements listed visit [Phase 3 Board](https://github.com/Ashwinshankar98/TeachersPetBot/projects/1).
+For a detailed description of each of the above future enhancements listed visit [Future Scope](https://github.com/chandur626/TeachersPetBot/projects/2).
 
 <hr />
 
