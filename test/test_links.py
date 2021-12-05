@@ -1,5 +1,5 @@
 """
-This file defines tests for email address configuration functions.
+This file defines tests for links saving function.
 """
 
 import discord
