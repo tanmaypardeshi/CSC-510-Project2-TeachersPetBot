@@ -4,6 +4,7 @@ import os
 from time import time
 from platform import python_version
 from datetime import datetime, timedelta
+import json
 from psutil import Process, virtual_memory
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
@@ -17,8 +18,8 @@ from discord_components import DiscordComponents
 
 from dotenv import load_dotenv
 
-
-
+from quickchart import QuickChart
+import pyshorteners
 import db
 import profanity
 import event_creation
@@ -547,6 +548,96 @@ async def ping(ctx):
     end=time()
     await message.edit(content="Pong! : "+str(int(bot.latency*1000))+" ms."+
     " Response time : "+str(int((end-start)*1000))+" ms.")
+
+
+@bot.command(name='chart', help='Creates a custom chart')
+@commands.has_role('Instructor')
+async def custom_chart(ctx, title: str, chart: str, *args):
+    """
+        Creates a custom chart with given specs
+        Parameters:
+            ctx: used to access the values passed through the current context.
+            title: the name of the chart
+            chart: the type of the chart
+            *args: a list of data labels and data numbers for each label
+        Returns:
+            returns a graph in the chat box
+    """
+
+    if len(args) % 2 != 0:
+        print("Make sure every data-label singularly matches a datapoint (A B C 1 2 3")
+        return
+    data_count = int(len(args) / 2)
+    with open('data/charts/chartstorage.json', 'r', encoding='utf-8') as file:
+        storage = json.load(file)
+
+    labels_list = []
+    dataset_list = []
+
+    for data_label in range(data_count):
+        labels_list.append(args[data_label])
+        print(args[data_label])
+
+    for data_point in range(data_count, len(args)):
+        dataset_list.append(args[data_point])
+        print(args[data_point])
+
+    quick_chart = QuickChart()
+    quick_chart.width = 500
+    quick_chart.height = 300
+    quick_chart.device_pixel_ratio = 2.0
+    quick_chart.config = {
+        "type": f"{chart}",
+        "data": {
+            "labels": labels_list,
+            "datasets": [{
+                "label": f"{title}",
+                "data": dataset_list
+            }]
+        }
+    }
+    link = quick_chart.get_url()
+    shortener = pyshorteners.Shortener()
+    shortened_link = shortener.tinyurl.short(link)
+
+    await update_chart(storage, title, shortened_link)
+    with open('data/charts/chartstorage.json', 'w', encoding='utf-8') as file:
+        json.dump(storage, file, indent=4)
+    await ctx.send("Here is your chart:")
+    await ctx.send(f"{shortened_link}")
+
+
+@bot.command(name='check_chart', help='View a custom chart by giving title name')
+async def checkchart(ctx, name: str):
+    """
+        Lets students check the a custom chart
+        Parameters:
+            ctx: used to access the values passed through the current context.
+            name: the name of the chart they are looking for
+        Returns:
+            returns the custom chart in the chat box if it exists
+    """
+    with open('data/charts/chartstorage.json', 'r', encoding='utf-8') as file:
+        storage = json.load(file)
+        if not storage or storage[name] == '':
+            await ctx.send("No chart with that name!")
+        else:
+            await ctx.send(f"Your requested chart:")
+            await ctx.send(f"{storage[name]['URL']}")
+
+
+async def update_chart(storage, name, link):
+    """
+        Updates the URL of the chart
+        Parameters:
+            storage: the json file
+            name: the name of the chart
+            link: the link to the chart
+    """
+    if not str(name) in storage:
+        storage[str(name)] = {}
+    storage[str(name)]['URL'] = link
+
 ###########################
 # Function: stats
 # Description: Shows stats like
@@ -595,9 +686,10 @@ async def show_stats(ctx):
 ###########################
 polls=[]
 scheduler = AsyncIOScheduler()
+
+
 @bot.command(name='poll', help='Set Poll for a specified time and topic.')
 @commands.has_role('Instructor')
-
 async def create_poll(ctx, hours: int, question: str, *options):
 
     if len(options) > 10:

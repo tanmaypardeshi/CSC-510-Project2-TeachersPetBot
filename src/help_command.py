@@ -40,6 +40,8 @@ async def helper(ctx):
                     value='Set member to Instructor')
     embed.add_field(name='stats',
                     value='Shows bot stats')
+    embed.add_field(name='chart',
+                    value='Creates a custom chart for data visualization')
     embed.add_field(name='test',
                     value='Simple sanity check')
     embed.add_field(name='regrade-request',
