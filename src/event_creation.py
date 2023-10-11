@@ -3,10 +3,11 @@
 ###########################
 import datetime
 from datetime import timedelta
-from discord_components import Button, ButtonStyle, Select, SelectOption
+from discord.ui import Button, Select, View
+from discord import SelectOption, ButtonStyle, Interaction
 import validators
 from discord.utils import get
-from discord.ext import tasks
+from discord.ext import tasks, commands
 from utils import EmailUtility
 
 import office_hours
@@ -27,26 +28,29 @@ async def create_event(ctx, testing_mode):
     ''' create event input flow '''
 
     if ctx.channel.name == 'instructor-commands':
+        button1 = Button(style=ButtonStyle.blurple, label='Assignment', custom_id='assignment')
+        button2 = Button(style=ButtonStyle.green, label='Exam', custom_id='exam')
+        button3 = Button(style=ButtonStyle.grey, label='Project', custom_id='project')
+        button4 = Button(style=ButtonStyle.red, label='Office Hour', custom_id='office-hour')
+        view = View()
+        view.add_item(button1)
+        view.add_item(button2)
+        view.add_item(button3)
+        view.add_item(button4)
         await ctx.send(
-            'Which type of event would you like to create?',
-            components=[
-                Button(style=ButtonStyle.blue, label='Assignment', custom_id='assignment'),
-                Button(style=ButtonStyle.green, label='Exam', custom_id='exam'),
-                Button(style=ButtonStyle.grey, label='Project', custom_id='project'),
-                Button(style=ButtonStyle.red, label='Office Hour', custom_id='office-hour')
-            ],
+            'Which type of event would you like to create?', view = view
         )
         def check(m):
             return m.author == ctx.author and m.channel == ctx.channel
-
+        """
         if testing_mode:
             button_clicked = await BOT.wait_for('message', timeout = 5, check = check)
             button_clicked = button_clicked.content
         else:
             button_clicked = (await BOT.wait_for('button_click')).custom_id
-
-        if button_clicked == 'assignment':
-            await ctx.send('What would you like the assignment to be called')
+        """
+        async def button_callback(interaction):
+            await interaction.response.send_message('What would you like the assignment to be called')
             msg = await BOT.wait_for('message', timeout = 60.0, check = check)
             title = msg.content.strip()
 
@@ -87,8 +91,11 @@ async def create_event(ctx, testing_mode):
             )
 
             await ctx.send('Assignment successfully created!')
-            await cal.display_events(None)
-        elif button_clicked == 'project':
+            await cal.display_events(ctx)
+
+        button1.callback = button_callback #assigns to the assignment button the function above
+        """
+        if button_clicked == 'project':
             await ctx.send('What is the title of this project?')
             msg = await BOT.wait_for('message', timeout=60.0, check=check)
             project_title = msg.content.strip()
@@ -269,7 +276,7 @@ async def create_event(ctx, testing_mode):
             )
 
             await ctx.send('Office hour successfully created!')
-
+        """
     else:
         await ctx.author.send('`!create` can only be used in the `instructor-commands` channel')
         await ctx.message.delete()

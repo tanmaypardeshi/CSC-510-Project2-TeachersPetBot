@@ -15,7 +15,7 @@ from discord import Embed
 from discord.ext import commands
 from discord.utils import get
 from discord import __version__ as discord_version
-from discord_components import DiscordComponents
+#from discord_components import DiscordComponents
 
 from dotenv import load_dotenv
 
@@ -64,7 +64,7 @@ async def on_ready():
     global TESTING_MODE
     TESTING_MODE = False
 
-    DiscordComponents(bot)
+    #DiscordComponents(bot)
     db.connect()
     db.mutation_query('''
         CREATE TABLE IF NOT EXISTS ta_office_hours (
