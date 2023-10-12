@@ -94,9 +94,9 @@ async def create_event(ctx, testing_mode):
             await cal.display_events(ctx)
 
         button1.callback = button_callback #assigns to the assignment button the function above
-        """
-        if button_clicked == 'project':
-            await ctx.send('What is the title of this project?')
+
+        async def project_button_callback(interaction):
+            await interaction.response.send_message('What is the title of this project?')
             msg = await BOT.wait_for('message', timeout=60.0, check=check)
             project_title = msg.content.strip()
 
@@ -129,9 +129,11 @@ async def create_event(ctx, testing_mode):
                 [ctx.guild.id, project_title, link, description, due_date]
             )
             await ctx.send('Project successfully created!')
+            await cal.display_events(ctx) ## needed so the calander updates
+        button3.callback = project_button_callback #assigns the project button to the function directly above
 
-        elif button_clicked == 'exam':
-            await ctx.send('What is the title of this exam?')
+        async def exam_button_callback(interaction):
+            await interaction.response.send_message('What is the title of this exam?')
             msg = await BOT.wait_for('message', timeout = 60.0, check = check)
             title = msg.content.strip()
 
@@ -192,8 +194,12 @@ async def create_event(ctx, testing_mode):
             )
 
             await ctx.send('Exam successfully created!')
-            await cal.display_events(None)
-        elif button_clicked == 'office-hour':
+            await cal.display_events(ctx) ## updates the calender channel on discord
+        button2.callback = exam_button_callback
+
+        async def office_hour_button_callback(interaction):
+            instructor = None
+            day = None
             leadrole = get(ctx.guild.roles, name='Instructor')
             all_instructors = leadrole.members
 
@@ -203,80 +209,91 @@ async def create_event(ctx, testing_mode):
 
             options = [SelectOption(label=instr.name, value=instr.name)
                 for instr in all_instructors]
-
-            await ctx.send(
-                'Which instructor will this office hour be for?',
-                components=[
-                    Select(
+            instructor_select = Select(
                         placeholder='Select an instructor', #all_instructors[0].name,
                         options=options
                     )
-                ]
+            instructor_view = View()
+            instructor_view.add_item(instructor_select)
+            await interaction.response.send_message(
+                'Which instructor will this office hour be for?',
+                view = instructor_view
             )
+            """
             if testing_mode:
                 instructor = await BOT.wait_for('message', timeout = 5, check = check)
                 instructor = instructor.content
             else:
                 instructor = (await BOT.wait_for('select_option')).values[0]
-            await ctx.send(
-                'Which day would you like the office hour to be on?',
-                components=[
-                    Select(
-                        placeholder='Select a day',
-                        options=[
-                            SelectOption(label='Monday', value='Mon'),
-                            SelectOption(label='Tuesday', value='Tue'),
-                            SelectOption(label='Wednesday', value='Wed'),
-                            SelectOption(label='Thursday', value='Thu'),
-                            SelectOption(label='Friday', value='Fri'),
-                            SelectOption(label='Saturday', value='Sat'),
-                            SelectOption(label='Sunday', value='Sun')
-                        ]
-                    )
-                ]
-            )
-
+            """
+            day_select = Select(placeholder='Select a day',
+                            options=[
+                                SelectOption(label='Monday', value='Mon'),
+                                SelectOption(label='Tuesday', value='Tue'),
+                                SelectOption(label='Wednesday', value='Wed'),
+                                SelectOption(label='Thursday', value='Thu'),
+                                SelectOption(label='Friday', value='Fri'),
+                                SelectOption(label='Saturday', value='Sat'),
+                                SelectOption(label='Sunday', value='Sun')
+                            ])
+            day_view = View()
+            day_view.add_item(day_select)
+            #function to respond to instructor selection
+            async def instructor_select_callback(interaction):
+                instructor = instructor_select.values[0] ## assigns instructor with the selected instructor
+                print(instructor)
+                await interaction.response.send_message(
+                    'Which day would you like the office hour to be on?',
+                    view=day_view
+                )
+            instructor_select.callback = instructor_select_callback
+            """
             if testing_mode:
                 day = await BOT.wait_for('message', timeout = 5, check = check)
                 day = day.content
             else:
                 day = (await BOT.wait_for('select_option')).values[0]
-            await ctx.send('What is the start time of the office hour?\nEnter in 24-hour format' +
-                ' e.g. an starting at 1:59pm can be inputted as 13:59')
-            msg = await BOT.wait_for('message', timeout = 60.0, check = check)
-            t_start = msg.content.strip()
-            try:
-                t_start = datetime.datetime.strptime(t_start, '%H:%M')
-            except ValueError:
-                await ctx.send('Invalid Time format. Aborting.')
-                return
+            """
+            async def day_select_callback(interaction):
+                day = day_select.values[0]
+                print(day)
+                await interaction.response.send_message('What is the start time of the office hour?\nEnter in 24-hour format' +
+                    ' e.g. an starting at 1:59pm can be inputted as 13:59')
+                msg = await BOT.wait_for('message', timeout = 60.0, check = check)
+                t_start = msg.content.strip()
+                try:
+                    t_start = datetime.datetime.strptime(t_start, '%H:%M')
+                except ValueError:
+                    await ctx.send('Invalid Time format. Aborting.')
+                    return
 
-            await ctx.send('What is the end time of the office hour?\nEnter in 24-hour format' +
-                ' e.g. an exam ending at 1:59pm can be inputted as 13:59')
-            msg = await BOT.wait_for('message', timeout = 60.0, check = check)
-            t_end= msg.content.strip()
-            try:
-                t_end = datetime.datetime.strptime(t_end, '%H:%M')
-            except ValueError:
-                await ctx.send('Invalid Time format. Aborting.')
-                return
-
-            office_hours.add_office_hour(
-                ctx.guild,
-                office_hours.TaOfficeHour(
-                    instructor,
-                    day,
-                    (t_start, t_end)
+                await ctx.send('What is the end time of the office hour?\nEnter in 24-hour format' +
+                    ' e.g. an exam ending at 1:59pm can be inputted as 13:59')
+                msg = await BOT.wait_for('message', timeout = 60.0, check = check)
+                t_end= msg.content.strip()
+                try:
+                    t_end = datetime.datetime.strptime(t_end, '%H:%M')
+                except ValueError:
+                    await ctx.send('Invalid Time format. Aborting.')
+                    return
+                office_hours.add_office_hour(
+                    ctx.guild,
+                    office_hours.TaOfficeHour(
+                        instructor,
+                        day,
+                        (t_start, t_end)
+                    )
                 )
-            )
 
-            db.mutation_query(
-                'INSERT INTO ta_office_hours VALUES (?, ?, ?, ?, ?)',
-                [ctx.guild.id, instructor, day, t_start, t_end]
-            )
+                db.mutation_query(
+                    'INSERT INTO ta_office_hours VALUES (?, ?, ?, ?, ?)',
+                    [ctx.guild.id, instructor, day, t_start, t_end]
+                )
 
-            await ctx.send('Office hour successfully created!')
-        """
+                await ctx.send('Office hour successfully created!')
+                await cal.display_events(ctx)  ## updates the calender channel on discord with new office hours
+            day_select.callback = day_select_callback ## sets the day selection button to call to the correct function
+        button4.callback = office_hour_button_callback
     else:
         await ctx.author.send('`!create` can only be used in the `instructor-commands` channel')
         await ctx.message.delete()
