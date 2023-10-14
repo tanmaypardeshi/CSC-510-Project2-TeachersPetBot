@@ -23,7 +23,8 @@ async def test_spam(testing_bot):
     await ctx.send("message 4")
     await ctx.send("message 5")
     await ctx.send("message 6")
-    messages = await qna_channel.history(limit=1).flatten()
+    #messages = await qna_channel.history(limit=1).flatten()
+    messages = [message async for message in qna_channel.history(limit=1)]
     
 
 

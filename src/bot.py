@@ -245,6 +245,9 @@ async def on_message(message):
             f.truncate(0)
 
     # allow messages from test bot
+    print(message.author.bot)
+    print(message.author.id)
+    print(Test_bot_application_ID)
     if message.author.bot and message.author.id == Test_bot_application_ID:
         ctx = await bot.get_context(message)
         await bot.invoke(ctx)
@@ -418,6 +421,7 @@ async def office_hour_command(ctx, command, *args):
 ###########################
 @bot.command(name='ask', help='Ask question. Please put question text in quotes.')
 async def ask_question(ctx, question):
+    print("Bot asked a question?")
     ''' ask question command '''
     # make sure to check that this is actually being asked in the Q&A channel
     if ctx.channel.name == 'q-and-a':
