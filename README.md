@@ -4,17 +4,17 @@ https://drive.google.com/file/d/1AN1_ogV7DrMxMMEdWf1HOMlxwH-fbyPm/view?usp=shari
   
   <h1 align="center"> Teacher's Pet </h1>
   
-<h2 align="center"> Streamline Your Class Discord</h1>
+<h2 align="center"> Streamline Your Class Discord</h2>
 
 
 [![DOI](https://zenodo.org/badge/429658277.svg)](https://zenodo.org/badge/latestdoi/429658277)
-![Python](https://img.shields.io/badge/python-v3.7+-brightgreen.svg)
+![Python](https://img.shields.io/badge/python-v3.10+-brightgreen.svg)
 ![GitHub](https://img.shields.io/github/license/chandur626/TeachersPetBot)
-![GitHub issues](https://img.shields.io/github/issues/chandur626/TeachersPetBot)
-![GitHub closed issues](https://img.shields.io/github/issues-closed/chandur626/TeachersPetBot)
-![Lines of code](https://tokei.rs/b1/github/chandur626/TeachersPetBot)
+![GitHub issues](https://img.shields.io/github/issues/tanmaypardeshi/CSC-510-Project2-TeachersPetBot)
+![GitHub closed issues](https://img.shields.io/github/issues-closed/tanmaypardeshi/CSC-510-Project2-TeachersPetBot)
+![Lines of code](https://tokei.rs/b1/github/tanmaypardeshi/CSC-510-Project2-TeachersPetBot)
 [![codecov](https://codecov.io/gh/chandur626/TeachersPetBot/branch/main/graph/badge.svg?token=QTKU51PZSO)](https://codecov.io/gh/chandur626/TeachersPetBot)
-[![GitHub Workflow Status](https://github.com/chandur626/TeachersPetBot/actions/workflows/test.yml/badge.svg)](https://github.com/chandur626/TeachersPetBot/actions/workflows/test.yml)
+[![GitHub Workflow Status](https://github.com/tanmaypardeshi/CSC-510-Project2-TeachersPetBot/actions/workflows/test.yml/badge.svg)](https://github.com/tanmaypardeshi/CSC-510-Project2-TeachersPetBot/actions/workflows/test.yml)
 ![GitHub deployments](https://img.shields.io/github/deployments/Ashwinshankar98/TeachersPetBot/discord-bot-phase2)<br/>
 
 ## Contents

@@ -44,7 +44,7 @@ async def run_tests():
         print('testing attendance\n----------')
         await test_attendance.test(testing_bot, TEST_GUILD_ID)
         print('testing help\n----------')
-        #await test_help.test(testing_bot, TEST_GUILD_ID)
+        await test_help.test(testing_bot, TEST_GUILD_ID)
         print('testing regrade\n----------')
         #await test_regrade.test(testing_bot, TEST_GUILD_ID)
         
