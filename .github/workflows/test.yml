@@ -5,12 +5,10 @@ on:
     branches:
       - main
       - pylint
-      - !Create_Fix
   pull_request:
     branches:
       - main
       - pylint
-      - !Create_Fix
 
 jobs:
   build:
