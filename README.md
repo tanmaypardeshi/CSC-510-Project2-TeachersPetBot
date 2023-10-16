@@ -4,7 +4,7 @@ https://drive.google.com/file/d/1AN1_ogV7DrMxMMEdWf1HOMlxwH-fbyPm/view?usp=shari
   
   <h1 align="center"> Teacher's Pet </h1>
   
-<h2 align="center"> Streamline Your Class Discord</h1>
+<h2 align="center"> Streamline Your Class Discord</h2>
 
 
 [![DOI](https://zenodo.org/badge/429658277.svg)](https://zenodo.org/badge/latestdoi/429658277)
