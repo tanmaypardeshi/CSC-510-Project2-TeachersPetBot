@@ -15,7 +15,7 @@ from discord import Embed
 from discord.ext import commands
 from discord.utils import get
 from discord import __version__ as discord_version
-from discord_components import DiscordComponents
+#from discord_components import DiscordComponents
 
 from dotenv import load_dotenv
 
@@ -64,7 +64,7 @@ async def on_ready():
     global TESTING_MODE
     TESTING_MODE = False
 
-    DiscordComponents(bot)
+    #DiscordComponents(bot)
     db.connect()
     db.mutation_query('''
         CREATE TABLE IF NOT EXISTS ta_office_hours (
@@ -229,6 +229,7 @@ async def on_message(message):
     temp=[]
     ctx = await bot.get_context(message)
     print(message.content)
+    print(message.author.id)
     count = 0
     with open("spam.txt", "a",encoding='utf-8') as f:
         f.writelines(f"{str(message.author.id)}\n")
@@ -239,10 +240,14 @@ async def on_message(message):
                 count = count+1
 
         if count>5:
-            #await ctx.send("spam;too many messages")
+            #await ctx.send("spam;too many messages") --> this feature is commented out right now because it
+            #litterly tells you that you've sent too many messages every 5 messages you send, which is rarely even spam
             f.truncate(0)
 
     # allow messages from test bot
+    print(message.author.bot)
+    print(message.author.id)
+    print(Test_bot_application_ID)
     if message.author.bot and message.author.id == Test_bot_application_ID:
         ctx = await bot.get_context(message)
         await bot.invoke(ctx)
@@ -416,6 +421,7 @@ async def office_hour_command(ctx, command, *args):
 ###########################
 @bot.command(name='ask', help='Ask question. Please put question text in quotes.')
 async def ask_question(ctx, question):
+    print("Bot asked a question?")
     ''' ask question command '''
     # make sure to check that this is actually being asked in the Q&A channel
     if ctx.channel.name == 'q-and-a':
@@ -602,7 +608,7 @@ async def custom_chart(ctx, title: str, chart: str, *args):
         print("Make sure every data-label singularly matches a datapoint (A B C 1 2 3")
         return
     data_count = int(len(args) / 2)
-    with open('data/charts/chartstorage.json', 'r', encoding='utf-8') as file:
+    with open('../data/charts/chartstorage.json', 'r', encoding='utf-8') as file:
         storage = json.load(file)
 
     labels_list = []
@@ -635,7 +641,7 @@ async def custom_chart(ctx, title: str, chart: str, *args):
     shortened_link = shortener.tinyurl.short(link)
 
     await update_chart(storage, title, shortened_link)
-    with open('data/charts/chartstorage.json', 'w', encoding='utf-8') as file:
+    with open('../data/charts/chartstorage.json', 'w', encoding='utf-8') as file:
         json.dump(storage, file, indent=4)
     await ctx.send("Here is your chart:")
     await ctx.send(f"{shortened_link}")
@@ -651,7 +657,7 @@ async def checkchart(ctx, name: str):
         Returns:
             returns the custom chart in the chat box if it exists
     """
-    with open('data/charts/chartstorage.json', 'r', encoding='utf-8') as file:
+    with open('../data/charts/chartstorage.json', 'r', encoding='utf-8') as file:
         storage = json.load(file)
         if not storage or storage[name] == '':
             await ctx.send("No chart with that name!")
