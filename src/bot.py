@@ -122,6 +122,14 @@ async def on_ready():
         )
     ''')
 
+    db.mutation_query('''
+        CREATE TABLE IF NOT EXISTS rank (
+            user_id     INT NOT NULL,
+            experience  INT DEFAULT 0,
+            level       INT DEFAULT 0            
+        )
+    ''')
+
     event_creation.init(bot)
     office_hours.init(bot)
     await cal.init(bot)
@@ -163,7 +171,17 @@ async def on_guild_join(guild):
                 await channel.send(instructors + " is the Instructor!")
             else:
                 await channel.send(instructors + " are the Instructors!")
-        await channel.send("To add Instructors, type \"!setInstructor @<member>\"")
+        await channel.send("To add Instructors, type \"!setInstructor @<member>\"")\
+        
+        # Initialize ranking system 
+
+        for x in guild.members:
+            if x.bot == False:
+                insert_query = f"INSERT INTO rank (user_id) VALUES ({x.id})"
+                db.mutation_query(insert_query)
+        print("Ranking system initialized!")
+        await channel.send("Ranking system initialized!")
+    
         #await channel.send("To remove instructors, type \"!removeInstructor @<member>\"")
         #Create Text channels if they don't exist
         overwrites = {guild.default_role: discord.PermissionOverwrite(read_messages=False,
@@ -189,6 +207,7 @@ async def on_guild_join(guild):
             await channel.send("regrade-requests channel has been added!")
         else:
             await channel.send("regrade-requests channel is already present!")
+            
 
 ###########################
 # Function: on_member_join
@@ -199,8 +218,11 @@ async def on_guild_join(guild):
 @bot.event
 async def on_member_join(member):
     channel = get(member.guild.text_channels, name='general')
-    await channel.send(f"Hello {member}!")
+    insert_query = f"INSERT INTO rank (user_id) VALUES (?)"
+    db.mutation_query(insert_query, (member.id,))
+    await channel.send(f"Hello {member}! Your rank details are as follows. Level: 0, Experience: 0")
     await member.send(f'You have joined {member.guild.name}!')
+
 
 ###########################
 # Function: on_member_remove
@@ -211,6 +233,8 @@ async def on_member_join(member):
 @bot.event
 async def on_member_remove(member):
     channel = get(member.guild.text_channels, name='general')
+    delete_query = f"DELETE FROM rank where user_id=?"
+    db.mutation_query(delete_query, (member.id,))
     await channel.send(f"{member.name} has left")
 
 ###########################
@@ -280,6 +304,19 @@ async def on_message(message):
     else:
         pass
 
+    # Ranking System 
+    if message.author.bot == False:
+        id_query = f"SELECT * FROM rank where user_id=?"
+        result = db.select_query(id_query, (message.author.id,))
+        result = result.fetchone()
+        if result[1] == 99: 
+            message.channel.send(f"{message.author.mention} has advanced to level {result[2]+1}!")
+            update_query = f"UPDATE rank SET experience=0, level=?  WHERE user_id=?"
+            db.mutation_query(update_query, (result[2]+1, message.author.id))
+        else:
+            update_query = f"UPDATE rank SET experience=? WHERE user_id=?"        
+            db.mutation_query(update_query, (result[1]+1, message.author.id))               
+
 
 ###########################
 # Function: on_message_edit
@@ -308,6 +345,39 @@ async def on_message_edit(before, after):
 async def test(ctx):
     ''' simple sanity check '''
     await ctx.send('test successful')
+
+###########################
+# Function: get_rank
+# Description: Command used to get level and experience
+# Inputs:
+#      - ctx: context of the command
+#      - member: user to whose rank is to be printed
+# Outputs:
+#      - Sends information back to channel
+###########################
+@bot.command(name='rank', help='Get rank of user')
+async def get_rank(ctx, member: discord.User = None):
+    query = "SELECT * FROM rank where user_id=?"
+    rank_query = "SELECT p1.*, (SELECT COUNT(*) FROM rank AS p2 WHERE p2.level < p1.level) AS level_rank FROM rank AS p1 WHERE p1.user_id=?"
+    # Get your own rank
+    if member == None:
+        result = db.select_query(query, (ctx.author.id,))
+        rank_result = db.select_query(rank_query, (ctx.author.id,))
+        result = result.fetchone()
+        rank = rank_result.fetchone()
+        print(rank)
+        await ctx.channel.send(f"{ctx.author.mention}'s Rank = {rank[3]}, Level = {result[2]} and Experience = {result[1]}")
+    # Get some other users rank
+    else:
+        result = db.select_query(query, (member.id,))           
+        rank_result = db.select_query(rank_query, (member.id,))
+        result = result.fetchone()
+        rank = rank_result.fetchone()
+        print(rank)
+        if result == None:
+            await ctx.channel.send("No such user in the database")
+        else:
+            await ctx.channel.send(f"{member.mention}'s Rank = {rank[3]}, Level = {result[2]} and Experience = {result[1]}")
 
 ###########################
 # Function: get_instructor
