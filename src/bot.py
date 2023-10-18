@@ -196,11 +196,31 @@ async def on_guild_join(guild):
 # Inputs:
 #      - member: the user details
 ###########################
+# @bot.event
+# async def on_member_join(member):
+#     channel = get(member.guild.text_channels, name='general')
+#     await channel.send(f"Hello {member}!")
+#     await member.send(f'You have joined {member.guild.name}!')
+
 @bot.event
 async def on_member_join(member):
     channel = get(member.guild.text_channels, name='general')
-    await channel.send(f"Hello {member}!")
-    await member.send(f'You have joined {member.guild.name}!')
+    
+    welcome_message = f"Hello {member}! Welcome to {member.guild.name} :) These are the important links, please follow it: .\n"
+    
+    # Retrieve important links from the 'important-links' channel
+    important_links_channel = get(member.guild.text_channels, name='important-links')
+    
+    if important_links_channel:
+        async for message in important_links_channel.history(limit=10):
+            link_match = re.search(r'^(.*?):\s*(https:\/\/[^\s]+)', message.content)
+            if link_match:
+                link_name, link_url = link_match.group(1), link_match.group(2)
+                welcome_message += f"**[{link_name}]({link_url})**\n"
+    
+    await member.send(welcome_message)
+    #await channel.send(welcome_message)
+    #await member.send(f'You have joined {member.guild.name}!')    
 
 ###########################
 # Function: on_member_remove
