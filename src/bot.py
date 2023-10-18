@@ -47,12 +47,26 @@ print(TOKEN)
 BOT_VERSION=os.getenv('VERSION')
 print(BOT_VERSION)
 Test_bot_application_ID = int(os.getenv('TEST_BOT_APP_ID'))
+guild_id = int(os.getenv('TEST_GUILD_ID'))  ## needed for spam detection
 
 TESTING_MODE = None
 
 intents=discord.Intents.all()
 bot = commands.Bot(command_prefix='!', description='This is TeachersPetBot!', intents=intents)
 bot.remove_command("help")
+
+###########################
+# Function: clear_spam
+# Description: run as a constant task that clears the spam.txt file
+# Inputs:
+#      - None
+###########################
+async def clear_spam():
+    while True:
+        #print("We cleared") ## for testing purposes
+        await asyncio.sleep(14) #14 seconds betweeen spam clearing
+        with open("spam.txt", "r+", encoding='utf-8') as f:
+            f.truncate(0) #delete the user_id of the last message sent
 
 ###########################
 # Function: on_ready
@@ -63,7 +77,6 @@ async def on_ready():
     ''' run on bot start-up '''
     global TESTING_MODE
     TESTING_MODE = False
-
     #DiscordComponents(bot)
     db.connect()
     db.mutation_query('''
@@ -121,15 +134,14 @@ async def on_ready():
             is_active   BOOLEAN NOT NULL CHECK (is_active IN (0, 1))
         )
     ''')
-
     event_creation.init(bot)
     office_hours.init(bot)
-    await cal.init(bot)
     print('Logged in as')
     print(bot.user.name)
     print(bot.user.id)
     print('------')
-
+    bot.loop.create_task(clear_spam()) ## set up a task for the bot to clear out spam from the txt file
+    await cal.init(bot) ##this needed to be moved below bc otherwise the stuff above is never called
 ###########################
 # Function: on_guild_join
 # Description: run when a the bot joins a guild
@@ -222,7 +234,7 @@ async def on_member_remove(member):
 @bot.event
 async def on_message(message):
     ''' run on message sent to a channel '''
-    #spam detection
+    #Upgraded Spam detection
 
     url_data=[]
     message_links = []
@@ -240,9 +252,19 @@ async def on_message(message):
                 count = count+1
 
         if count>5:
-            #await ctx.send("spam;too many messages") --> this feature is commented out right now because it
-            #litterly tells you that you've sent too many messages every 5 messages you send, which is rarely even spam
-            f.truncate(0)
+            guild = bot.get_guild(guild_id)
+            member = guild.get_member(message.author.id)
+            muted = discord.utils.get(guild.roles, name="Mute")
+            #await member.add_roles(muted)
+            seconds=0
+            minutes=4
+            hours=0
+            days=0
+            await member.timeout(timedelta(seconds=seconds, minutes=minutes, hours= hours, days=days))
+            await ctx.send(f"{message.author.name} has been muted") #lets the everyone know who was timed out
+        elif count>4:
+            await ctx.send(f"Warning, {message.author.name} will be muted if they continue to spam")
+
 
     # allow messages from test bot
     print(message.author.bot)

@@ -30,7 +30,6 @@ async def run_tests():
     exit_status = 0
     await begin_tests()
     try:
-
         print('testing QNA\n----------')
         await test_qna.test(testing_bot, TEST_GUILD_ID)
         print('testing office hours\n----------')
@@ -46,13 +45,11 @@ async def run_tests():
         print('testing help\n----------')
         await test_help.test(testing_bot, TEST_GUILD_ID)
         print('testing regrade\n----------')
-        #await test_regrade.test(testing_bot, TEST_GUILD_ID)
-        
+        await test_regrade.test(testing_bot, TEST_GUILD_ID)
         print('testing email address configuration\n----------')
         await test_email_address.test(testing_bot, TEST_GUILD_ID)
         print('testing chart\n-----------')
         await test_chart.test(testing_bot, TEST_GUILD_ID)
-
         print('testing email utility\n-----------')
         #await test_email_utility.test()
     except AssertionError as ex:
