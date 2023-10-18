@@ -32,6 +32,7 @@ import attendance
 import help_command
 import regrade
 import utils
+from bardapi import Bard
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '1'
 
@@ -47,6 +48,13 @@ print(TOKEN)
 BOT_VERSION=os.getenv('VERSION')
 print(BOT_VERSION)
 Test_bot_application_ID = int(os.getenv('TEST_BOT_APP_ID'))
+bard_api_key = os.getenv('BARD_API_KEY')
+#print(f'bard_api_key =  {bard_api_key} ')
+#print('check1')
+#print('check2')
+bard = Bard(token = bard_api_key)
+
+
 
 TESTING_MODE = None
 
@@ -308,6 +316,33 @@ async def on_message_edit(before, after):
 async def test(ctx):
     ''' simple sanity check '''
     await ctx.send('test successful')
+
+##################################
+#Function : bard enabled
+# Description: Integrating bard api
+##################################
+def bard_response(user_input):
+    #response = bard.query(prompt)
+    response = bard.get_answer(str(user_input))['content']
+    return response
+@bot.command()
+async def Aichat(ctx):
+    await ctx.send("You are now in a AI chat session. Type 'exit' to end the chat.")
+    def check(msg):
+        return msg.author == ctx.author
+    while True:
+        try:
+            user_input = await bot.wait_for("message", check=check, timeout=300)  # Adjust the timeout as needed
+
+            if user_input.content.lower() == 'exit':
+                await ctx.send("Chat session ended.")
+                break
+            chat_reply = bard_response(user_input.content)
+            await ctx.send(chat_reply)
+        except asyncio.TimeoutError:
+            await ctx.send("Chat session timed out. Type `!chat` to start a new session.")
+            break
+
 
 ###########################
 # Function: get_instructor
