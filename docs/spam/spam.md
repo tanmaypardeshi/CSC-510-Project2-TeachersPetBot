@@ -4,7 +4,7 @@ The code that implements the above commands is located [here](../../src/spam.py)
 
 
 # Code Description
-This code implements a spam detector that issues warnings to students who send too many messages based on a message threshold and a time-allowed threshold. If a user sends more messages than allowed in a certain amount of time, then that user will be put in time out after a warning. 
+This code implements a spam detector that issues warnings to students who send too many messages based on a message threshold and a time-allowed threshold. If a user sends more messages than allowed in a certain amount of time, then that user will be put in time-out after a warning. 
 
 ## Functions
 def init(bot):
