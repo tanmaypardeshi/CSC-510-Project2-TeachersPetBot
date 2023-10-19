@@ -1,5 +1,3 @@
-https://drive.google.com/file/d/1AN1_ogV7DrMxMMEdWf1HOMlxwH-fbyPm/view?usp=sharing
-
 <p align="center"><img src="https://github.com/Ashwinshankar98/TeachersPetBot/blob/main/images/teacherspet.png" alt="alt text" width=200 height=200>
   
   <h1 align="center"> Teacher's Pet </h1>
@@ -76,14 +74,14 @@ In addition to the packages from [requirements.txt](https://github.com/tanmaypar
 * [Python 3.9.7](https://www.python.org/downloads/)
 * [Sqlite](https://www.sqlite.org/download.html)
 <!-- Are there any changes here? -->
-To install and run Teacher's Pet, follow instructions in the [Installation and Testing Guide](https://github.com/Ashwinshankar98/TeachersPetBot/blob/main/Installation.md).
+To install and run Teacher's Pet, follow the instructions in the [Installation and Testing Guide](Installation.md).
 
 
 <a name="testing"></a>
 <!-- Are there any changes here? -->
 <h2>Testing </h2>
 
-To run tests on the Teacher's Pet, follow instructions in the [Installation and Testing Guide](https://github.com/Ashwinshankar98/TeachersPetBot/blob/main/Installation.md#Run-Tests).
+To run tests on the Teacher's Pet, follow instructions in the [Installation and Testing Guide](Installation.md).
 
 <hr />
 <!-- Are there any changes here? -->
