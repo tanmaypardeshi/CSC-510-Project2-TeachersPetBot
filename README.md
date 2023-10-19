@@ -55,7 +55,7 @@ For 4.0, we created new tools for instructors and students to use to improve cou
 <h4>Bard AI</h4>
 This feature allows you to chat with Bard, a large language model from Google AI. Bard can answer your questions, generate text, translate languages, and write different kinds of creative content.
 
-<h4>Interactive Greetings: Elevating the Welcome Message with Embedded Essential Links<h4>
+<h4>Interactive Greetings: Elevating the Welcome Message with Important Links<h4>
 This feature guarantees that whenever a new member joins, they are greeted with a warm and inclusive welcome message that not only extends a friendly reception but also provides them with all the necessary and significant links to get started and navigate the guild effectively.
 
 <h4>Upgraded Spam Detection</h4>
