@@ -21,6 +21,7 @@ from dotenv import load_dotenv
 
 from quickchart import QuickChart
 import pyshorteners
+from bardapi import Bard
 import db
 import profanity
 import event_creation
@@ -33,7 +34,6 @@ import help_command
 import regrade
 import utils
 import spam
-from bardapi import Bard
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '1'
 
@@ -49,11 +49,10 @@ print(TOKEN)
 BOT_VERSION=os.getenv('VERSION')
 print(BOT_VERSION)
 Test_bot_application_ID = int(os.getenv('TEST_BOT_APP_ID'))
-bard_api_key = os.getenv('BARD_API_KEY')
-#print(f'bard_api_key =  {bard_api_key} ')
-#print('check1')
-#print('check2')
-bard = Bard(token = bard_api_key)
+#bard_api_key = os.getenv('BARD_API_KEY', None)
+#bard = None
+#if bard_api_key:
+#    bard = Bard(token = bard_api_key)
 
 
 guild_id = int(os.getenv('TEST_GUILD_ID'))  ## needed for spam detection
@@ -323,28 +322,30 @@ async def test(ctx):
 #Function : bard enabled
 # Description: Integrating bard api
 ##################################
-def bard_response(user_input):
-    response = bard.get_answer(str(user_input))['content']
-    return response
 @bot.command()
 async def Aichat(ctx):
-    await ctx.send("You are now in a AI chat session. Type 'exit' to end the chat.")
+    bard_api_key = os.getenv('BARD_API_KEY', None)
+    bard = None
+    if bard_api_key:
+        bard = Bard(token = bard_api_key)
+    await ctx.send("You are now in a AI chat session."
+                    "Type 'exit' to end the chat.")
     def check(msg):
         return msg.author == ctx.author
     while True:
         try:
-            user_input = await bot.wait_for("message", check=check, timeout=300)  # Adjust the timeout as needed
-
+            user_input = await bot.wait_for("message", check=check, timeout=300)
             if user_input.content.lower() == 'exit':
                 await ctx.send("Chat session ended.")
                 break
-            chat_reply = bard_response(user_input.content)
-            await ctx.send(chat_reply)
+            if bard:
+                chat_reply = bard.get_answer(str(user_input.content))['content']
+                await ctx.send(chat_reply)
+            else:
+                await ctx.send("Bard API is not available.")
         except asyncio.TimeoutError:
             await ctx.send("Chat session timed out. Type `!chat` to start a new session.")
             break
-
-
 ###########################
 # Function: get_instructor
 # Description: Command used to give Instructor role out by instructors
@@ -908,83 +909,51 @@ async def custom_begin_tests(ctx):
 @custom_help.command('create')
 async def custom_create(ctx):
     await help_command.create(ctx)
-
-
 @custom_help.command('end-tests')
 async def custom_end_tests(ctx):
     await help_command.end_tests(ctx)
-
-
 @custom_help.command('oh')
 async def custom_oh(ctx):
     await help_command.oh(ctx)
-
-
 @custom_help.command('ping')
 async def custom_ping(ctx):
     await help_command.ping(ctx)
-
-
 @custom_help.command('poll')
 async def custom_poll(ctx):
     await help_command.poll(ctx)
-
-
 @custom_help.command('setInstructor')
 async def custom_setInstructor(ctx):
     await help_command.setInstructor(ctx)
-
-
 @custom_help.command('stats')
 async def custom_stats(ctx):
     await help_command.stats(ctx)
-
-
 @custom_help.command('test')
 async def custom_test(ctx):
     await help_command.test(ctx)
-
-
 @custom_help.command('regrade-request')
 async def custom_regrade_request(ctx):
     await help_command.regrade_request(ctx)
-
-
 @custom_help.command('update-request')
 async def custom_update_request(ctx):
     await help_command.update_request(ctx)
-
-
 @custom_help.command('display-requests')
 async def custom_display_requests(ctx):
     await help_command.display_requests(ctx)
-
-
 @custom_help.command('remove-request')
 async def custom_remove_request(ctx):
     await help_command.remove_request(ctx)
-
-
 @custom_help.command('create_email')
 async def custom_create_email(ctx):
     await help_command.create_email(ctx)
-
-
 @custom_help.command('update_email')
 async def custom_update_email(ctx):
     await help_command.update_email(ctx)
-
-
 @custom_help.command('remove_email')
 async def custom_remove_email(ctx):
     await help_command.remove_email(ctx)
-
-
 @custom_help.command('view_email')
 async def custom_view_email(ctx):
     await help_command.view_email(ctx)
-
-
 ###########################
 # Function: begin_tests
 # Description: Start the automated testing
@@ -995,12 +964,9 @@ async def custom_view_email(ctx):
 async def begin_tests(ctx):
     ''' start test command '''
     global TESTING_MODE
-
     if ctx.author.id != Test_bot_application_ID:
         return
-
     TESTING_MODE = True
-
     test_oh_chan = next((ch for ch in ctx.guild.text_channels
         if 'office-hour-test' in ch.name), None)
     if test_oh_chan:
