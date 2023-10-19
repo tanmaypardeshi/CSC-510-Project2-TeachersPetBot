@@ -9,13 +9,11 @@ import json
 from psutil import Process, virtual_memory
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
-
 import discord
 from discord import Embed
 from discord.ext import commands
 from discord.utils import get
 from discord import __version__ as discord_version
-#from discord_components import DiscordComponents
 
 from dotenv import load_dotenv
 
@@ -31,8 +29,9 @@ import qna
 import attendance
 import help_command
 import regrade
-import utils
 import spam
+from rank_card import draw_card
+
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '1'
 
@@ -182,17 +181,14 @@ async def on_guild_join(guild):
                 await channel.send(instructors + " is the Instructor!")
             else:
                 await channel.send(instructors + " are the Instructors!")
-        await channel.send("To add Instructors, type \"!setInstructor @<member>\"")\
-        
-        # Initialize ranking system 
-
+        await channel.send("To add Instructors, type \"!setInstructor @<member>\"")
+        # Initialize ranking system
         for x in guild.members:
             if x.bot == False:
                 insert_query = f"INSERT INTO rank (user_id) VALUES ({x.id})"
                 db.mutation_query(insert_query)
         print("Ranking system initialized!")
         await channel.send("Ranking system initialized!")
-    
         #await channel.send("To remove instructors, type \"!removeInstructor @<member>\"")
         #Create Text channels if they don't exist
         overwrites = {guild.default_role: discord.PermissionOverwrite(read_messages=False,
@@ -217,8 +213,7 @@ async def on_guild_join(guild):
             await guild.create_text_channel('regrade-requests')
             await channel.send("regrade-requests channel has been added!")
         else:
-            await channel.send("regrade-requests channel is already present!")
-            
+            await channel.send("regrade-requests channel is already present!")            
 
 ###########################
 # Function: on_member_join
@@ -362,24 +357,41 @@ async def get_rank(ctx, member: discord.User = None):
     query = "SELECT * FROM rank where user_id=?"
     rank_query = "SELECT p1.*, (SELECT COUNT(*) FROM rank AS p2 WHERE p2.level < p1.level) AS level_rank FROM rank AS p1 WHERE p1.user_id=?"
     # Get your own rank
-    if member == None:
+    if member is None:
         result = db.select_query(query, (ctx.author.id,))
         rank_result = db.select_query(rank_query, (ctx.author.id,))
         result = result.fetchone()
         rank = rank_result.fetchone()
-        print(rank)
-        await ctx.channel.send(f"{ctx.author.mention}'s Rank = {rank[3]}, Level = {result[2]} and Experience = {result[1]}")
+        card = await draw_card(
+            xp=result[1],
+            level=result[2],
+            rank=rank[3],
+            name=ctx.author.name,
+            image_url=ctx.author.display_avatar,
+            next_level_xp=100,            
+        )
+        file = discord.File(card, filename="levelcard.png") 
+        await ctx.channel.send(file=file)
     # Get some other users rank
     else:
         result = db.select_query(query, (member.id,))           
         rank_result = db.select_query(rank_query, (member.id,))
         result = result.fetchone()
         rank = rank_result.fetchone()
-        print(rank)
-        if result == None:
+        if result is None:
             await ctx.channel.send("No such user in the database")
         else:
-            await ctx.channel.send(f"{member.mention}'s Rank = {rank[3]}, Level = {result[2]} and Experience = {result[1]}")
+            card = await draw_card(
+                xp=result[1],
+                level=result[2],
+                rank=rank[3],
+                name=member.name,
+                image_url=member.display_avatar,
+                next_level_xp=100,                
+            )
+            file = discord.File(card, filename="levelcard.png") 
+            await ctx.channel.send(file=file)
+        
 
 ###########################
 # Function: get_instructor
