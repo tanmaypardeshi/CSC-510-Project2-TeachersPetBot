@@ -31,4 +31,4 @@ Enter the amount of time a user should be placed in timeout in the format outlin
 
 Successful execution will result in spam detector similar to below. 
 
-<p align="left"><img width=65% src="media/spam.gif"></p>
+<p align="left"><img width=65% src="../media/spam.gif"></p>
