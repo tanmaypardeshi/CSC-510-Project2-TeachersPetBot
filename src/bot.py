@@ -204,23 +204,18 @@ async def on_guild_join(guild):
 
 @bot.event
 async def on_member_join(member):
-    channel = get(member.guild.text_channels, name='general')
-    
-    welcome_message = f"Hello {member}! Welcome to {member.guild.name} :) These are the important links, please follow it: .\n"
-    
+    ''' run on guild join '''
+    #channel = get(member.guild.text_channels, name='general')
+    welcome_message = f"Hello {member}! Welcome to {member.guild.name} important links:.\n"
     # Retrieve important links from the 'important-links' channel
     important_links_channel = get(member.guild.text_channels, name='important-links')
-    
     if important_links_channel:
         async for message in important_links_channel.history(limit=10):
             link_match = re.search(r'^(.*?):\s*(https:\/\/[^\s]+)', message.content)
             if link_match:
                 link_name, link_url = link_match.group(1), link_match.group(2)
                 welcome_message += f"**[{link_name}]({link_url})**\n"
-    
     await member.send(welcome_message)
-    #await channel.send(welcome_message)
-    #await member.send(f'You have joined {member.guild.name}!')    
 
 ###########################
 # Function: on_member_remove
@@ -230,6 +225,7 @@ async def on_member_join(member):
 ###########################
 @bot.event
 async def on_member_remove(member):
+    ''' run on message edited '''
     channel = get(member.guild.text_channels, name='general')
     await channel.send(f"{member.name} has left")
 
@@ -260,8 +256,6 @@ async def on_message(message):
                 count = count+1
 
         if count>5:
-            #await ctx.send("spam;too many messages") --> this feature is commented out right now because it
-            #litterly tells you that you've sent too many messages every 5 messages you send, which is rarely even spam
             f.truncate(0)
 
     # allow messages from test bot
@@ -441,6 +435,7 @@ async def office_hour_command(ctx, command, *args):
 ###########################
 @bot.command(name='ask', help='Ask question. Please put question text in quotes.')
 async def ask_question(ctx, question):
+    ''' run on message edited '''
     print("Bot asked a question?")
     ''' ask question command '''
     # make sure to check that this is actually being asked in the Q&A channel
@@ -603,6 +598,7 @@ async def remove_regrade_request_error(ctx, error):
 @bot.command(name='ping', help='Returns Latency')
 
 async def ping(ctx):
+    ''' run on message edited '''
     start=time()
     message=await ctx.send(f"Pong! : {bot.latency*1000:,.0f} ms")
     end=time()
@@ -706,6 +702,7 @@ async def update_chart(storage, name, link):
 @bot.command(name='stats', help='shows bot stats')
 
 async def show_stats(ctx):
+    ''' run on message edited '''   
     embed = Embed(title="Bot stats",
                     colour=ctx.author.colour,
                     thumbnail=bot.user.avatar_url,
@@ -751,7 +748,7 @@ scheduler = AsyncIOScheduler()
 @bot.command(name='poll', help='Set Poll for a specified time and topic.')
 @commands.has_role('Instructor')
 async def create_poll(ctx, hours: int, question: str, *options):
-
+    ''' run on create poll '''
     if len(options) > 10:
         await ctx.send("You can only supply a maximum of 10 options.")
 
@@ -780,6 +777,7 @@ async def create_poll(ctx, hours: int, question: str, *options):
         scheduler.start()
 
 async def complete_poll(channel_id, message_id):
+    ''' run on message edited '''
     message = await bot.get_channel(channel_id).fetch_message(message_id)
 
     most_voted = max(message.reactions, key=lambda r: r.count)
@@ -791,6 +789,7 @@ async def complete_poll(channel_id, message_id):
 
 @bot.event
 async def on_raw_reaction_add(payload):
+    ''' run on message edited '''
     if payload.message_id in (poll[1] for poll in polls):
         message = await bot.get_channel(payload.channel_id).fetch_message(payload.message_id)
 
@@ -821,26 +820,31 @@ async def custom_profanity(ctx, pword):
 @bot.command(name='attendance', help='Gets the attendance of voice channel')
 @commands.has_role('Instructor')
 async def attend(ctx):
+    ''' run on message edited '''
     await attendance.compute(bot, ctx)
 
 
 @bot.command(name='create_email', help='Configures the specified email address against user.')
 async def create_email(ctx, email_id):
+    ''' run on message edited '''
     await email_address.create_email(ctx, email_id)
 
 
 @bot.command(name='update_email', help='Updates the configured email address against user.')
 async def update_email(ctx, email_id):
+    ''' run on message edited '''
     await email_address.update_email(ctx, email_id)
 
 
 @bot.command(name='view_email', help='displays the configured email address against user.')
 async def view_email(ctx):
+    ''' run on message edited '''
     await email_address.view_email(ctx)
 
 
 @bot.command(name='remove_email', help='deletes the configured email address against user.')
 async def delete_email(ctx):
+    ''' run on message edited '''
     await email_address.delete_email(ctx)
 
 ###########################
@@ -851,108 +855,88 @@ async def delete_email(ctx):
 ###########################
 @bot.group(name='help', invoke_without_command=True)
 async def custom_help(ctx):
+    ''' run on message edited '''
     await help_command.helper(ctx)
-
-
 @custom_help.command('answer')
 async def custom_answer(ctx):
+    ''' run on message edited '''
     await help_command.answer(ctx)
-
-
 @custom_help.command('ask')
 async def custom_ask(ctx):
+    ''' run on message edited '''
     await help_command.ask(ctx)
-
-
 @custom_help.command('attendance')
 async def custom_attendance(ctx):
+    ''' run on message edited '''
     await help_command.attendance(ctx)
-
-
 @custom_help.command('begin-tests')
 async def custom_begin_tests(ctx):
+    ''' run on message edited '''
     await help_command.begin_tests(ctx)
-
-
 @custom_help.command('create')
 async def custom_create(ctx):
+    ''' run on message edited '''
     await help_command.create(ctx)
-
-
 @custom_help.command('end-tests')
 async def custom_end_tests(ctx):
+    ''' run on message edited '''    
     await help_command.end_tests(ctx)
-
-
 @custom_help.command('oh')
 async def custom_oh(ctx):
+    ''' run on message edited '''    
     await help_command.oh(ctx)
-
-
 @custom_help.command('ping')
 async def custom_ping(ctx):
+    ''' run on message edited '''    
     await help_command.ping(ctx)
-
-
 @custom_help.command('poll')
 async def custom_poll(ctx):
+    ''' run on message edited '''    
     await help_command.poll(ctx)
-
-
 @custom_help.command('setInstructor')
 async def custom_setInstructor(ctx):
+    ''' run on message edited '''    
     await help_command.setInstructor(ctx)
-
-
 @custom_help.command('stats')
 async def custom_stats(ctx):
+    ''' run on message edited '''    
     await help_command.stats(ctx)
-
-
 @custom_help.command('test')
 async def custom_test(ctx):
+    ''' run on message edited '''    
     await help_command.test(ctx)
-
-
 @custom_help.command('regrade-request')
 async def custom_regrade_request(ctx):
+    ''' run on message edited '''    
     await help_command.regrade_request(ctx)
-
-
 @custom_help.command('update-request')
 async def custom_update_request(ctx):
+    ''' run on message edited '''    
     await help_command.update_request(ctx)
-
-
 @custom_help.command('display-requests')
 async def custom_display_requests(ctx):
+    ''' run on message edited '''    
     await help_command.display_requests(ctx)
-
-
 @custom_help.command('remove-request')
 async def custom_remove_request(ctx):
+    ''' run on message edited '''    
     await help_command.remove_request(ctx)
-
-
 @custom_help.command('create_email')
 async def custom_create_email(ctx):
+    ''' run on message edited '''    
     await help_command.create_email(ctx)
-
-
 @custom_help.command('update_email')
 async def custom_update_email(ctx):
+    ''' run on message edited '''    
     await help_command.update_email(ctx)
-
-
 @custom_help.command('remove_email')
 async def custom_remove_email(ctx):
+    ''' run on message edited '''    
     await help_command.remove_email(ctx)
-
-
 @custom_help.command('view_email')
 async def custom_view_email(ctx):
+    ''' run on message edited '''    
     await help_command.view_email(ctx)
-
 
 ###########################
 # Function: begin_tests
@@ -964,17 +948,13 @@ async def custom_view_email(ctx):
 async def begin_tests(ctx):
     ''' start test command '''
     global TESTING_MODE
-
     if ctx.author.id != Test_bot_application_ID:
         return
-
     TESTING_MODE = True
-
     test_oh_chan = next((ch for ch in ctx.guild.text_channels
         if 'office-hour-test' in ch.name), None)
     if test_oh_chan:
         await office_hours.close_oh(ctx.guild, 'test')
-
     await office_hours.open_oh(ctx.guild, 'test')
 
 ###########################
@@ -988,9 +968,7 @@ async def end_tests(ctx):
     ''' end tests command '''
     if ctx.author.id != Test_bot_application_ID:
         return
-
     await office_hours.close_oh(ctx.guild, 'test')
-
     # TODO maybe use ctx.bot.logout()
     await ctx.bot.close()
     # quit(0)
