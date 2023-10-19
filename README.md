@@ -52,7 +52,7 @@ For 4.0, we created new tools for instructors and students to use to improve cou
 <h2>Bot Features</h2>
 
 <!-- Need to update this -->
-[Click here to see the features of iterations I, II and III.](https://github.com/chandur626/TeachersPetBot/blob/update-readme/docs/feature-history.md)
+[Click here to see the features of iterations I, II and III.](docs/feature-history.md)
 
 <h4>Upgraded Spam Detection</h4>
 This feature is used to detect spam in message channels. First instructors have the ability to fully customize their spam detection settings. 
@@ -91,7 +91,7 @@ To run tests on the Teacher's Pet, follow instructions in the [Installation and 
 <h3> Bot commands from iteration IV </h3>
 
 
-:open_file_folder: [!set_spam_settings command](https://github.com/chandur626/TeachersPetBot/blob/main/docs/Regrade/Regrade.md)
+:open_file_folder: [!set_spam_settings command](docs/spam/set_spam_settings.md)
 
 <br>
 <h3> Bot commands from iteration I, II and III </h3>
