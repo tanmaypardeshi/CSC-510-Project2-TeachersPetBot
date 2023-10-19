@@ -239,7 +239,6 @@ async def on_member_remove(member):
     ''' run on message edited '''
     channel = get(member.guild.text_channels, name='general')
     await channel.send(f"{member.name} has left")
-    
 ###########################
 # Function: on_message
 # Description: run when a message is sent to a discord the bot occupies
@@ -859,13 +858,10 @@ async def update_email(ctx, email_id):
 async def view_email(ctx):
     ''' run on message edited '''
     await email_address.view_email(ctx)
-
-
 @bot.command(name='remove_email', help='deletes the configured email address against user.')
 async def delete_email(ctx):
     ''' run on message edited '''
     await email_address.delete_email(ctx)
-
 ###########################
 # Function: help
 # Description: Describes the help
