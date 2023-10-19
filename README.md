@@ -88,33 +88,13 @@ To run tests on the Teacher's Pet, follow instructions in the [Installation and 
 <a name="commands"></a>
 <h2> Bot Commands </h2>
 
-<h3> Bot commands from iteration III </h3>
+<h3> Bot commands from iteration IV </h3>
 
 
-:open_file_folder: [!regrade-request command](https://github.com/chandur626/TeachersPetBot/blob/main/docs/Regrade/Regrade.md)
-
-:open_file_folder: [!update-request command](https://github.com/chandur626/TeachersPetBot/blob/main/docs/Regrade/Regrade.md)
-
-:open_file_folder: [!remove-request command](https://github.com/chandur626/TeachersPetBot/blob/main/docs/Regrade/Regrade.md)
-
-:open_file_folder: [!display-requests command](https://github.com/chandur626/TeachersPetBot/blob/main/docs/Regrade/Regrade.md)
-
-:open_file_folder: [!chart command](https://github.com/chandur626/TeachersPetBot/blob/update-readme/docs/charts/charts.md)
-
-:open_file_folder: [!check_chart command](https://github.com/chandur626/TeachersPetBot/blob/update-readme/docs/charts/check_chart.md)
-
-:open_file_folder: [!create_email_command](https://github.com/chandur626/TeachersPetBot/blob/update-readme/docs/email_address/create_email.md)
-
-:open_file_folder: [!view_email_command](https://github.com/chandur626/TeachersPetBot/blob/update-readme/docs/email_address/view_email.md)
-
-:open_file_folder: [!update_email_command](https://github.com/chandur626/TeachersPetBot/blob/update-readme/docs/email_address/update_email.md)
-
-:open_file_folder: [!remove_email_command](https://github.com/chandur626/TeachersPetBot/blob/update-readme/docs/email_address/remove_email.md)
-
-:open_file_folder: [!project_event command](https://github.com/chandur626/TeachersPetBot/blob/update-readme/docs/events/project_event.md)
+:open_file_folder: [!set_spam_settings command](https://github.com/chandur626/TeachersPetBot/blob/main/docs/Regrade/Regrade.md)
 
 <br>
-<h3> Bot commands from iteration I and II </h3>
+<h3> Bot commands from iteration I, II and III </h3>
 
 `!setInstructor <@member>` Set a server member to be an instructor (Instructor command)
 
@@ -147,6 +127,30 @@ To run tests on the Teacher's Pet, follow instructions in the [Installation and 
 `!ping` Find the latency of network
 
 `!stats` Gets the statistics of system and softwares used
+
+`!regrade-request` This command lets a student add a regrade-request
+
+`!update-request` This command lets a student update an existing regrade-request
+
+`!remove-request` This command removes a regrade request
+
+`!display_requests` This command lets a student display all regrade requests
+
+`!chart` This command lets admins make a custom chart of any type with any size of dataset
+
+`!check_chart` This command lets students/users check any chart if previously created
+
+`!create_email` This command enables users to configure their email address to receive important reminder notifications and attachments
+
+`!view_email` This command enables users to view their configured email address
+
+`!update_email` This command enables users to update their configured email address
+
+`!remove_email` This command enables users to delete their configured email address
+
+`!create -> press project button` This command enables users to create a project
+
+
 
 <hr />
 
