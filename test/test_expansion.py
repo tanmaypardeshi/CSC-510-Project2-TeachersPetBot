@@ -7,7 +7,7 @@ import unittest
 from unittest.mock import AsyncMock, MagicMock
 
 # Import the function or method that you want to test.
-from event import on_member_join
+from bot import on_member_join
 
 class TestDiscordBot(unittest.IsolatedAsyncioTestCase):
     async def test_on_member_join(self):

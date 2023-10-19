@@ -228,7 +228,7 @@ async def on_member_remove(member):
     ''' run on message edited '''
     channel = get(member.guild.text_channels, name='general')
     await channel.send(f"{member.name} has left")
-
+    
 ###########################
 # Function: on_message
 # Description: run when a message is sent to a discord the bot occupies
