@@ -54,6 +54,8 @@ For 4.0, we created new tools for instructors and students to use to improve cou
 <!-- Need to update this -->
 [Click here to see the features of iterations I, II and III.](docs/feature-history.md)
 
+<h4>Bard AI</h4>h4>
+
 <h4>Upgraded Spam Detection</h4>
 This feature is used to detect spam in message channels. First instructors have the ability to fully customize their spam detection settings. 
 
