@@ -213,7 +213,7 @@ async def on_guild_join(guild):
             await guild.create_text_channel('regrade-requests')
             await channel.send("regrade-requests channel has been added!")
         else:
-            await channel.send("regrade-requests channel is already present!")            
+            await channel.send("regrade-requests channel is already present!")
 
 ###########################
 # Function: on_member_join
@@ -301,18 +301,18 @@ async def on_message(message):
     else:
         pass
 
-    # Ranking System 
+    # Ranking System
     if message.author.bot is False:
         id_query = f"SELECT * FROM rank where user_id=?"
         result = db.select_query(id_query, (message.author.id,))
         result = result.fetchone()
-        if result[1] == 99: 
+        if result[1] == 99:
             message.channel.send(f"{message.author.mention} has advanced to level {result[2]+1}!")
             update_query = f"UPDATE rank SET experience=0, level=?  WHERE user_id=?"
             db.mutation_query(update_query, (result[2]+1, message.author.id))
         else:
-            update_query = f"UPDATE rank SET experience=? WHERE user_id=?"        
-            db.mutation_query(update_query, (result[1]+1, message.author.id))               
+            update_query = f"UPDATE rank SET experience=? WHERE user_id=?"
+            db.mutation_query(update_query, (result[1]+1, message.author.id))
 
 
 ###########################
@@ -355,7 +355,8 @@ async def test(ctx):
 @bot.command(name='rank', help='Get rank of user')
 async def get_rank(ctx, member: discord.User = None):
     query = "SELECT * FROM rank where user_id=?"
-    rank_query = "SELECT p1.*, (SELECT COUNT(*) FROM rank AS p2 WHERE p2.level < p1.level) AS level_rank FROM rank AS p1 WHERE p1.user_id=?"
+    rank_query = "SELECT p1.*, (SELECT COUNT(*) FROM rank AS p2 WHERE p2.level < p1.level) AS \
+    level_rank FROM rank AS p1 WHERE p1.user_id=?"
     # Get your own rank
     if member is None:
         result = db.select_query(query, (ctx.author.id,))
@@ -368,13 +369,13 @@ async def get_rank(ctx, member: discord.User = None):
             rank=rank[3],
             name=ctx.author.name,
             image_url=ctx.author.display_avatar,
-            next_level_xp=100,            
+            next_level_xp=100,
         )
-        file = discord.File(card, filename="levelcard.png") 
+        file = discord.File(card, filename="levelcard.png")
         await ctx.channel.send(file=file)
     # Get some other users rank
     else:
-        result = db.select_query(query, (member.id,))           
+        result = db.select_query(query, (member.id,))
         rank_result = db.select_query(rank_query, (member.id,))
         result = result.fetchone()
         rank = rank_result.fetchone()
@@ -387,11 +388,10 @@ async def get_rank(ctx, member: discord.User = None):
                 rank=rank[3],
                 name=member.name,
                 image_url=member.display_avatar,
-                next_level_xp=100,                
+                next_level_xp=100,
             )
-            file = discord.File(card, filename="levelcard.png") 
+            file = discord.File(card, filename="levelcard.png")
             await ctx.channel.send(file=file)
-        
 
 ###########################
 # Function: get_instructor
