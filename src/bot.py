@@ -184,7 +184,7 @@ async def on_guild_join(guild):
         await channel.send("To add Instructors, type \"!setInstructor @<member>\"")
         # Initialize ranking system
         for x in guild.members:
-            if x.bot == False:
+            if x.bot is False:
                 insert_query = f"INSERT INTO rank (user_id) VALUES ({x.id})"
                 db.mutation_query(insert_query)
         print("Ranking system initialized!")
@@ -302,7 +302,7 @@ async def on_message(message):
         pass
 
     # Ranking System 
-    if message.author.bot == False:
+    if message.author.bot is False:
         id_query = f"SELECT * FROM rank where user_id=?"
         result = db.select_query(id_query, (message.author.id,))
         result = result.fetchone()
