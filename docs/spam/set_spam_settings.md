@@ -29,6 +29,9 @@ This will be followed by the prompt: How long should a user be placed in timeout
 
 Enter the amount of time a user should be placed in timeout in the format outlined above: 10,0,0
 
-Successful execution will result in spam detector similar to below. 
+Below is an example of using the !set_spam_settings command:
+<p align="center"><img width=85% src="../media/set_spam.gif"></p>
 
-<p align="left"><img width=65% src="../media/spam.gif"></p>
+Successful execution will result in a spam detector similar to below. 
+
+<p align="center"><img width=85% src="../media/spam.gif"></p>
