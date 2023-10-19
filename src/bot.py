@@ -32,6 +32,7 @@ import attendance
 import help_command
 import regrade
 import utils
+import spam
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '1'
 
@@ -54,19 +55,6 @@ TESTING_MODE = None
 intents=discord.Intents.all()
 bot = commands.Bot(command_prefix='!', description='This is TeachersPetBot!', intents=intents)
 bot.remove_command("help")
-
-###########################
-# Function: clear_spam
-# Description: run as a constant task that clears the spam.txt file
-# Inputs:
-#      - None
-###########################
-async def clear_spam():
-    while True:
-        #print("We cleared") ## for testing purposes
-        await asyncio.sleep(14) #14 seconds betweeen spam clearing
-        with open("spam.txt", "r+", encoding='utf-8') as f:
-            f.truncate(0) #delete the user_id of the last message sent
 
 ###########################
 # Function: on_ready
@@ -134,13 +122,23 @@ async def on_ready():
             is_active   BOOLEAN NOT NULL CHECK (is_active IN (0, 1))
         )
     ''')
+    db.mutation_query('''
+            CREATE TABLE IF NOT EXISTS spam_settings (
+                warning_num             INT,
+                timeout_num             INT,
+                timeout_min             INT,
+                timeout_hour            INT,
+                timeout_day             INT,
+                time_between_clears     INT
+            )
+        ''')
     event_creation.init(bot)
     office_hours.init(bot)
+    spam.init(bot)  #initialize the spam function of the bot so spam.py has access to the bot and clearing starts
     print('Logged in as')
     print(bot.user.name)
     print(bot.user.id)
     print('------')
-    bot.loop.create_task(clear_spam()) ## set up a task for the bot to clear out spam from the txt file
     await cal.init(bot) ##this needed to be moved below bc otherwise the stuff above is never called
 ###########################
 # Function: on_guild_join
@@ -234,42 +232,23 @@ async def on_member_remove(member):
 @bot.event
 async def on_message(message):
     ''' run on message sent to a channel '''
-    #Upgraded Spam detection
-
     url_data=[]
     message_links = []
     temp=[]
     ctx = await bot.get_context(message)
-    print(message.content)
-    print(message.author.id)
-    count = 0
-    with open("spam.txt", "a",encoding='utf-8') as f:
-        f.writelines(f"{str(message.author.id)}\n")
-
-    with open("spam.txt","r+",encoding='utf-8') as f:
-        for line in f:
-            if line.strip("\n") == str(message.author.id):
-                count = count+1
-
-        if count>5:
-            guild = bot.get_guild(guild_id)
-            member = guild.get_member(message.author.id)
-            muted = discord.utils.get(guild.roles, name="Mute")
-            #await member.add_roles(muted)
-            seconds=0
-            minutes=4
-            hours=0
-            days=0
-            await member.timeout(timedelta(seconds=seconds, minutes=minutes, hours= hours, days=days))
-            await ctx.send(f"{message.author.name} has been muted") #lets the everyone know who was timed out
-        elif count>4:
-            await ctx.send(f"Warning, {message.author.name} will be muted if they continue to spam")
-
+    member = message.guild.get_member(message.author.id)
+    instructor = False
+    for role in member.roles:
+        if role.name == 'Instructor':
+            instructor = True
+    if not instructor:
+        # Only spam detect on non instructors
+        await spam.handle_spam(message, ctx, guild_id) # handles spam
 
     # allow messages from test bot
-    print(message.author.bot)
-    print(message.author.id)
-    print(Test_bot_application_ID)
+    #print(message.author.bot)
+    #print(message.author.id)
+    #print(Test_bot_application_ID)
     if message.author.bot and message.author.id == Test_bot_application_ID:
         ctx = await bot.get_context(message)
         await bot.invoke(ctx)
@@ -416,6 +395,21 @@ async def remove_instructor(ctx, member:discord.Member):
 async def create_event(ctx):
     ''' run event creation interface '''
     await event_creation.create_event(ctx, TESTING_MODE)
+
+###########################
+# Function: create_event
+# Description: command to create event and send to event_creation module
+# Ensures command author is Instructor
+# Inputs:
+#      - ctx: context of the command
+# Outputs:
+#      - Options to create event
+###########################
+@bot.command(name='set_spam_settings', help='Allows instructor to set spam settings')
+@commands.has_role('Instructor')
+async def set_spam_settings(ctx):
+    ''' run spam setting prompts '''
+    await spam.set(ctx)
 
 ###########################
 # Function: oh
