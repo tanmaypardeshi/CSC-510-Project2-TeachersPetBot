@@ -296,7 +296,9 @@ async def on_message(message):
         result = db.select_query(id_query, (message.author.id,))
         result = result.fetchone()
         if result[1] == 99:
-            message.channel.send(f"{message.author.mention} has advanced to level {result[2]+1}!")
+            await message.channel.send(
+                f"{message.author.mention} has advanced to level {result[2]+1}!"
+            )
             update_query = f"UPDATE rank SET experience=0, level=?  WHERE user_id=?"
             db.mutation_query(update_query, (result[2]+1, message.author.id))
         else:
@@ -341,12 +343,12 @@ async def test(ctx):
 #      - Sends information back to channel
 ###########################
 @bot.command(name='rank', help='Get rank of user')
-async def get_rank(ctx, member: discord.User = None):
+async def get_rank(ctx, member_id=None):
     query = "SELECT * FROM rank where user_id=?"
     rank_query = "SELECT p1.*, (SELECT COUNT(*) FROM rank AS p2 WHERE p2.level < p1.level) AS \
     level_rank FROM rank AS p1 WHERE p1.user_id=?"
     # Get your own rank
-    if member is None:
+    if member_id is None:
         result = db.select_query(query, (ctx.author.id,))
         rank_result = db.select_query(rank_query, (ctx.author.id,))
         result = result.fetchone()
@@ -363,13 +365,12 @@ async def get_rank(ctx, member: discord.User = None):
         await ctx.channel.send(file=file)
     # Get some other users rank
     else:
-        result = db.select_query(query, (member.id,))
-        rank_result = db.select_query(rank_query, (member.id,))
-        result = result.fetchone()
-        rank = rank_result.fetchone()
-        if result is None:
-            await ctx.channel.send("No such user in the database")
-        else:
+        try:
+            member = ctx.guild.get_member(int(member_id[2:-1]))
+            result = db.select_query(query, (member.id,))
+            rank_result = db.select_query(rank_query, (member.id,))
+            result = result.fetchone()
+            rank = rank_result.fetchone()
             card = await draw_card(
                 xp=result[1],
                 level=result[2],
@@ -380,6 +381,8 @@ async def get_rank(ctx, member: discord.User = None):
             )
             file = discord.File(card, filename="levelcard.png")
             await ctx.channel.send(file=file)
+        except Exception as e:
+            await ctx.channel.send(f"No {member_id} in the database")
 
 ###########################
 # Function: get_instructor
@@ -770,10 +773,7 @@ async def update_chart(storage, name, link):
 
 @bot.command(name='stats', help='shows bot stats')
 async def show_stats(ctx):
-    embed = Embed(title="Bot stats",
-                    colour=ctx.author.colour,
-                    #thumbnail=bot.user.avatar_url,
-                    timestamp=datetime.utcnow())
+    embed = Embed(title="Bot stats",colour=ctx.author.colour, timestamp=datetime.utcnow())
     proc = Process()
     with proc.oneshot():
         uptime = timedelta(seconds=time()-proc.create_time())
@@ -810,7 +810,6 @@ scheduler = AsyncIOScheduler()
 @bot.command(name='poll', help='Set Poll for a specified time and topic.')
 @commands.has_role('Instructor')
 async def create_poll(ctx, hours: int, question: str, *options):
-
     if len(options) > 10:
         await ctx.send("You can only supply a maximum of 10 options.")
     else:
@@ -859,7 +858,6 @@ async def custom_profanity(ctx, pword):
     ''' adding custom word to profanity list '''
     profanity.custom_words.append(pword)
     await ctx.message.delete()
-
 ###########################
 # Function: attendance
 # Description: Gets the attendance when requested by the instructor for audio channel
