@@ -32,6 +32,7 @@ import attendance
 import help_command
 import regrade
 import utils
+import spam
 from bardapi import Bard
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '1'
@@ -55,6 +56,7 @@ bard_api_key = os.getenv('BARD_API_KEY')
 bard = Bard(token = bard_api_key)
 
 
+guild_id = int(os.getenv('TEST_GUILD_ID'))  ## needed for spam detection
 
 TESTING_MODE = None
 
@@ -71,7 +73,6 @@ async def on_ready():
     ''' run on bot start-up '''
     global TESTING_MODE
     TESTING_MODE = False
-
     #DiscordComponents(bot)
     db.connect()
     db.mutation_query('''
@@ -129,15 +130,25 @@ async def on_ready():
             is_active   BOOLEAN NOT NULL CHECK (is_active IN (0, 1))
         )
     ''')
-
+    db.mutation_query('''
+            CREATE TABLE IF NOT EXISTS spam_settings (
+                warning_num             INT,
+                timeout_num             INT,
+                timeout_min             INT,
+                timeout_hour            INT,
+                timeout_day             INT,
+                time_between_clears     INT
+            )
+        ''')
     event_creation.init(bot)
     office_hours.init(bot)
-    await cal.init(bot)
+    spam.init(bot)  #initialize the spam function of the bot so spam.py has
+    # access to the bot and clearing starts
     print('Logged in as')
     print(bot.user.name)
     print(bot.user.id)
     print('------')
-
+    await cal.init(bot) ##this needed to be moved below bc otherwise the stuff above is never called
 ###########################
 # Function: on_guild_join
 # Description: run when a the bot joins a guild
@@ -230,32 +241,23 @@ async def on_member_remove(member):
 @bot.event
 async def on_message(message):
     ''' run on message sent to a channel '''
-    #spam detection
-
     url_data=[]
     message_links = []
     temp=[]
     ctx = await bot.get_context(message)
-    print(message.content)
-    print(message.author.id)
-    count = 0
-    with open("spam.txt", "a",encoding='utf-8') as f:
-        f.writelines(f"{str(message.author.id)}\n")
-
-    with open("spam.txt","r+",encoding='utf-8') as f:
-        for line in f:
-            if line.strip("\n") == str(message.author.id):
-                count = count+1
-
-        if count>5:
-            #await ctx.send("spam;too many messages") --> this feature is commented out right now because it
-            #litterly tells you that you've sent too many messages every 5 messages you send, which is rarely even spam
-            f.truncate(0)
+    member = message.guild.get_member(message.author.id)
+    instructor = False
+    for role in member.roles:
+        if role.name == 'Instructor':
+            instructor = True
+    if not instructor:
+        # Only spam detect on non instructors
+        await spam.handle_spam(message, ctx, guild_id) # handles spam
 
     # allow messages from test bot
-    print(message.author.bot)
-    print(message.author.id)
-    print(Test_bot_application_ID)
+    #print(message.author.bot)
+    #print(message.author.id)
+    #print(Test_bot_application_ID)
     if message.author.bot and message.author.id == Test_bot_application_ID:
         ctx = await bot.get_context(message)
         await bot.invoke(ctx)
@@ -428,6 +430,21 @@ async def remove_instructor(ctx, member:discord.Member):
 async def create_event(ctx):
     ''' run event creation interface '''
     await event_creation.create_event(ctx, TESTING_MODE)
+
+###########################
+# Function: create_event
+# Description: command to create event and send to event_creation module
+# Ensures command author is Instructor
+# Inputs:
+#      - ctx: context of the command
+# Outputs:
+#      - Options to create event
+###########################
+@bot.command(name='set_spam_settings', help='Allows instructor to set spam settings')
+@commands.has_role('Instructor')
+async def set_spam_settings(ctx):
+    ''' run spam setting prompts '''
+    await spam.set(ctx)
 
 ###########################
 # Function: oh
@@ -722,7 +739,7 @@ async def update_chart(storage, name, link):
 async def show_stats(ctx):
     embed = Embed(title="Bot stats",
                     colour=ctx.author.colour,
-                    thumbnail=bot.user.avatar_url,
+                    #thumbnail=bot.user.avatar_url,
                     timestamp=datetime.utcnow())
 
     proc = Process()
@@ -988,9 +1005,7 @@ async def begin_tests(ctx):
         if 'office-hour-test' in ch.name), None)
     if test_oh_chan:
         await office_hours.close_oh(ctx.guild, 'test')
-
     await office_hours.open_oh(ctx.guild, 'test')
-
 ###########################
 # Function: end_tests
 # Description: Finalize automated testing
@@ -1002,9 +1017,7 @@ async def end_tests(ctx):
     ''' end tests command '''
     if ctx.author.id != Test_bot_application_ID:
         return
-
     await office_hours.close_oh(ctx.guild, 'test')
-
     # TODO maybe use ctx.bot.logout()
     await ctx.bot.close()
     # quit(0)
