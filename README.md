@@ -160,17 +160,14 @@ To run tests on the Teacher's Pet, follow instructions in the [Installation and 
 
 This bot has endless possibilities for functionality. Features which we are interested in adding but did not have time for include but are not limited to:
 
-  * Custom Events
-  * Allow events to be edited
-  * Show error information on discord
-  * Make Instructor commands private
-  * Add new roles
-  * Track participation and user ranking
+  * Adding detailed error display integration to the bot
+  * Add Tutor role
+  * Add ways for users to lose exp in the rank feature(spamming etc)
+  * Add commands so an instructor can customize how rank exp is awarded(what for and how much etc)
   * Refactor code to use cogs
-  * Save data charts on DB rather than locally in json
-  * Store data based on user emote reactions to instructor messages
-
-For a detailed description of each of the above future enhancements listed visit [Future Scope](https://github.com/chandur626/TeachersPetBot/projects/2).
+  * Add a gibberish detector that deletes comments that are irrelevant to the class
+  * Funnel the AI chat responses to a limited set(so AI only answers questions an instructor wants them to answer)
+  * Upgrade to a better chatbot API that is free
 
 <hr />
 
