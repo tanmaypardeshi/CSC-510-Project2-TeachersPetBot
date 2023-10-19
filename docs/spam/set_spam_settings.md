@@ -2,7 +2,7 @@
 This command lets instructors set their own customized spam settings
 
 # Location of Code
-The code that implements the above mentioned gits functionality is located [here](../src/spam.py).
+The code that implements the above mentioned gits functionality is located [here](../../src/spam.py).
 
 # Code Description
 ## Functions
