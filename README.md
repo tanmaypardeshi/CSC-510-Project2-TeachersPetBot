@@ -39,12 +39,12 @@ https://user-images.githubusercontent.com/60410421/143972105-f5aabb10-73e3-454a-
 
 
   
-<h2>Software Engineering Project for CSC 510 : Phase III</h2>
+<h2>Software Engineering Project for CSC 510 : Phase IV</h2>
 
 
 Teacher's Pet is a Discord Bot for class instructors to streamline their Discord servers. Discord is a great tool for communication and its functionalities can be enhanced by bots and integrations. 
 
-For 3.0, we created new tools for instructors and students to use to improve course communication. Some of our implemented features were partly suggested by iteration 2 such as regrade requests, project event, and live spam checking. We implemented other features we thought would be helpful such as email interactions, link saving, and data visualization. Our main objective for 3.0 was to add more organizational tools to make a course's discord channel more than just a messenger.
+For 4.0, we created new tools for instructors and students to use to improve course communication. After version 3.0's success, we decided we wanted to improve upon some of its features including spam and saved links. We also wanted to add a few more exciting features that would really drive engagement with our bot, for example, the AI chat and student ranking feature. Our main objective for 4.0 was to make using Discord a more controlled and enjoyable experience.
 
 <hr />
 
@@ -52,7 +52,7 @@ For 3.0, we created new tools for instructors and students to use to improve cou
 <h2>Bot Features</h2>
 
 <!-- Need to update this -->
-[Click here to see the features of iterations I and II.](https://github.com/chandur626/TeachersPetBot/blob/update-readme/docs/feature-history.md)
+[Click here to see the features of iterations I, II and III.](https://github.com/chandur626/TeachersPetBot/blob/update-readme/docs/feature-history.md)
 
 <!-- Need to update this -->
 <h4>Charts</h4>
@@ -97,8 +97,8 @@ This feature allows instructors or teaching assistants to create a project event
 <p align="left"><img width=65% src="https://github.com/chandur626/TeachersPetBot/blob/update-readme/docs/media/project-event.gif"></p>
 
 <!-- Need to update this -->
-<h4>Spam Detection</h4>
-This feature is used to detect spam in message channels. When a user tries to send too many messages in the channel, it gives a warning. This is useful when multiple users are trying to send mutiple messages. The warning lets the student know that they have sent too many messages. 
+<h4>Upgraded Spam Detection</h4>
+This feature is used to detect spam in message channels. When a user tries to send too many messages to the channel, it gives a warning. When a warned user continues to spam after this, they will be temporarily put in timeout, effectively ending their spam. This is a good feature to help keep rogue students in check, while also stopping students from spamming for rank. Additionally, instructors now have full control to customize their own spam detection settings. 
 
 <p align="left"><img width=65% src="https://github.com/chandur626/TeachersPetBot/blob/update-readme/docs/media/Spam-Detection.gif"></p>
 
