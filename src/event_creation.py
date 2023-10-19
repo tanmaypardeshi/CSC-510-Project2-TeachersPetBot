@@ -8,9 +8,10 @@ from discord import SelectOption, ButtonStyle
 from discord.utils import get
 from discord.ext import tasks
 
+import validators
+
 from utils import EmailUtility
 
-import validators
 
 import office_hours
 import cal
