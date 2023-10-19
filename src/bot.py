@@ -322,7 +322,6 @@ async def test(ctx):
 # Description: Integrating bard api
 ##################################
 def bard_response(user_input):
-    #response = bard.query(prompt)
     response = bard.get_answer(str(user_input))['content']
     return response
 @bot.command()
