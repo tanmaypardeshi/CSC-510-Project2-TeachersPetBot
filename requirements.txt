@@ -10,3 +10,4 @@ psutil==5.9.5
 apscheduler==3.10.4
 pyshorteners~=1.0.1
 quickchart.io==1.0.0
+easy-pil==0.3.0
