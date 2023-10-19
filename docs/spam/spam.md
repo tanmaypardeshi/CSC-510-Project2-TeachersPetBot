@@ -51,5 +51,5 @@ The main use case of this feature is that if you are an instructor running an on
 Below is what the feature looks like in action:
 
 
-<p align="left"><img width=65% src="../media/spam.gif"></p>
+<p align="center"><img width=85% src="../media/spam.gif"></p>
 
