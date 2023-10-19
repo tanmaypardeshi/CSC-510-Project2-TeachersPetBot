@@ -98,9 +98,13 @@ This feature allows instructors or teaching assistants to create a project event
 
 <!-- Need to update this -->
 <h4>Upgraded Spam Detection</h4>
-This feature is used to detect spam in message channels. When a user tries to send too many messages to the channel, it gives a warning. When a warned user continues to spam after this, they will be temporarily put in timeout, effectively ending their spam. This is a good feature to help keep rogue students in check, while also stopping students from spamming for rank. Additionally, instructors now have full control to customize their own spam detection settings. 
+This feature is used to detect spam in message channels. First instructors have the ability to fully customize their spam detection settings. 
 
-<p align="left"><img width=65% src="https://github.com/chandur626/TeachersPetBot/blob/update-readme/docs/media/Spam-Detection.gif"></p>
+<p align="left"><img width=65% src="docs/media/set_spam.gif"></p>
+
+When a user tries to send too many messages to the channel, it gives a warning. When a warned user continues to spam after this, they will be temporarily put in timeout, effectively ending their spam. This is a good feature to help keep rogue students in check, while also stopping students from spamming for rank. 
+
+<p align="left"><img width=65% src="docs/media/spam.gif"></p>
 
 <hr />
 
