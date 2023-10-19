@@ -134,7 +134,8 @@ async def on_ready():
         ''')
     event_creation.init(bot)
     office_hours.init(bot)
-    spam.init(bot)  #initialize the spam function of the bot so spam.py has access to the bot and clearing starts
+    spam.init(bot)  #initialize the spam function of the bot so spam.py has
+    # access to the bot and clearing starts
     print('Logged in as')
     print(bot.user.name)
     print(bot.user.id)
@@ -704,7 +705,7 @@ async def update_chart(storage, name, link):
 async def show_stats(ctx):
     embed = Embed(title="Bot stats",
                     colour=ctx.author.colour,
-                    thumbnail=bot.user.avatar_url,
+                    #thumbnail=bot.user.avatar_url,
                     timestamp=datetime.utcnow())
 
     proc = Process()
@@ -970,9 +971,7 @@ async def begin_tests(ctx):
         if 'office-hour-test' in ch.name), None)
     if test_oh_chan:
         await office_hours.close_oh(ctx.guild, 'test')
-
     await office_hours.open_oh(ctx.guild, 'test')
-
 ###########################
 # Function: end_tests
 # Description: Finalize automated testing
@@ -984,9 +983,7 @@ async def end_tests(ctx):
     ''' end tests command '''
     if ctx.author.id != Test_bot_application_ID:
         return
-
     await office_hours.close_oh(ctx.guild, 'test')
-
     # TODO maybe use ctx.bot.logout()
     await ctx.bot.close()
     # quit(0)

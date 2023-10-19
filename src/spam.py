@@ -1,7 +1,9 @@
 import asyncio
-import db
-import discord
 from datetime import timedelta
+import discord
+import db
+
+
 
 BOT = None
 ###########################
@@ -13,7 +15,8 @@ BOT = None
 async def set(ctx):
     if ctx.channel.name == 'instructor-commands':
         # only run in the instructor command channel
-        await ctx.send('How many messages should a user be able to send before they are warned of spamming?')
+        await ctx.send('How many messages should a user be able to send before they are warned '
+                       'of spamming?')
         try:
             print("lord...")
             msg = (await BOT.wait_for('message', timeout=60.0, check=lambda x: x.channel.name ==
@@ -26,19 +29,23 @@ async def set(ctx):
             await ctx.send('Invalid entry. Try again...')
             return
 
-        await ctx.send('How many messages should a user be able to send before they are put in timeout?')
+        await ctx.send('How many messages should a user be able to send before they are put in '
+                       'timeout?')
         try:
-            msg_timeout_num = int((await BOT.wait_for('message', timeout=60.0, check=lambda x: x.channel.name ==
+            msg_timeout_num = int((await BOT.wait_for('message', timeout=60.0, check=lambda x:
+            x.channel.name ==
                 'instructor-commands' and x.author.id != BOT.user.id)).content)
         except:
             await ctx.send('Invalid entry. Try again...')
             return
 
         await ctx.send(
-            f'How much time should users have to send {msg_warn_num} messages before they will be warned '
+            f'How much time should users have to send {msg_warn_num} messages before they will be '
+            f'warned '
             f'and then eventually put in timeout?')
         try:
-            msg_time_clears = int((await BOT.wait_for('message', timeout=60.0, check=lambda x: x.channel.name ==
+            msg_time_clears = int((await BOT.wait_for('message', timeout=60.0, check=lambda x:
+            x.channel.name ==
                 'instructor-commands' and x.author.id != BOT.user.id)).content)
         except:
             await ctx.send('Invalid entry. Try again...')
@@ -47,7 +54,8 @@ async def set(ctx):
         await ctx.send('How long should a user be placed in timeout when caught spamming? '
                         'Format: min,hours,days Example: 5,0,0 is 5 minutes')
         try:
-            msg_timeout_time = (await BOT.wait_for('message', timeout=60.0, check=lambda x: x.channel.name ==
+            msg_timeout_time = (await BOT.wait_for('message', timeout=60.0, check=lambda x:
+            x.channel.name ==
                 'instructor-commands' and x.author.id != BOT.user.id)).content
             timeout_time = msg_timeout_time.split(',')
             minutes = int(timeout_time[0])
@@ -58,12 +66,15 @@ async def set(ctx):
             await ctx.send('Invalid entry. Try again...')
             return
         db.mutation_query(
-            'UPDATE spam_settings SET warning_num = ?, timeout_num = ?, timeout_min = ?, timeout_hour = ?, timeout_day = ?, time_between_clears = ?',
-            [msg_warn_num, msg_timeout_num, int(timeout_time[0]), int(timeout_time[1]), int(timeout_time[2]), msg_time_clears]
+            'UPDATE spam_settings SET warning_num = ?, timeout_num = ?, timeout_min = ?, '
+            'timeout_hour = ?, timeout_day = ?, time_between_clears = ?',
+            [msg_warn_num, msg_timeout_num, int(timeout_time[0]), int(timeout_time[1]),
+             int(timeout_time[2]), msg_time_clears]
         )
         await ctx.send('Spam settings successfully updated!')
     else:
-        await ctx.author.send('`!set_spam_settings` can only be used in the `instructor-commands` channel')
+        await ctx.author.send('`!set_spam_settings` can only be used in the `instructor-commands` '
+                              'channel')
         await ctx.message.delete()
 ###########################
 # Function: clear_spam
@@ -82,7 +93,8 @@ async def clear_spam():
             f.truncate(0)  # delete the user_id of the last message sent
 ###########################
 # Function: init
-# Description: initializes this module, giving it access to discord bot. Also inits the clear spam function and
+# Description: initializes this module, giving it access to discord bot. Also inits the clear
+# spam function and
 # puts default values in for the spam settings.
 # Inputs:
 #      - bot: discord bot
@@ -91,7 +103,8 @@ async def clear_spam():
 def init(bot):
     global BOT
     BOT = bot
-    bot.loop.create_task(clear_spam())  # set up a task for the bot to clear out spam from the txt file
+    bot.loop.create_task(clear_spam())  # set up a task for the bot to clear out spam from the
+    # txt file
     row = db.select_query('SELECT * FROM spam_settings').fetchall()
     if len(row) == 0:
         # there is nothing in the database then put defaults in it
@@ -108,7 +121,8 @@ def init(bot):
 
 ###########################
 # Function: handle_spam
-# Description: takes a message and determines whether the author who sent that message is spamming or not
+# Description: takes a message and determines whether the author who sent that message is spamming
+# or not
 # Inputs:
 #      - message: the message sent in the channel
 #      - ctx: context of the message
@@ -139,7 +153,9 @@ async def handle_spam(message, ctx, guild_id):
             minutes = rows_tuple[2]
             hours = rows_tuple[3]
             days = rows_tuple[4]
-            await member.timeout(timedelta(seconds=seconds, minutes=minutes, hours=hours, days=days))
-            await ctx.send(f"{message.author.name} has been muted")  # lets the everyone know who was timed out
+            await member.timeout(timedelta(seconds=seconds, minutes=minutes, hours=hours,
+                                           days=days))
+            await ctx.send(f"{message.author.name} has been muted")  # lets the everyone know who
+            # was timed out
         elif count > warning_num:
             await ctx.send(f"Warning, {message.author.name} will be muted if they continue to spam")

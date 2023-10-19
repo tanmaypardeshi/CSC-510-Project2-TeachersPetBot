@@ -4,11 +4,13 @@
 import datetime
 from datetime import timedelta
 from discord.ui import Button, Select, View
-from discord import SelectOption, ButtonStyle, Interaction
-import validators
+from discord import SelectOption, ButtonStyle
 from discord.utils import get
-from discord.ext import tasks, commands
+from discord.ext import tasks
+
 from utils import EmailUtility
+
+import validators
 
 import office_hours
 import cal
@@ -50,11 +52,13 @@ async def create_event(ctx, testing_mode):
             button_clicked = (await BOT.wait_for('button_click')).custom_id
         """
         async def button_callback(interaction):
-            await interaction.response.send_message('What would you like the assignment to be called')
+            await interaction.response.send_message('What would you like the assignment to '
+                                                    'be called')
             msg = await BOT.wait_for('message', timeout = 60.0, check = check)
             title = msg.content.strip()
 
-            await ctx.send('What is the due date of this assignment?\nEnter in format `MM-DD-YYYY`')
+            await ctx.send('What is the due date of this assignment?\nEnter in format '
+                           '`MM-DD-YYYY`')
             msg = await BOT.wait_for('message', timeout = 60.0, check = check)
             date = msg.content.strip()
             try:
@@ -130,7 +134,8 @@ async def create_event(ctx, testing_mode):
             )
             await ctx.send('Project successfully created!')
             await cal.display_events(ctx) ## needed so the calander updates
-        button3.callback = project_button_callback #assigns the project button to the function directly above
+        button3.callback = project_button_callback #assigns the project button to the function
+        # directly above
 
         async def exam_button_callback(interaction):
             await interaction.response.send_message('What is the title of this exam?')
@@ -240,7 +245,8 @@ async def create_event(ctx, testing_mode):
             day_view.add_item(day_select)
             #function to respond to instructor selection
             async def instructor_select_callback(interaction):
-                instructor = instructor_select.values[0] ## assigns instructor with the selected instructor
+                instructor = instructor_select.values[0] ## assigns instructor with the selected
+                # instructor
                 print(instructor)
                 await interaction.response.send_message(
                     'Which day would you like the office hour to be on?',
@@ -257,7 +263,8 @@ async def create_event(ctx, testing_mode):
             async def day_select_callback(interaction):
                 day = day_select.values[0]
                 print(day)
-                await interaction.response.send_message('What is the start time of the office hour?\nEnter in 24-hour format' +
+                await interaction.response.send_message('What is the start time of the office '
+                                                        'hour?\nEnter in 24-hour format' +
                     ' e.g. an starting at 1:59pm can be inputted as 13:59')
                 msg = await BOT.wait_for('message', timeout = 60.0, check = check)
                 t_start = msg.content.strip()
@@ -291,8 +298,10 @@ async def create_event(ctx, testing_mode):
                 )
 
                 await ctx.send('Office hour successfully created!')
-                await cal.display_events(ctx)  ## updates the calender channel on discord with new office hours
-            day_select.callback = day_select_callback ## sets the day selection button to call to the correct function
+                await cal.display_events(ctx)  ## updates the calender channel on discord with
+                # new office hours
+            day_select.callback = day_select_callback ## sets the day selection button to call to
+            # the correct function
         button4.callback = office_hour_button_callback
     else:
         await ctx.author.send('`!create` can only be used in the `instructor-commands` channel')
