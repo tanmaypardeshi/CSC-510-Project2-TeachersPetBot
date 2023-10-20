@@ -242,6 +242,8 @@ async def check_office_hour_loop():
                     begin_time = datetime.strptime(str(begin_time).rsplit(' ', 1)[1],
                      '%H:%M:%S').time()
                     end_time = datetime.strptime(str(end_time).rsplit(' ', 1)[1], '%H:%M:%S').time()
+                    if office_hour.ta is None:
+                        office_hour.ta = 'bot'
                     ta_name_channelified = office_hour.ta.lower().replace(" ", "-")
                     if (begin_time <= curr_time <= end_time and ta_name_channelified
                      not in office_hour_queues):
