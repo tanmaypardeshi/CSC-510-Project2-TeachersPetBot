@@ -54,6 +54,9 @@ For 4.0, we created new tools for instructors and students to use to improve cou
 
 <h4>Bard AI</h4>
 This feature allows you to chat with Bard, a large language model from Google AI. Bard can answer your questions, generate text, translate languages, and write different kinds of creative content.
+![Ai_bot_gif](https://github.com/tanmaypardeshi/CSC-510-Project2-TeachersPetBot/assets/102000543/fe0a0388-e95e-4c42-9b8b-18d2b26ffb9c)
+
+
 
 <h4>Upgraded Spam Detection</h4>
 This feature is used to detect spam in message channels. First instructors have the ability to fully customize their spam detection settings. 
