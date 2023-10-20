@@ -19,6 +19,7 @@ from dotenv import load_dotenv
 
 from quickchart import QuickChart
 import pyshorteners
+from bardapi import Bard
 import db
 import profanity
 import event_creation
@@ -47,6 +48,12 @@ print(TOKEN)
 BOT_VERSION=os.getenv('VERSION')
 print(BOT_VERSION)
 Test_bot_application_ID = int(os.getenv('TEST_BOT_APP_ID'))
+#bard_api_key = os.getenv('BARD_API_KEY', None)
+#bard = None
+#if bard_api_key:
+#    bard = Bard(token = bard_api_key)
+
+
 guild_id = int(os.getenv('TEST_GUILD_ID'))  ## needed for spam detection
 
 TESTING_MODE = None
@@ -334,6 +341,34 @@ async def test(ctx):
     ''' simple sanity check '''
     await ctx.send('test successful')
 
+##################################
+#Function : bard enabled
+# Description: Integrating bard api
+##################################
+@bot.command()
+async def Aichat(ctx):
+    bard_api_key = os.getenv('BARD_API_KEY', None)
+    bard = None
+    if bard_api_key:
+        bard = Bard(token = bard_api_key)
+    await ctx.send("You are now in a AI chat session."
+                    "Type 'exit' to end the chat.")
+    def check(msg):
+        return msg.author == ctx.author
+    while True:
+        try:
+            user_input = await bot.wait_for("message", check=check, timeout=300)
+            if user_input.content.lower() == 'exit':
+                await ctx.send("Chat session ended.")
+                break
+            if bard:
+                chat_reply = bard.get_answer(str(user_input.content))['content']
+                await ctx.send(chat_reply)
+            else:
+                await ctx.send("Bard API is not available.")
+        except asyncio.TimeoutError:
+            await ctx.send("Chat session timed out. Type `!chat` to start a new session.")
+            break
 ###########################
 # Function: get_rank
 # Description: Command used to get level and experience
@@ -520,7 +555,6 @@ async def ask_question(ctx, question):
     else:
         await ctx.author.send('Please send questions to the #q-and-a channel.')
         await ctx.message.delete()
-
 ###########################
 # Function: send_links
 # Description: command to fetch all the links posted in the group
@@ -529,13 +563,11 @@ async def ask_question(ctx, question):
 # Outputs:
 #      - Bot posts all the links posted in group.
 ###########################
-
 @bot.command(name='send_links', help='Command will output all the messages which contain url')
 async def send_links(ctx):
     """To display all messages which contain url."""
     await ctx.send("The below list of messages contains URLs")
     await ctx.send(file=discord.File('images/links/links.txt'))
-
 ###########################
 # Function: answer
 # Description: command to answer question and sends to qna module
@@ -555,10 +587,8 @@ async def answer_question(ctx, q_num, answer):
     else:
         await ctx.author.send('Please send answers to the #q-and-a channel.')
         await ctx.message.delete()
-
 @bot.command(name='regrade-request', help='add regrade-request')
 async def submit_regrade_request(ctx,name:str,questions:str):
-
     """
         Function: submit_regrade_request
         Description: command to add a regrade request
@@ -569,7 +599,6 @@ async def submit_regrade_request(ctx,name:str,questions:str):
         Outputs:
             - adds the regrade request to the database
     """
-
     if ctx.channel.name == 'regrade-requests':
         await regrade.add_request(ctx,name,questions)
     else:
@@ -608,7 +637,6 @@ async def display_regrade_request(ctx):
 
 @bot.command(name='update-request', help='update regrade request')
 async def update_regrade_request(ctx,name:str,questions:str):
-
     """
         Function: update_regrade_request
         Description: command to display all the regrade requests
@@ -617,15 +645,11 @@ async def update_regrade_request(ctx,name:str,questions:str):
         Output:
             - updates an existing regrade request with any modifications
     """
-
     if ctx.channel.name == 'regrade-requests':
         await regrade.update_regrade_request(ctx,name,questions)
-
     else:
         await ctx.author.send('Please submit requests in regrade channel.')
         await ctx.message.delete()
-
-
 @update_regrade_request.error
 async def update_regrade_request_error(ctx, error):
     """
@@ -634,10 +658,8 @@ async def update_regrade_request_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
         await ctx.send('Invalid command.\n Use !update-request <StudentName> <question numbers> \n \
         ( Example: !update-request "Student 1" q1,q2,q3 )')
-
 @bot.command(name='remove-request', help='remove regrade request')
 async def remove_regrade_request(ctx,name:str,questions:str):
-
     """
         Function: remove_regrade_request
         Description: command to remove a regrade request
@@ -647,15 +669,11 @@ async def remove_regrade_request(ctx,name:str,questions:str):
             - questions: question numbers to be regraded
             - output: removes an existing regrade request from the database
     """
-
     if ctx.channel.name == 'regrade-requests':
         await regrade.remove_regrade_request(ctx,name,questions)
-
     else:
         await ctx.author.send('Please submit requests in regrade channel.')
         await ctx.message.delete()
-
-
 @remove_regrade_request.error
 async def remove_regrade_request_error(ctx, error):
     """
@@ -664,22 +682,17 @@ async def remove_regrade_request_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
         await ctx.send('Invalid command.\n Use !remove-request <StudentName> <question numbers> \n \
         ( Example: !remove-request "Student 1" q1,q2,q3 )')
-
 ###########################
 # Function: ping
 # Description: Shows latency for debugging
 ###########################
-
 @bot.command(name='ping', help='Returns Latency')
-
 async def ping(ctx):
     start=time()
     message=await ctx.send(f"Pong! : {bot.latency*1000:,.0f} ms")
     end=time()
     await message.edit(content="Pong! : "+str(int(bot.latency*1000))+" ms."+
     " Response time : "+str(int((end-start)*1000))+" ms.")
-
-
 @bot.command(name='chart', help='Creates a custom chart')
 @commands.has_role('Instructor')
 async def custom_chart(ctx, title: str, chart: str, *args):
@@ -693,25 +706,20 @@ async def custom_chart(ctx, title: str, chart: str, *args):
         Returns:
             returns a graph in the chat box
     """
-
     if len(args) % 2 != 0:
         print("Make sure every data-label singularly matches a datapoint (A B C 1 2 3")
         return
     data_count = int(len(args) / 2)
     with open('../data/charts/chartstorage.json', 'r', encoding='utf-8') as file:
         storage = json.load(file)
-
     labels_list = []
     dataset_list = []
-
     for data_label in range(data_count):
         labels_list.append(args[data_label])
         print(args[data_label])
-
     for data_point in range(data_count, len(args)):
         dataset_list.append(args[data_point])
         print(args[data_point])
-
     quick_chart = QuickChart()
     quick_chart.width = 500
     quick_chart.height = 300
@@ -729,14 +737,11 @@ async def custom_chart(ctx, title: str, chart: str, *args):
     link = quick_chart.get_url()
     shortener = pyshorteners.Shortener()
     shortened_link = shortener.tinyurl.short(link)
-
     await update_chart(storage, title, shortened_link)
     with open('../data/charts/chartstorage.json', 'w', encoding='utf-8') as file:
         json.dump(storage, file, indent=4)
     await ctx.send("Here is your chart:")
     await ctx.send(f"{shortened_link}")
-
-
 @bot.command(name='check_chart', help='View a custom chart by giving title name')
 async def checkchart(ctx, name: str):
     """
@@ -754,7 +759,6 @@ async def checkchart(ctx, name: str):
         else:
             await ctx.send(f"Your requested chart:")
             await ctx.send(f"{storage[name]['URL']}")
-
 async def update_chart(storage, name, link):
     """
         Updates the URL of the chart
@@ -766,12 +770,10 @@ async def update_chart(storage, name, link):
     if not str(name) in storage:
         storage[str(name)] = {}
     storage[str(name)]['URL'] = link
-
 ###########################
 # Function: stats
 # Description: Shows stats like
 ###########################
-
 @bot.command(name='stats', help='shows bot stats')
 async def show_stats(ctx):
     embed = Embed(title="Bot stats",colour=ctx.author.colour, timestamp=datetime.utcnow())
@@ -807,7 +809,6 @@ async def show_stats(ctx):
 ###########################
 polls=[]
 scheduler = AsyncIOScheduler()
-
 @bot.command(name='poll', help='Set Poll for a specified time and topic.')
 @commands.has_role('Instructor')
 async def create_poll(ctx, hours: int, question: str, *options):
@@ -829,7 +830,6 @@ async def create_poll(ctx, hours: int, question: str, *options):
         scheduler.add_job(complete_poll, "interval",
         minutes=hours,args=(message.channel.id, message.id))
         scheduler.start()
-
 async def complete_poll(channel_id, message_id):
     message = await bot.get_channel(channel_id).fetch_message(message_id)
     most_voted = max(message.reactions, key=lambda r: r.count)
@@ -837,7 +837,6 @@ async def complete_poll(channel_id, message_id):
     " was the most popular with "+str(most_voted.count-1)+" votes!")
     polls.remove((message.channel.id, message.id))
     scheduler.shutdown()
-
 @bot.event
 async def on_raw_reaction_add(payload):
     if payload.message_id in (poll[1] for poll in polls):
@@ -847,7 +846,6 @@ async def on_raw_reaction_add(payload):
                 and payload.member in await reaction.users().flatten()
                 and reaction.emoji != payload.emoji.name):
                 await message.remove_reaction(reaction.emoji, payload.member)
-
 ###########################
 # Function: custom-profanity
 # Description: Define a word to be added to the profanity filter
@@ -869,19 +867,15 @@ async def custom_profanity(ctx, pword):
 @commands.has_role('Instructor')
 async def attend(ctx):
     await attendance.compute(bot, ctx)
-
 @bot.command(name='create_email', help='Configures the specified email address against user.')
 async def create_email(ctx, email_id):
     await email_address.create_email(ctx, email_id)
-
 @bot.command(name='update_email', help='Updates the configured email address against user.')
 async def update_email(ctx, email_id):
     await email_address.update_email(ctx, email_id)
-
 @bot.command(name='view_email', help='displays the configured email address against user.')
 async def view_email(ctx):
     await email_address.view_email(ctx)
-
 @bot.command(name='remove_email', help='deletes the configured email address against user.')
 async def delete_email(ctx):
     await email_address.delete_email(ctx)
