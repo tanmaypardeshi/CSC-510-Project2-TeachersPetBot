@@ -2,8 +2,7 @@
 This feature allows you to chat with Bard, a large language model from Google AI. Bard can answer your questions, generate text, translate languages, and write different kinds of creative content
 
 # Location of Code
-The code that implements the above mentioned gits functionality is located [here](https://github.com/chandur626/TeachersPetBot/blob/update-readme/src/bot.py).
-
+The code that implements the above mentioned gits functionality is located [here](https://github.com/tanmaypardeshi/CSC-510-Project2-TeachersPetBot/blob/main/src/bot.py).
 # Code Description
 ## Functions
 
