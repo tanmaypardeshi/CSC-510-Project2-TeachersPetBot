@@ -137,11 +137,6 @@ async def on_ready():
     office_hours.init(bot)
     spam.init(bot)  #initialize the spam function of the bot so spam.py has
     # access to the bot and clearing starts
-    # Initialize ranking system
-    for x in bot.get_guild(guild_id).members:
-        # if x.bot is False: bots must have rank in order to do testing
-        insert_query = f"INSERT INTO rank (user_id) VALUES ({x.id})"
-        db.mutation_query(insert_query)
     print("Ranking system initialized!")
     print('Logged in as')
     print(bot.user.name)
