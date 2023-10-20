@@ -225,6 +225,18 @@ async def on_guild_join(guild):
 ###########################
 @bot.event
 async def on_member_join(member):
+    ''' run on guild join '''
+    # channel = get(member.guild.text_channels, name='general')
+    welcome_message = f"Hello {member}! Welcome to {member.guild.name} important links:.\n"
+    # Retrieve important links from the 'important-links' channel
+    important_links_channel = get(member.guild.text_channels, name='important-links')
+    if important_links_channel:
+        async for message in important_links_channel.history(limit=10):
+            link_match = re.search(r'^(.*?):\s*(https:\/\/[^\s]+)', message.content)
+            if link_match:
+                link_name, link_url = link_match.group(1), link_match.group(2)
+                welcome_message += f"**[{link_name}]({link_url})**\n"
+    await member.send(welcome_message)
     channel = get(member.guild.text_channels, name='general')
     insert_query = f"INSERT INTO rank (user_id) VALUES (?)"
     db.mutation_query(insert_query, (member.id,))
