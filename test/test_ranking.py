@@ -1,9 +1,9 @@
 # ###########################
 # # Tests Ranking
 # ###########################
-# from time import sleep
-# import discord
-# from utils import wait_for_msg
+from time import sleep
+import discord
+from utils import wait_for_msg
 
 # ###########################
 # # Function: test
@@ -13,11 +13,11 @@
 # #      - guild_id: id of the guild that is using the TeachersPetBot
 # # Outputs: None
 # ###########################
-# async def test(testing_bot):
-#     general_channel = discord.utils.get(testing_bot.get_all_channels(), name='general')
-#     await test_rank_for_same_user(testing_bot, general_channel)
-#     await test_rank_for_other_user(testing_bot, general_channel)
-#     await test_rank_for_other_user_who_does_not_exist(testing_bot, general_channel)
+async def test(testing_bot):
+     general_channel = discord.utils.get(testing_bot.get_all_channels(), name='general')
+     await test_rank_for_same_user(testing_bot, general_channel)
+     await test_rank_for_other_user(testing_bot, general_channel)
+     await test_rank_for_other_user_who_does_not_exist(testing_bot, general_channel)
 
 
 # ###########################
@@ -27,27 +27,24 @@
 # #      - testing_bot: bot that sends commands to test TeachersPetBot
 # # Outputs: None
 # ###########################
+async def test_rank_for_same_user(testing_bot, general_channel):
+    print("testing ranking for same user")
+    await general_channel.send('!rank')
+    response = await testing_bot.wait_for('message', check=lambda x: x.guild.id==general_channel.guild.id and bool(x.attachments))
+    return response
 
-# async def test_rank_for_same_user(testing_bot, general_channel):   
-#     print("testing ranking for same user")
-#     await general_channel.send('!rank')
-#     print('a')
-#     response = await testing_bot.wait_for('message', check=lambda x: x.guild.id==general_channel.guild.id and bool(x.attachments))
-#     print('b')
-#     return response
-
-# async def test_rank_for_other_user(testing_bot, general_channel):   
-#     await general_channel.send('!rank @Clorox-B2')
-#     response = await testing_bot.wait_for('message', check=lambda x: x.guild.id==general_channel.guild.id and bool(x.attachments))
-#     print(response)
-#     return response
+async def test_rank_for_other_user(testing_bot, general_channel):
+    for member1 in testing_bot.get_all_members():
+        if member1.name == 'cloroxb2': # enter the username of a member
+            member = member1
+        print(member1.name)
+    await general_channel.send(f'!rank {member.mention}')
+    response = await testing_bot.wait_for('message', check=lambda x: x.guild.id==general_channel.guild.id and bool(x.attachments))
+    print(response)
+    return response
 
 
-# async def test_rank_for_other_user_who_does_not_exist(testing_bot, general_channel):   
-#     await general_channel.send('!rank @Clorox-B3')
-#     response = await testing_bot.wait_for('message', check=lambda x: x.guild.id==general_channel.guild.id and bool(x.attachments))
-#     print(response)
-#     return response
-
-    
-    
+async def test_rank_for_other_user_who_does_not_exist(testing_bot, general_channel):
+    await general_channel.send('!rank @Clorox-B3')
+    #response = await testing_bot.wait_for('message', check=lambda x: x.guild.id==general_channel.guild.id and bool(x.attachments))
+    await wait_for_msg(testing_bot, general_channel, 'No @Clorox-B3 in the database')
