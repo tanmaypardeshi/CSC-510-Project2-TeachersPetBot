@@ -33,7 +33,7 @@ Click Below to Watch The Video!
 
   
 
-https://user-images.githubusercontent.com/60410421/143972105-f5aabb10-73e3-454a-96dc-9e9d0fe5b468.mp4
+https://youtu.be/wzObedlYgho
 
 
   
