@@ -16,6 +16,7 @@ import test_help
 import test_regrade
 import test_email_address
 import test_spam
+import test_ranking
 
 if platform.system() == 'Windows':
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
@@ -55,6 +56,8 @@ async def run_tests():
         #await test_email_utility.test()
         print('testing spam\n----------')
         await test_spam.test(testing_bot, TEST_GUILD_ID)
+        print('testing rank card\n----------')
+        await test_ranking.test(testing_bot)
     except AssertionError as ex:
         print('exception: ', type(ex).__name__ + ':', ex)
         print('--')

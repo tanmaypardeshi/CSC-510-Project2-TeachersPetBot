@@ -9,13 +9,11 @@ import json
 from psutil import Process, virtual_memory
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
-
 import discord
 from discord import Embed
 from discord.ext import commands
 from discord.utils import get
 from discord import __version__ as discord_version
-#from discord_components import DiscordComponents
 
 from dotenv import load_dotenv
 
@@ -31,8 +29,9 @@ import qna
 import attendance
 import help_command
 import regrade
-import utils
 import spam
+from rank_card import draw_card
+
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '1'
 
@@ -76,7 +75,6 @@ async def on_ready():
             end_time    DATETIME
         )
     ''')
-
     db.mutation_query('''
         CREATE TABLE IF NOT EXISTS exams (
             guild_id    INT,
@@ -87,7 +85,6 @@ async def on_ready():
             end_date    DATETIME
         )
     ''')
-
     db.mutation_query('''
         CREATE TABLE IF NOT EXISTS assignments (
             guild_id    INT,
@@ -97,7 +94,6 @@ async def on_ready():
             date        DATETIME
         )
     ''')
-
     db.mutation_query('''
         CREATE TABLE IF NOT EXISTS qna (
             guild_id    INT,
@@ -106,7 +102,6 @@ async def on_ready():
             qnumber      INT
         )
     ''')
-
     db.mutation_query('''
         CREATE TABLE IF NOT EXISTS regrade (
             guild_id    INT,
@@ -114,12 +109,18 @@ async def on_ready():
             questions   VARCHAR(50)
         )
     ''')
-
     db.mutation_query('''
         CREATE TABLE IF NOT EXISTS email_address (
             author_id    INT,
             email_id       VARCHAR(50),
             is_active   BOOLEAN NOT NULL CHECK (is_active IN (0, 1))
+        )
+    ''')
+    db.mutation_query('''
+        CREATE TABLE IF NOT EXISTS rank (
+            user_id     INT NOT NULL,
+            experience  INT DEFAULT 0,
+            level       INT DEFAULT 0            
         )
     ''')
     db.mutation_query('''
@@ -136,6 +137,7 @@ async def on_ready():
     office_hours.init(bot)
     spam.init(bot)  #initialize the spam function of the bot so spam.py has
     # access to the bot and clearing starts
+    print("Ranking system initialized!")
     print('Logged in as')
     print(bot.user.name)
     print(bot.user.id)
@@ -175,6 +177,13 @@ async def on_guild_join(guild):
             else:
                 await channel.send(instructors + " are the Instructors!")
         await channel.send("To add Instructors, type \"!setInstructor @<member>\"")
+        # Initialize ranking system
+        for x in guild.members:
+            # if x.bot is False: bots must have rank in order to do testing
+            insert_query = f"INSERT INTO rank (user_id) VALUES ({x.id})"
+            db.mutation_query(insert_query)
+        print("Ranking system initialized!")
+        await channel.send("Ranking system initialized!")
         #await channel.send("To remove instructors, type \"!removeInstructor @<member>\"")
         #Create Text channels if they don't exist
         overwrites = {guild.default_role: discord.PermissionOverwrite(read_messages=False,
@@ -210,7 +219,9 @@ async def on_guild_join(guild):
 @bot.event
 async def on_member_join(member):
     channel = get(member.guild.text_channels, name='general')
-    await channel.send(f"Hello {member}!")
+    insert_query = f"INSERT INTO rank (user_id) VALUES (?)"
+    db.mutation_query(insert_query, (member.id,))
+    await channel.send(f"Hello {member}! Your rank details are as follows. Level: 0, Experience: 0")
     await member.send(f'You have joined {member.guild.name}!')
 
 ###########################
@@ -222,6 +233,8 @@ async def on_member_join(member):
 @bot.event
 async def on_member_remove(member):
     channel = get(member.guild.text_channels, name='general')
+    delete_query = f"DELETE FROM rank where user_id=?"
+    db.mutation_query(delete_query, (member.id,))
     await channel.send(f"{member.name} has left")
 
 ###########################
@@ -253,15 +266,12 @@ async def on_message(message):
     if message.author.bot and message.author.id == Test_bot_application_ID:
         ctx = await bot.get_context(message)
         await bot.invoke(ctx)
-
     if message.author == bot.user:
         return
-
     if profanity.check_profanity(message.content):
         await message.channel.send(message.author.name + ' says: ' +
             profanity.censor_profanity(message.content))
         await message.delete()
-
     await bot.process_commands(message)
 
     if message.content == 'hey bot':
@@ -281,7 +291,20 @@ async def on_message(message):
             text_file.close()
     else:
         pass
-
+    # Ranking System
+    if message.author.bot is False:
+        id_query = f"SELECT * FROM rank where user_id=?"
+        result = db.select_query(id_query, (message.author.id,))
+        result = result.fetchone()
+        if result[1] == 99:
+            await message.channel.send(
+                f"{message.author.mention} has advanced to level {result[2]+1}!"
+            )
+            update_query = f"UPDATE rank SET experience=0, level=?  WHERE user_id=?"
+            db.mutation_query(update_query, (result[2]+1, message.author.id))
+        else:
+            update_query = f"UPDATE rank SET experience=? WHERE user_id=?"
+            db.mutation_query(update_query, (result[1]+1, message.author.id))
 
 ###########################
 # Function: on_message_edit
@@ -310,6 +333,57 @@ async def on_message_edit(before, after):
 async def test(ctx):
     ''' simple sanity check '''
     await ctx.send('test successful')
+
+###########################
+# Function: get_rank
+# Description: Command used to get level and experience
+# Inputs:
+#      - ctx: context of the command
+#      - member: user to whose rank is to be printed
+# Outputs:
+#      - Sends information back to channel
+###########################
+@bot.command(name='rank', help='Get rank of user')
+async def get_rank(ctx, member_id=None):
+    query = "SELECT * FROM rank where user_id=?"
+    rank_query = "SELECT p1.*, (SELECT COUNT(*) FROM rank AS p2 WHERE p2.level < p1.level) AS \
+    level_rank FROM rank AS p1 WHERE p1.user_id=?"
+    # Get your own rank
+    if member_id is None:
+        result = db.select_query(query, (ctx.author.id,))
+        rank_result = db.select_query(rank_query, (ctx.author.id,))
+        result = result.fetchone()
+        rank = rank_result.fetchone()
+        card = await draw_card(
+            xp=result[1],
+            level=result[2],
+            rank=rank[3],
+            name=ctx.author.name,
+            image_url=ctx.author.display_avatar,
+            next_level_xp=100,
+        )
+        file = discord.File(card, filename="levelcard.png")
+        await ctx.channel.send(file=file)
+    # Get some other users rank
+    else:
+        try:
+            member = ctx.guild.get_member(int(member_id[2:-1]))
+            result = db.select_query(query, (member.id,))
+            rank_result = db.select_query(rank_query, (member.id,))
+            result = result.fetchone()
+            rank = rank_result.fetchone()
+            card = await draw_card(
+                xp=result[1],
+                level=result[2],
+                rank=rank[3],
+                name=member.name,
+                image_url=member.display_avatar,
+                next_level_xp=100,
+            )
+            file = discord.File(card, filename="levelcard.png")
+            await ctx.channel.send(file=file)
+        except Exception as e:
+            await ctx.channel.send(f"No {member_id} in the database")
 
 ###########################
 # Function: get_instructor
@@ -481,7 +555,6 @@ async def answer_question(ctx, q_num, answer):
     else:
         await ctx.author.send('Please send answers to the #q-and-a channel.')
         await ctx.message.delete()
-
 
 @bot.command(name='regrade-request', help='add regrade-request')
 async def submit_regrade_request(ctx,name:str,questions:str):
@@ -682,7 +755,6 @@ async def checkchart(ctx, name: str):
             await ctx.send(f"Your requested chart:")
             await ctx.send(f"{storage[name]['URL']}")
 
-
 async def update_chart(storage, name, link):
     """
         Updates the URL of the chart
@@ -701,13 +773,8 @@ async def update_chart(storage, name, link):
 ###########################
 
 @bot.command(name='stats', help='shows bot stats')
-
 async def show_stats(ctx):
-    embed = Embed(title="Bot stats",
-                    colour=ctx.author.colour,
-                    #thumbnail=bot.user.avatar_url,
-                    timestamp=datetime.utcnow())
-
+    embed = Embed(title="Bot stats",colour=ctx.author.colour, timestamp=datetime.utcnow())
     proc = Process()
     with proc.oneshot():
         uptime = timedelta(seconds=time()-proc.create_time())
@@ -715,7 +782,6 @@ async def show_stats(ctx):
         mem_total = virtual_memory().total / (1024**2)
         mem_of_total = proc.memory_percent()
         mem_usage = mem_total * (mem_of_total / 100)
-
     fields = [
         ("Bot version", BOT_VERSION, True),
         ("Python version", python_version(), True),
@@ -725,10 +791,8 @@ async def show_stats(ctx):
         ("Memory usage", f"{mem_usage:,.3f} / {mem_total:,.0f} MiB ({mem_of_total:.0f}%)", True),
         ("Users", f"{ctx.guild.member_count:,}", True)
     ]
-
     for name, value, inline in fields:
         embed.add_field(name=name, value=value, inline=inline)
-
     await ctx.send(embed=embed)
 ###########################
 # Function: poll
@@ -744,33 +808,23 @@ async def show_stats(ctx):
 polls=[]
 scheduler = AsyncIOScheduler()
 
-
 @bot.command(name='poll', help='Set Poll for a specified time and topic.')
 @commands.has_role('Instructor')
 async def create_poll(ctx, hours: int, question: str, *options):
-
     if len(options) > 10:
         await ctx.send("You can only supply a maximum of 10 options.")
-
     else:
-        embed = Embed(title="Poll ‼",
-                        description=question,
-                        colour=ctx.author.colour,
-                        timestamp=datetime.utcnow())
-
+        embed = Embed(title="Poll ‼",description=question,colour=ctx.author.colour,
+            timestamp=datetime.utcnow())
         fields = [("Options", "\n".join([f"{numbers[idx]} {option}" for idx,
         option in enumerate(options)]), False),
         ("Instructions", "React to cast a vote!", False),
         ("Duration","The Voting will end in "+str(hours)+" Minutes",False)]
-
         for name, value, inline in fields:
             embed.add_field(name=name, value=value, inline=inline)
-
         message = await ctx.send(embed=embed)
-
         for emoji in numbers[:len(options)]:
             await message.add_reaction(emoji)
-
         polls.append((message.channel.id, message.id))
         scheduler.add_job(complete_poll, "interval",
         minutes=hours,args=(message.channel.id, message.id))
@@ -778,9 +832,7 @@ async def create_poll(ctx, hours: int, question: str, *options):
 
 async def complete_poll(channel_id, message_id):
     message = await bot.get_channel(channel_id).fetch_message(message_id)
-
     most_voted = max(message.reactions, key=lambda r: r.count)
-
     await message.channel.send("The results are in and option "+most_voted.emoji+
     " was the most popular with "+str(most_voted.count-1)+" votes!")
     polls.remove((message.channel.id, message.id))
@@ -790,7 +842,6 @@ async def complete_poll(channel_id, message_id):
 async def on_raw_reaction_add(payload):
     if payload.message_id in (poll[1] for poll in polls):
         message = await bot.get_channel(payload.channel_id).fetch_message(payload.message_id)
-
         for reaction in message.reactions:
             if (not payload.member.bot
                 and payload.member in await reaction.users().flatten()
@@ -808,7 +859,6 @@ async def custom_profanity(ctx, pword):
     ''' adding custom word to profanity list '''
     profanity.custom_words.append(pword)
     await ctx.message.delete()
-
 ###########################
 # Function: attendance
 # Description: Gets the attendance when requested by the instructor for audio channel
@@ -820,26 +870,21 @@ async def custom_profanity(ctx, pword):
 async def attend(ctx):
     await attendance.compute(bot, ctx)
 
-
 @bot.command(name='create_email', help='Configures the specified email address against user.')
 async def create_email(ctx, email_id):
     await email_address.create_email(ctx, email_id)
-
 
 @bot.command(name='update_email', help='Updates the configured email address against user.')
 async def update_email(ctx, email_id):
     await email_address.update_email(ctx, email_id)
 
-
 @bot.command(name='view_email', help='displays the configured email address against user.')
 async def view_email(ctx):
     await email_address.view_email(ctx)
 
-
 @bot.command(name='remove_email', help='deletes the configured email address against user.')
 async def delete_email(ctx):
     await email_address.delete_email(ctx)
-
 ###########################
 # Function: help
 # Description: Describes the help
@@ -849,108 +894,66 @@ async def delete_email(ctx):
 @bot.group(name='help', invoke_without_command=True)
 async def custom_help(ctx):
     await help_command.helper(ctx)
-
-
 @custom_help.command('answer')
 async def custom_answer(ctx):
     await help_command.answer(ctx)
-
-
 @custom_help.command('ask')
 async def custom_ask(ctx):
     await help_command.ask(ctx)
-
-
 @custom_help.command('attendance')
 async def custom_attendance(ctx):
     await help_command.attendance(ctx)
-
-
 @custom_help.command('begin-tests')
 async def custom_begin_tests(ctx):
     await help_command.begin_tests(ctx)
-
-
 @custom_help.command('create')
 async def custom_create(ctx):
     await help_command.create(ctx)
-
-
 @custom_help.command('end-tests')
 async def custom_end_tests(ctx):
     await help_command.end_tests(ctx)
-
-
 @custom_help.command('oh')
 async def custom_oh(ctx):
     await help_command.oh(ctx)
-
-
 @custom_help.command('ping')
 async def custom_ping(ctx):
     await help_command.ping(ctx)
-
-
 @custom_help.command('poll')
 async def custom_poll(ctx):
     await help_command.poll(ctx)
-
-
 @custom_help.command('setInstructor')
 async def custom_setInstructor(ctx):
     await help_command.setInstructor(ctx)
-
-
 @custom_help.command('stats')
 async def custom_stats(ctx):
     await help_command.stats(ctx)
-
-
 @custom_help.command('test')
 async def custom_test(ctx):
     await help_command.test(ctx)
-
-
 @custom_help.command('regrade-request')
 async def custom_regrade_request(ctx):
     await help_command.regrade_request(ctx)
-
-
 @custom_help.command('update-request')
 async def custom_update_request(ctx):
     await help_command.update_request(ctx)
-
-
 @custom_help.command('display-requests')
 async def custom_display_requests(ctx):
     await help_command.display_requests(ctx)
-
-
 @custom_help.command('remove-request')
 async def custom_remove_request(ctx):
     await help_command.remove_request(ctx)
-
-
 @custom_help.command('create_email')
 async def custom_create_email(ctx):
     await help_command.create_email(ctx)
-
-
 @custom_help.command('update_email')
 async def custom_update_email(ctx):
     await help_command.update_email(ctx)
-
-
 @custom_help.command('remove_email')
 async def custom_remove_email(ctx):
     await help_command.remove_email(ctx)
-
-
 @custom_help.command('view_email')
 async def custom_view_email(ctx):
     await help_command.view_email(ctx)
-
-
 ###########################
 # Function: begin_tests
 # Description: Start the automated testing
@@ -961,12 +964,9 @@ async def custom_view_email(ctx):
 async def begin_tests(ctx):
     ''' start test command '''
     global TESTING_MODE
-
     if ctx.author.id != Test_bot_application_ID:
         return
-
     TESTING_MODE = True
-
     test_oh_chan = next((ch for ch in ctx.guild.text_channels
         if 'office-hour-test' in ch.name), None)
     if test_oh_chan:
