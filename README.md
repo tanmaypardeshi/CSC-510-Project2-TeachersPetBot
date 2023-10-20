@@ -53,13 +53,15 @@ For 4.0, we created new tools for instructors and students to use to improve cou
 [Click here to see the features of iterations I, II and III.](docs/feature-history.md)
 
 <h4>Bard AI</h4>
-This feature allows you to chat with Bard, a large language model from Google AI. Bard can answer your questions, generate text, translate languages, and write different kinds of creative content.
+Experience the power of AI and engage in informative and creative conversations with Bard through our !Aichat feature. Ask questions, spark creativity, and enjoy intelligent interactions—all at your fingertips.
+Google Bard can answer your questions, generate text, translate languages, and write different kinds of creative content.
 To use this feature, simply type !Aichat in any channel. Bard will then start a chat session with you. You can type anything you want,
 <p align="left"><img width=65% src="https://github.com/tanmaypardeshi/CSC-510-Project2-TeachersPetBot/assets/102000543/fe0a0388-e95e-4c42-9b8b-18d2b26ffb9c"></p>
+
 With this feature 
-  we Provide users with a fun and engaging way to interact with the bot.
-  Help them learn new things and get answers to their questions.
-  Generate creative content.
+  - we Provide users with a fun and engaging way to interact with the bot.
+  - Help them learn new things and get answers to their questions.
+  - Generate creative content.
 
 <p align="left"><img width=65% src="https://github.com/tanmaypardeshi/CSC-510-Project2-TeachersPetBot/assets/102000543/65f3bf75-bdf8-4784-addd-5e0c9d0c603d"></p>
 Tpye exit to exit from the AI chat mode.
