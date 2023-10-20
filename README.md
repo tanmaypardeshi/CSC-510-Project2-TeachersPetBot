@@ -58,7 +58,7 @@ This feature allows you to chat with Bard, a large language model from Google AI
 <h4>Interactive Greetings: Elevating the Welcome Message with Important Links</h4>
 This feature guarantees that whenever a new member joins, they are greeted with a warm and inclusive welcome message that not only extends a friendly reception but also provides them with all the necessary and significant links to get started and navigate the guild effectively. 
 
-<p align="left"><img width=65% src="https://github.com/tanmaypardeshi/CSC-510-Project2-TeachersPetBot/assets/144291380/f4548f61-0f37-43a0-a274-d366f1dd51f0"></p>
+<p align="left"><img width=65% src="https://github.com/tanmaypardeshi/CSC-510-Project2-TeachersPetBot/assets/144291380/d23ebf8a-735f-45b7-bc5c-055aaffd5e90"></p>
 
 
 <h4>Upgraded Spam Detection</h4>
