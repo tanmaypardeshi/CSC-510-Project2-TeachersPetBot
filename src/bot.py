@@ -431,7 +431,6 @@ async def get_rank(ctx, member_id=None):
             await ctx.channel.send(file=file)
         except Exception as e:
             await ctx.channel.send(f"No {member_id} in the database")
-
 ###########################
 # Function: get_instructor
 # Description: Command used to give Instructor role out by instructors
@@ -450,7 +449,6 @@ async def get_instructor(ctx):
         await ctx.send(instructors + " is the Instructor!")
     else:
         await ctx.send(instructors + " are the Instructors!")
-
 ###########################
 # Function: set_instructor
 # Description: Command used to give Instructor role out by instructors
@@ -476,7 +474,6 @@ async def set_instructor(ctx, member:discord.Member):
             send_messages=True,read_message_history=False)
     else:
         await ctx.channel.send('Not a valid command for this channel')
-
 ###########################
 # Function: remove_instructor
 # Description: Command used to remove a user from Instructor role by instructors
@@ -501,7 +498,6 @@ async def remove_instructor(ctx, member:discord.Member):
             await channel.set_permissions(member, overwrite=None)
     else:
         await ctx.channel.send('Not a valid command for this channel')
-
 ###########################
 # Function: create_event
 # Description: command to create event and send to event_creation module
@@ -517,7 +513,6 @@ async def remove_instructor(ctx, member:discord.Member):
 async def create_event(ctx):
     ''' run event creation interface '''
     await event_creation.create_event(ctx, TESTING_MODE)
-
 ###########################
 # Function: create_event
 # Description: command to create event and send to event_creation module
@@ -532,7 +527,6 @@ async def create_event(ctx):
 async def set_spam_settings(ctx):
     ''' run spam setting prompts '''
     await spam.set(ctx)
-
 ###########################
 # Function: oh
 # Description: command related office hour and send to office_hours module
@@ -547,7 +541,6 @@ async def set_spam_settings(ctx):
 async def office_hour_command(ctx, command, *args):
     ''' run office hour commands with various args '''
     await office_hours.office_hour_command(ctx, command, *args)
-
 ###########################
 # Function: ask
 # Description: command to ask question and sends to qna module
@@ -616,7 +609,6 @@ async def submit_regrade_request(ctx,name:str,questions:str):
     else:
         await ctx.author.send('Please submit requests in regrade channel.')
         await ctx.message.delete()
-
 @submit_regrade_request.error
 async def submit_regrade_request_error(ctx, error):
     """
@@ -638,15 +630,11 @@ async def display_regrade_request(ctx):
         Outputs:
             - displays regrade requests present in the database
     """
-
     if ctx.channel.name == 'regrade-requests':
         await regrade.display_requests(ctx)
-
     else:
         await ctx.author.send('Please submit requests in regrade channel.')
         await ctx.message.delete()
-
-
 @bot.command(name='update-request', help='update regrade request')
 async def update_regrade_request(ctx,name:str,questions:str):
     """
