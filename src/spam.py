@@ -157,5 +157,19 @@ async def handle_spam(message, ctx, guild_id):
                                            days=days))
             await ctx.send(f"{message.author.name} has been muted")  # lets the everyone know who
             # was timed out
+            if message.author.bot is False:
+                id_query = f"SELECT * FROM rank where user_id=?"
+                result = db.select_query(id_query, (message.author.id,))
+                result = result.fetchone()
+                if result[1] >= 10:
+                    update_query = f"UPDATE rank SET experience=? WHERE user_id=?"
+                    db.mutation_query(update_query, (result[1]-10, message.author.id))
+                else:
+                    update_query = f"UPDATE rank SET experience=?, level=?  WHERE user_id=?"
+                    db.mutation_query(update_query, (90+result[1], result[2]-1, message.author.id))
+            return True
+            
         elif count > warning_num:
             await ctx.send(f"Warning, {message.author.name} will be muted if they continue to spam")
+            return False
+    return False

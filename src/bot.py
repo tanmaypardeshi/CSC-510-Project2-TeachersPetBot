@@ -276,7 +276,9 @@ async def on_message(message):
             instructor = True
     if not instructor:
         # Only spam detect on non instructors
-        await spam.handle_spam(message, ctx, guild_id) # handles spam
+        is_timeout = await spam.handle_spam(message, ctx, guild_id) # handles spam
+        if is_timeout:
+            return
 
     # allow messages from test bot
     #print(message.author.bot)
