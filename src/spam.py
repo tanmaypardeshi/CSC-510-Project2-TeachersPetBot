@@ -164,9 +164,13 @@ async def handle_spam(message, ctx, guild_id):
                 if result[1] >= 10:
                     update_query = f"UPDATE rank SET experience=? WHERE user_id=?"
                     db.mutation_query(update_query, (result[1]-10, message.author.id))
-                else:
+                elif result[1] < 10 and result[2] >0:
                     update_query = f"UPDATE rank SET experience=?, level=?  WHERE user_id=?"
                     db.mutation_query(update_query, (90+result[1], result[2]-1, message.author.id))
+                else:
+                    update_query = f"UPDATE rank SET experience=? WHERE user_id=?"
+                    db.mutation_query(update_query, (0, message.author.id))
+
             return True
             
         elif count > warning_num:
