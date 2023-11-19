@@ -140,6 +140,12 @@ async def on_ready():
                 time_between_clears     INT
             )
         ''')
+    db.mutation_query('''
+            CREATE TABLE IF NOT EXISTS explicit_content_violations (
+                user_id           INT NOT NULL,
+                violation_num     INT DEFAULT 0
+            )
+        ''')
     event_creation.init(bot)
     office_hours.init(bot)
     spam.init(bot)  #initialize the spam function of the bot so spam.py has
