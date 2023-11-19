@@ -283,8 +283,7 @@ async def on_message(message):
     if not instructor:
         # Only spam detect on non instructors
         is_timeout = await spam.handle_spam(message, ctx, guild_id) # handles spam
-        if is_timeout:
-            return
+
 
     # allow messages from test bot
     #print(message.author.bot)
@@ -300,6 +299,9 @@ async def on_message(message):
             profanity.censor_profanity(message.content))
         await message.delete()
     await bot.process_commands(message)
+
+    if is_timeout:
+        return
 
     if message.content == 'hey bot':
         response = 'hey yourself ;)'
