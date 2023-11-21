@@ -346,11 +346,11 @@ async def on_message(message):
     else:
         pass
     # Ranking System
-    if message.author.bot is False:
+    if message.author.bot is False and not instructor:
         id_query = f"SELECT * FROM rank where user_id=?"
         result = db.select_query(id_query, (message.author.id,))
         result = result.fetchone()
-        if result is not None:
+        try:
             if result[1] == 99:
                 await message.channel.send(
                     f"{message.author.mention} has advanced to level {result[2]+1}!"
@@ -360,12 +360,13 @@ async def on_message(message):
             else:
                 update_query = f"UPDATE rank SET experience=? WHERE user_id=?"
                 db.mutation_query(update_query, (result[1]+1, message.author.id))
-        else:
-            write_query = f"INSERT into rank (user_id, level, experience) VALUES(?, ?, ?)"
-            if instructor:
-                db.mutation_query(write_query, (message.author.id, 100, 0))
-            else:
-                db.mutation_query(write_query, (message.author.id, 0, 0))
+        except Exception as error:
+            print(" the error is : ", error)
+            # write_query = f"INSERT into rank (user_id, level, experience) VALUES(?, ?, ?)"
+            # if instructor:
+            #     db.mutation_query(write_query, (message.author.id, 100, 0))
+            # else:
+            #     db.mutation_query(write_query, (message.author.id, 0, 0))
 
 ###########################
 # Function: on_message_edit
