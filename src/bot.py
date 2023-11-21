@@ -149,6 +149,8 @@ async def on_ready():
     event_creation.init(bot)
     office_hours.init(bot)
     spam.init(bot)  #initialize the spam function of the bot so spam.py has
+
+    
     # access to the bot and clearing starts
     print("Ranking system initialized!")
     print('Logged in as')
@@ -323,15 +325,22 @@ async def on_message(message):
         id_query = f"SELECT * FROM rank where user_id=?"
         result = db.select_query(id_query, (message.author.id,))
         result = result.fetchone()
-        if result[1] == 99:
-            await message.channel.send(
-                f"{message.author.mention} has advanced to level {result[2]+1}!"
-            )
-            update_query = f"UPDATE rank SET experience=0, level=?  WHERE user_id=?"
-            db.mutation_query(update_query, (result[2]+1, message.author.id))
+        if result is not None:
+            if result[1] == 99:
+                await message.channel.send(
+                    f"{message.author.mention} has advanced to level {result[2]+1}!"
+                )
+                update_query = f"UPDATE rank SET experience=0, level=?  WHERE user_id=?"
+                db.mutation_query(update_query, (result[2]+1, message.author.id))
+            else:
+                update_query = f"UPDATE rank SET experience=? WHERE user_id=?"
+                db.mutation_query(update_query, (result[1]+1, message.author.id))
         else:
-            update_query = f"UPDATE rank SET experience=? WHERE user_id=?"
-            db.mutation_query(update_query, (result[1]+1, message.author.id))
+            write_query = f"INSERT into rank (user_id, level, experience) VALUES(?, ?, ?)"
+            if instructor:
+                db.mutation_query(write_query, (message.author.id, 100, 0))
+            else:
+                db.mutation_query(write_query, (message.author.id, 0, 0))
 
 ###########################
 # Function: on_message_edit
