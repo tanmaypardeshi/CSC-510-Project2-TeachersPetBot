@@ -125,7 +125,7 @@ async def on_ready():
     ''')
     db.mutation_query('''
         CREATE TABLE IF NOT EXISTS rank (
-            user_id     INT NOT NULL,
+            user_id     INT NOT NULL UNIQUE ON CONFLICT IGNORE,
             experience  INT DEFAULT 0,
             level       INT DEFAULT 0            
         )
@@ -142,19 +142,46 @@ async def on_ready():
         ''')
     db.mutation_query('''
             CREATE TABLE IF NOT EXISTS explicit_content_violations (
-                user_id           INT NOT NULL,
+                user_id           INT NOT NULL UNIQUE ON CONFLICT IGNORE,
                 violation_num     INT DEFAULT 0
             )
         ''')
     event_creation.init(bot)
     office_hours.init(bot)
     spam.init(bot)  #initialize the spam function of the bot so spam.py has
+
+    # Get the user list from general
+    guild = bot.guilds[0]
+    channel_name = 'general'
+    general_channel = discord.utils.get(guild.channels, name=channel_name, type=discord.ChannelType.text)
+    general_members = general_channel.members
+    # Get the general user_ids, make sure the bot is ignored
+    general_ids = [i.id for i in general_members if i.bot == False]
+
+    channel_name = 'instructor-commands'
+    ins_channel = discord.utils.get(guild.channels, name=channel_name, type=discord.ChannelType.text)
+    ins_members = ins_channel.members
+    # Get the instructor user_ids, make sure the bot is ignored
+    ins_ids = [i.id for i in ins_members if i.bot == False]
+    
+    for i in range(len(general_ids)):
+        if general_ids[i] in ins_ids:
+            update_rank_table_query = f"INSERT into rank (user_id, level, experience) VALUES(?, ?, ?)"
+            db.mutation_query(update_rank_table_query, (general_ids[i], 100, 0))
+        else:
+            update_rank_table_query = f"INSERT into rank (user_id, level, experience) VALUES(?, ?, ?)"
+            db.mutation_query(update_rank_table_query, (general_ids[i], 0, 0))
+
+        update_explicit_table_query = f"INSERT into explicit_content_violations (user_id, violation_num) VALUES(?, ?)"
+        db.mutation_query(update_explicit_table_query, (general_ids[i], 0))
     # access to the bot and clearing starts
     print("Ranking system initialized!")
     print('Logged in as')
     print(bot.user.name)
     print(bot.user.id)
     print('------')
+    print('the ins members are : ', ins_members)
+    print('the ins ids are ', ins_ids)
     await cal.init(bot) ##this needed to be moved below bc otherwise the stuff above is never called
 ###########################
 # Function: on_guild_join
@@ -325,15 +352,22 @@ async def on_message(message):
         id_query = f"SELECT * FROM rank where user_id=?"
         result = db.select_query(id_query, (message.author.id,))
         result = result.fetchone()
-        if result[1] == 99:
-            await message.channel.send(
-                f"{message.author.mention} has advanced to level {result[2]+1}!"
-            )
-            update_query = f"UPDATE rank SET experience=0, level=?  WHERE user_id=?"
-            db.mutation_query(update_query, (result[2]+1, message.author.id))
+        if result is not None:
+            if result[1] == 99:
+                await message.channel.send(
+                    f"{message.author.mention} has advanced to level {result[2]+1}!"
+                )
+                update_query = f"UPDATE rank SET experience=0, level=?  WHERE user_id=?"
+                db.mutation_query(update_query, (result[2]+1, message.author.id))
+            else:
+                update_query = f"UPDATE rank SET experience=? WHERE user_id=?"
+                db.mutation_query(update_query, (result[1]+1, message.author.id))
         else:
-            update_query = f"UPDATE rank SET experience=? WHERE user_id=?"
-            db.mutation_query(update_query, (result[1]+1, message.author.id))
+            write_query = f"INSERT into rank (user_id, level, experience) VALUES(?, ?, ?)"
+            if instructor:
+                db.mutation_query(write_query, (message.author.id, 100, 0))
+            else:
+                db.mutation_query(write_query, (message.author.id, 0, 0))
 
 ###########################
 # Function: on_message_edit
