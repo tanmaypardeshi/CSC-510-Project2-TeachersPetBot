@@ -325,9 +325,6 @@ async def on_message(message):
         await message.delete()
     await bot.process_commands(message)
 
-    if is_timeout:
-        return
-
     if message.content == 'hey bot':
         response = 'hey yourself ;)'
         await message.channel.send(response)
