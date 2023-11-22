@@ -316,7 +316,7 @@ async def on_message(message):
     for role in member.roles:
         if role.name == 'Instructor':
             instructor = True
-    if not instructor:
+    if message.author.bot is False and not instructor:
         # Only spam detect on non instructors
         is_timeout = await spam.handle_spam(message, ctx, guild_id) # handles spam
 
