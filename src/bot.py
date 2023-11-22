@@ -21,7 +21,8 @@ from quickchart import QuickChart
 import pyshorteners
 from bardapi import Bard
 import db
-import profanity
+import profanity_custom 
+from profanity_help import check_profanity, censor_profanity, custom_words
 import event_creation
 import office_hours
 import email_address
@@ -141,6 +142,16 @@ async def on_ready():
                 time_between_clears     INT
             )
         ''')
+    db.mutation_query('''
+            CREATE TABLE IF NOT EXISTS profanity_settings (
+                warning_num             INT,
+                timeout_num             INT,
+                timeout_min             INT,
+                timeout_hour            INT,
+                timeout_day             INT,
+                kicked_out_violations     INT
+            )
+        ''')
     # db.mutation_query('''
     #         CREATE TABLE IF NOT EXISTS explicit_content_violations (
     #             user_id           INT NOT NULL UNIQUE ON CONFLICT IGNORE,
@@ -150,7 +161,7 @@ async def on_ready():
     event_creation.init(bot)
     office_hours.init(bot)
     spam.init(bot)  #initialize the spam function of the bot so spam.py has
-
+    profanity_custom.init(bot)
     # Get the user list from general
     guild = bot.guilds[0]
     channel_name = 'general'
@@ -319,10 +330,12 @@ async def on_message(message):
         await bot.invoke(ctx)
     if message.author == bot.user:
         return
-    if profanity.check_profanity(message.content):
+    if check_profanity(message.content):
         await message.channel.send(message.author.name + ' says: ' +
-            profanity.censor_profanity(message.content))
+            censor_profanity(message.content))
         await message.delete()
+        if not instructor:
+            await profanity_custom.handle_profanity(message, ctx, guild_id)
     await bot.process_commands(message)
 
     if message.content == 'hey bot':
@@ -375,9 +388,9 @@ async def on_message(message):
 @bot.event
 async def on_message_edit(before, after):
     ''' run on message edited '''
-    if profanity.check_profanity(after.content):
+    if check_profanity(after.content):
         await after.channel.send(after.author.name + ' says: ' +
-            profanity.censor_profanity(after.content))
+            censor_profanity(after.content))
         await after.delete()
 
 ###########################
@@ -895,7 +908,7 @@ async def on_raw_reaction_add(payload):
 @bot.command(name = 'custom', help = 'Add word to profanity filter')
 async def custom_profanity(ctx, pword):
     ''' adding custom word to profanity list '''
-    profanity.custom_words.append(pword)
+    custom_words.append(pword)
     await ctx.message.delete()
 ###########################
 # Function: attendance
