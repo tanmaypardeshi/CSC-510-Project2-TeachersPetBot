@@ -316,10 +316,6 @@ async def on_message(message):
     for role in member.roles:
         if role.name == 'Instructor':
             instructor = True
-    if message.author.bot is False and not instructor:
-        # Only spam detect on non instructors
-        is_timeout = await spam.handle_spam(message, ctx, guild_id) # handles spam
-
 
     # allow messages from test bot
     #print(message.author.bot)
@@ -330,6 +326,11 @@ async def on_message(message):
         await bot.invoke(ctx)
     if message.author == bot.user:
         return
+
+    if not instructor:
+        # Only spam detect on non instructors
+        is_timeout = await spam.handle_spam(message, ctx, guild_id) # handles spam
+
     if check_profanity(message.content):
         await message.channel.send(message.author.name + ' says: ' +
             censor_profanity(message.content))
