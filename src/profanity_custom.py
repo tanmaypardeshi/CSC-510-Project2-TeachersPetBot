@@ -1,35 +1,8 @@
-from better_profanity import profanity
 import asyncio
 from datetime import timedelta
 import discord
 import db
 
-profanity.load_censor_words()
-custom_words = []
-###########################
-# Function: check_profanity
-# Description: Uses better_profanity to check profanity in a message
-# Inputs:
-#      - msg: message from user
-###########################
-def check_profanity(msg):
-    ''' check if message contains profanity through profanity module '''
-    if msg in custom_words:
-        return True
-
-    return profanity.contains_profanity(msg)
-
-###########################
-# Function: censor_profanity
-# Description: censor the message per better_profanity
-# Inputs:
-#      - msg: message from user
-###########################
-def censor_profanity(msg):
-    ''' take action on the profanity by censoring it '''
-    if msg in custom_words:
-        msg = '****'
-    return profanity.censor(msg)
 
 BOT = None
 ###########################
@@ -153,6 +126,7 @@ def init(bot):
 async def handle_profanity(message, ctx, guild_id):
     print(message.content)
     print(message.author.id)
+    print(type(message.author.id))
     # with open("spam.txt", "a", encoding='utf-8') as f:
     #     f.writelines(f"{str(message.author.id)}\n")
 
@@ -160,17 +134,20 @@ async def handle_profanity(message, ctx, guild_id):
     #     for line in f:
     #         if line.strip("\n") == str(message.author.id):
     #             count = count + 1
-    violations = db.select_query(('SELECT violations from rank where user_id=?'), (message.author.id)).fetchall()[0][3]
+    violations_query = db.select_query(f"SELECT * FROM rank where user_id=?", (message.author.id,))
+    print('the violations_query', violations_query)
+    violations = violations_query.fetchall()[0][3]
+    print('the violations are: ', violations)
     rows = db.select_query('SELECT * FROM profanity_settings')
     rows_tuple = rows.fetchall()[0]
     warning_num = rows_tuple[0]
     timeout_num = rows_tuple[1]
     kicked_out_num  = rows_tuple[-1]
-    if violations == warning_num:
+    if violations < warning_num:
         await ctx.send(f"{message.author.name} this is your first violation of using profanity, one more and you'll be in time out.")
-        update_query = f"UPDATE rank SET violations=? WHERE user_id=?"
+        update_query = f"UPDATE rank SET violation_num=? WHERE user_id=?"
         db.mutation_query(update_query,(violations+1, message.author.id)) 
-    elif violations == timeout_num:
+    elif violations < timeout_num:
         guild = BOT.get_guild(guild_id)
         member = guild.get_member(message.author.id)
         muted = discord.utils.get(guild.roles, name="Mute")
@@ -183,7 +160,7 @@ async def handle_profanity(message, ctx, guild_id):
                                         days=days))
         await ctx.send(f"{message.author.name} has been muted due to exceeding the permitted threshold for use of profanity")  # lets the everyone know who
         # was timed out
-        update_query = f"UPDATE rank SET violations=? WHERE user_id=?"
+        update_query = f"UPDATE rank SET violation_num=? WHERE user_id=?"
         db.mutation_query(update_query,(violations+1, message.author.id))
     elif violations >= kicked_out_num:
         guild = BOT.get_guild(guild_id)
