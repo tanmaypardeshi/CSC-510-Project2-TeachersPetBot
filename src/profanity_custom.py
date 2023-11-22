@@ -158,7 +158,7 @@ async def handle_profanity(message, ctx, guild_id):
         days = rows_tuple[4]
         await member.timeout(timedelta(seconds=seconds, minutes=minutes, hours=hours,
                                         days=days))
-        await ctx.send(f"{message.author.name} has been muted due to exceeding the permitted threshold for use of profanity")  # lets the everyone know who
+        await ctx.send(f"{message.author.name} has been timed out due to exceeding the permitted threshold for use of profanity")  # lets the everyone know who
         # was timed out
         update_query = f"UPDATE rank SET violation_num=? WHERE user_id=?"
         db.mutation_query(update_query,(violations+1, message.author.id))
@@ -168,6 +168,8 @@ async def handle_profanity(message, ctx, guild_id):
         member.kick()
         await ctx.send(f"{message.author.name} has been kicked out due to exceeding the permitted threshold for use of profanity")  # lets the everyone know who
         # was kicked out
+        with open("blocked_user.txt", "a", encoding='utf-8') as f:
+            f.writelines(f"{str(message.author.id)}\n")
         update_query = f"DELETE from rank WHERE user_id=?"
         db.mutation_query(update_query,(message.author.id))
     return False
