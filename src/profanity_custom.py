@@ -104,7 +104,7 @@ def init(bot):
         # there is nothing in the database then put defaults in it
         warning_num = 1  # number of messages before warning of spam
         timeout_num = 2  # number of messages before timeout
-        timeout_min = 5  # number of minutes in timeout
+        timeout_min = 1  # number of minutes in timeout
         timeout_hour = 0  # hours in timeout
         timeout_day = 0  # days in timout
         kicked_out_violations = 3

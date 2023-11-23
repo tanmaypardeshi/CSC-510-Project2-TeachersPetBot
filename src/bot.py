@@ -272,7 +272,9 @@ async def on_member_join(member):
     with open("blocked_user.txt", "r+", encoding='utf-8') as f:
         for line in f:
             if line.strip("\n") == str(member.id):
-                member.kick()
+                await member.kick()
+                await channel.send(f"A blocked user {member} tried to join the server but was kicked out!! ")
+
                 
     welcome_message = f"Hello {member}! Welcome to {member.guild.name} important links:.\n"
     # Retrieve important links from the 'important-links' channel
