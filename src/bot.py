@@ -269,6 +269,11 @@ async def on_guild_join(guild):
 async def on_member_join(member):
     ''' run on guild join '''
     # channel = get(member.guild.text_channels, name='general')
+    with open("blocked_user.txt", "r+", encoding='utf-8') as f:
+        for line in f:
+            if line.strip("\n") == str(member.id):
+                member.kick()
+                
     welcome_message = f"Hello {member}! Welcome to {member.guild.name} important links:.\n"
     # Retrieve important links from the 'important-links' channel
     important_links_channel = get(member.guild.text_channels, name='important-links')
