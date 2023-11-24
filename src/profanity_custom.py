@@ -124,9 +124,11 @@ def init(bot):
 # Outputs: None
 ###########################
 async def handle_profanity(message, ctx, guild_id):
-    print(message.content)
-    print(message.author.id)
-    print(type(message.author.id))
+
+    #print(message.content)
+    #print(message.author.id)
+    #print(type(message.author.id))
+    print((f"{str(message.author.id)} {str(message.author)}\n"))
     # with open("spam.txt", "a", encoding='utf-8') as f:
     #     f.writelines(f"{str(message.author.id)}\n")
 
@@ -169,7 +171,7 @@ async def handle_profanity(message, ctx, guild_id):
         await ctx.send(f"{message.author.name} has been kicked out due to exceeding the permitted threshold for use of profanity")  # lets the everyone know who
         # was kicked out
         with open("blocked_user.txt", "a", encoding='utf-8') as f:
-            f.writelines(f"{str(message.author.id)}\n")
+            f.writelines(f"{str(message.author.id)} {str(message.author)}\n")
         update_query = f"DELETE from rank WHERE user_id=?"
         db.mutation_query(update_query,(message.author.id,))
     return False
