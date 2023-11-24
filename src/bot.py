@@ -273,6 +273,7 @@ async def on_member_join(member):
         for line in f:
             if line.strip("\n") == str(member.id):
                 await member.kick()
+                channel = get(member.guild.text_channels, name='general')
                 await channel.send(f"A blocked user {member} tried to join the server but was kicked out!! ")
 
                 
