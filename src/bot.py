@@ -269,6 +269,14 @@ async def on_guild_join(guild):
 async def on_member_join(member):
     ''' run on guild join '''
     # channel = get(member.guild.text_channels, name='general')
+    with open("blocked_user.txt", "r+", encoding='utf-8') as f:
+        for line in f:
+            if line.strip("\n") == str(member.id):
+                await member.kick()
+                channel = get(member.guild.text_channels, name='general')
+                await channel.send(f"A blocked user {member} tried to join the server but was kicked out!! ")
+
+                
     welcome_message = f"Hello {member}! Welcome to {member.guild.name} important links:.\n"
     # Retrieve important links from the 'important-links' channel
     important_links_channel = get(member.guild.text_channels, name='important-links')
@@ -552,6 +560,38 @@ async def remove_instructor(ctx, member:discord.Member):
             await channel.set_permissions(member, overwrite=None)
     else:
         await ctx.channel.send('Not a valid command for this channel')
+
+###########################
+# Function: unblock_user
+# Description: Command used to unblock a user from joining the channel by instructors
+# Inputs:
+#      - ctx: context of the command
+#      - member: user to remove role
+# Outputs:
+#      - Sends confirmation back to channel
+###########################
+@bot.command(name='unblockUser', help='Unblock user from joining the channel.')
+@commands.has_role('Instructor')
+async def unblock_user(ctx):
+    ''' unblock user by instructor command '''
+    if ctx.channel.name == 'instructor-commands':
+        await ctx.send('Which user do you want to unblock?')
+        userid_to_unblock = str((await bot.wait_for('message', timeout=60.0, check=lambda x:
+            x.channel.name ==
+                'instructor-commands' and x.author.id != bot.user.id)).content)
+        with open("blocked_user.txt", "r", encoding='utf-8') as f:
+            lines = f.readlines()
+            updated_lines = [line for line in lines if userid_to_unblock not in line]
+        with open("blocked_user.txt", "w", encoding='utf-8') as f:
+            f.writelines(updated_lines)
+        if len(lines) != len(updated_lines):
+            await ctx.send(f'The user {userid_to_unblock} got unblocked!!!')
+        else:
+            await ctx.send(f'The user {userid_to_unblock} is not blocked in the forst place!!!')
+    else:
+        await ctx.channel.send('Not a valid command for this channel')
+
+
 ###########################
 # Function: create_event
 # Description: command to create event and send to event_creation module
