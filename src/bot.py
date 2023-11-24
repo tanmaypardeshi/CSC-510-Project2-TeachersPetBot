@@ -354,6 +354,10 @@ async def on_message(message):
     
     instructor_role = discord.utils.get(message.guild.roles, name='Instructor')
 
+    if ctx.channel.name == 'instructor-mentions':
+        channel = get(member.guild.text_channels, name='general')
+        await channel.send(f'{message.author} :- {message.content}')
+
     if message.mentions or f'<@&{instructor_role.id}>' in message.content:
         mentioned_users = [user for user in message.mentions]
         instructor_mentions = [user for user in mentioned_users if any(role.name == 'Instructor' for role in user.roles)]
