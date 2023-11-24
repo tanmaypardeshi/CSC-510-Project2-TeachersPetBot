@@ -667,6 +667,21 @@ async def send_links(ctx):
     """To display all messages which contain url."""
     await ctx.send("The below list of messages contains URLs")
     await ctx.send(file=discord.File('images/links/links.txt'))
+
+
+###########################
+# Function: send_links
+# Description: command to fetch all the links posted in the group
+# Inputs:
+#      - ctx: context of the command
+# Outputs:
+#      - Bot posts all the links posted in group.
+###########################
+@bot.command(name='set_profanity_settings', help='Allows instructor to set profanity settings')
+@commands.has_role('Instructor')
+async def set_profanity_settings(ctx):
+    ''' run spam setting prompts '''
+    await profanity_custom.set(ctx)
 ###########################
 # Function: answer
 # Description: command to answer question and sends to qna module
