@@ -271,10 +271,11 @@ async def on_member_join(member):
     # channel = get(member.guild.text_channels, name='general')
     with open("blocked_user.txt", "r+", encoding='utf-8') as f:
         for line in f:
-            if line.strip("\n") == str(member.id):
+            if line.strip("\n").split(" ")[0] == str(member.id):
                 await member.kick()
                 channel = get(member.guild.text_channels, name='general')
                 await channel.send(f"A blocked user {member} tried to join the server but was kicked out!! ")
+                return
 
                 
     welcome_message = f"Hello {member}! Welcome to {member.guild.name} important links:.\n"
@@ -581,9 +582,9 @@ async def unblock_user(ctx):
                 'instructor-commands' and x.author.id != bot.user.id)).content)
         with open("blocked_user.txt", "r", encoding='utf-8') as f:
             lines = f.readlines()
-            updated_lines = [line for line in lines if userid_to_unblock not in line]
+        updated_lines = [line.strip() for line in lines if line.strip().split(' ')[1] != userid_to_unblock]
         with open("blocked_user.txt", "w", encoding='utf-8') as f:
-            f.writelines(updated_lines)
+            f.write('\n'.join(updated_lines))
         if len(lines) != len(updated_lines):
             await ctx.send(f'The user {userid_to_unblock} got unblocked!!!')
         else:
