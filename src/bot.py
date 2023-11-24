@@ -351,6 +351,24 @@ async def on_message(message):
     if message.content == 'hey bot':
         response = 'hey yourself ;)'
         await message.channel.send(response)
+    
+    instructor_role = discord.utils.get(message.guild.roles, name='Instructor')
+
+    if ctx.channel.name == 'instructor-mentions':
+        channel = get(member.guild.text_channels, name='general')
+        await channel.send(f'{message.author} :- {message.content}')
+
+    if message.mentions or f'<@&{instructor_role.id}>' in message.content:
+        mentioned_users = [user for user in message.mentions]
+        instructor_mentions = [user for user in mentioned_users if any(role.name == 'Instructor' for role in user.roles)]
+        if instructor_mentions or f'<@&{instructor_role.id}>' in message.content:
+            target_guild = bot.get_guild(guild_id)
+            if target_guild:
+                for channel in target_guild.channels:
+                    if channel.name == 'instructor-mentions':
+                        await channel.send(f'{message.author} :- {message.content}')
+            else:
+                print(f"Guild with ID {guild_id} not found.")
 
     regex = r"(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s" \
             r"()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};" \
