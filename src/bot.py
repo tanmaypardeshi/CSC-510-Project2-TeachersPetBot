@@ -1150,7 +1150,12 @@ async def end_tests(ctx):
     await ctx.bot.close()
     # quit(0)
 
-############## AWARD
+###########################
+# Function: award
+# Description: Award a worthy member with XP points as an instructor. 
+# Inputs:
+#      - ctx: context of the command
+###########################
 @bot.command(name='award', help='Award a bright member.')
 @commands.has_role('Instructor')
 async def award_member(ctx, member, points):
@@ -1181,6 +1186,7 @@ async def award_member(ctx, member, points):
         except:
             await ctx.send('Invalid points argument. Try again...')
             return
+        await ctx.channel.send(f'The previous rank for {username_to_award} is {result[2]} and XP is {result[1]}')
         new_rank, new_xp = award_update_rank_and_xp(int(result[2]),int(result[1]), points)
         await ctx.channel.send(f'The new rank for {username_to_award} is {new_rank} and XP is {new_xp}')
         update_query = f"UPDATE rank SET experience=?, level=?  WHERE user_id=?"
