@@ -14,17 +14,17 @@
 | Text channels recreating | If the bot is added to a server it recreated some default channels each time again and again. | Code changes to check for the existence of the channel before adding it. |
 | Help | Used inbuild discord help | Added custom help command to better suite the usage. |
 
-
+# Phase IV  
 |  New Commands/ Features | Details |
 | ------------ |------------ |
-| Ping | Shows latency of the BOT which can be used for debugging purposes. |
-| Stats | Shows stats like version of BOT, python and discord.py and also display Uptime, CPU time, Memory Usage and Number of Users. |
-| Member Join | Send the new member a personal welcome message when joining the server in which bot is alreay present. |
-| Member Quit or Removal | Displays a message when a member leaves a guild in which bot is alreay present. |
-| Get Instructor | Command used to check the Instructors in the guild. |
-| Remove Instructor | Command used to remove a user from Instructor role by instructors. |
-| Poll | Functionality for instructors to host polls with deadline by which students can respond. |
-| Attendance | Finds attendees and absentees of class. |
-| custom-profanity | Define a word to be added to the profanity filter. |
-| Close call | It check the events at a particular time and send outs notification about deadlines in the next 24hrs to the members. |
+| Custom profanity settings | Whenever a user enters an nsfw message, the user can be warned, timed-out and even blocked from the server as per the settings of the instructor or the default settings which is warning, followed by timeout followed by ban from server.|
+| Persistent Block from server | Shows stats like version of BOT, python and discord.py and also display Uptime, CPU time, Memory Usage and Number of Users. |
+| !unblock_user | Send the new member a personal welcome message when joining the server in which bot is alreay present. |
+| DB initialization | Displays a message when a member leaves a guild in which bot is alreay present. |
+| Spam Violation penalty | Command used to check the Instructors in the guild. |
+| NSFW violation penalty | Command used to remove a user from Instructor role by instructors. |
+| !Award XP | Functionality for instructors to host polls with deadline by which students can respond. |
+| !Penalize XP | Finds attendees and absentees of class. |
+| !Leaderboard | Define a word to be added to the profanity filter. |
+| QNA Channel | It check the events at a particular time and send outs notification about deadlines in the next 24hrs to the members. |
 
