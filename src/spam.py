@@ -108,8 +108,8 @@ def init(bot):
     row = db.select_query('SELECT * FROM spam_settings').fetchall()
     if len(row) == 0:
         # there is nothing in the database then put defaults in it
-        warning_num = 4  # number of messages before warning of spam
-        timeout_num = 5  # number of messages before timeout
+        warning_num = 40  # number of messages before warning of spam
+        timeout_num = 50 # number of messages before timeout
         timeout_min = 5  # number of minutes in timeout
         timeout_hour = 0  # hours in timeout
         timeout_day = 0  # days in timout

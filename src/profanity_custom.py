@@ -173,7 +173,7 @@ async def handle_profanity(message, ctx, guild_id):
     if violations < warning_num:
         await ctx.send(f"{message.author.name} this is your first violation of using profanity, one more and you'll be in time out.")
         profanity_penalize( message.author.id)
-        update_query = f"UPDATE rank SET violation_num=?,  WHERE user_id=?"
+        update_query = f"UPDATE rank SET violation_num=?  WHERE user_id=?"
         db.mutation_query(update_query,(violations+1, message.author.id)) 
     elif violations < timeout_num:
         guild = BOT.get_guild(guild_id)
