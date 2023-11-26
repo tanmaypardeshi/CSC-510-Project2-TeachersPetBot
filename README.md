@@ -42,7 +42,7 @@ https://youtu.be/wzObedlYgho
 
 Teacher's Pet is a Discord Bot for class instructors to streamline their Discord servers. Discord is a great tool for communication and its functionalities can be enhanced by bots and integrations. 
 
-For 4.0, we created new tools for instructors and students to use to improve course communication. After version 3.0's success, we decided we wanted to improve upon some of its features including spam and saved links. We also wanted to add a few more exciting features that would really drive engagement with our bot, for example, the AI chat and student ranking feature. Our main objective for 4.0 was to make using Discord a more controlled and enjoyable experience.
+For 5.0, we created new tools for instructors and students to use to improve course communication. After version 4.0's success, we decided we wanted to improve upon some of its features including spam, profanity settings, penalty, awarding-penalize XP, QNA channel etc. Our main objective for 5.0 was to make using Discord a more controlled and enjoyable experience.
 
 <hr />
 
