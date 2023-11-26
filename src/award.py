@@ -9,7 +9,3 @@ def award_update_rank_and_xp(rank, current_xp, awarded_xp):
         current_xp = remainder
     
     return rank, current_xp
-
-rank, current_xp = award_update_rank_and_xp(4, 35, 375)
-print("Updated Rank:", rank)
-print("Updated Current XP:", current_xp)
