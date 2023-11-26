@@ -81,7 +81,7 @@ To run tests on the Teacher's Pet, follow instructions in the [Installation and 
 
 
 <br>
-<h3> Bot commands from iteration I, II and III </h3>
+<h3> Bot commands from iteration I, II, III, IV </h3>  
 
 `set_spam_settings command` Set the spam_settings as instructor
 
