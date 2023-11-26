@@ -253,30 +253,18 @@ Tpye exit to exit from the AI chat mode.
 
 <h4>Upgraded Spam Detection</h4>
 This feature is used to detect spam in message channels. First instructors have the ability to fully customize their spam detection settings. 
-
 <p align="left"><img width=65% src="docs/media/set_spam.gif"></p>
-
 When a user tries to send too many messages to the channel, it gives a warning. When a warned user continues to spam after this, they will be temporarily put in timeout, effectively ending their spam. This is a good feature to help keep rogue students in check, while also stopping students from spamming for rank. 
-
 <p align="left"><img width=65% src="docs/media/spam.gif"></p>
-
 <hr />
-
 <h4>User ranking on the server</h4>
 This feature is added so that users can interact more on the server and the server becomes more engaging overall. The rank of the user describes how active they are on the server and the more the user messages on the server, it increases their XP which increases the level of the user. The highest level users have the best rank on the server. The spam detection feature plugged with this feature will ensure that the students are not sending rogue messages or spamming on the server just to level up.
-
 <br/>
-
 <p align="left"><img width=65% src="docs/media/rank.gif"></p>
-
 When a user runs command !rank, it shows the user their own rank, XP and level on a card. Similarly, if the user runs the command !rank @username, it will display the rank, XP and level for that particular user if the user exists on the server. Otherwise, it will show that the user doesn't exist.
-
 <p align="left"><img width=65% src="docs/media/rank2.gif"></p>
-
 <p align="left"><img width=65% src="docs/media/rank3.gif"></p>
-
 <hr />
-
 <h4>Interactive Greetings: Elevating the Welcome Message with Important Links</h4>
 This feature guarantees that whenever a new member joins, they are greeted with a warm and inclusive welcome message that not only extends a friendly reception but also provides them with all the necessary and significant links to get started and navigate the guild effectively. 
 <p align="left"><img width=65% src="https://github.com/tanmaypardeshi/CSC-510-Project2-TeachersPetBot/assets/144291380/ddfeec14-211a-4a74-aed1-7f66f0d13d88"></p>
