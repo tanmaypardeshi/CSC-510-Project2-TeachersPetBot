@@ -1151,9 +1151,9 @@ async def end_tests(ctx):
     # quit(0)
 
 ############## AWARD
-@bot.command(name='awardMember', help='Award a bright member.')
+@bot.command(name='award', help='Award a bright member.')
 @commands.has_role('Instructor')
-async def award_member(ctx):
+async def award_member(ctx, member, points):
     ''' award member command '''
     guild = bot.get_guild(guild_id)
     channel_name = 'general'
@@ -1162,42 +1162,30 @@ async def award_member(ctx):
     # Get the general user_ids, make sure the bot is ignored
     general_ids = [i.id for i in general_members if i.bot == False]
     if ctx.channel.name == 'instructor-commands':
-        await ctx.send('Which user do you want to award?')
-        try:
-            username_to_award = str((await bot.wait_for('message', timeout=60.0, check=lambda x:
-                x.channel.name ==
-                    'instructor-commands' and x.author.id != bot.user.id)).content)
-        except:
-            await ctx.send('Invalid entry. Try again...')
-            return
+        
+        username_to_award = member
         userid_to_award = None
         for member in general_members:
             if member.name == username_to_award:
                 userid_to_award= member.id
                 
         if not userid_to_award:
-            await ctx.send('Invalid entry. Try again...')
+            await ctx.send('Invalid username. Try again...')
             return
                 
-        if userid_to_award in general_ids:
-            await ctx.send('How many XP points do you want to award?')
-            try:
-                points_to_award = int((await bot.wait_for('message', timeout=60.0, check=lambda x:
-                    x.channel.name ==
-                        'instructor-commands' and x.author.id != bot.user.id)).content)
-            except:
-                await ctx.send('Invalid entry. Try again...')
-                return
-            id_query = f"SELECT * FROM rank where user_id=?"
-            result = db.select_query(id_query, (userid_to_award,))
-            result = result.fetchone()
-            new_rank, new_xp = award_update_rank_and_xp(int(result[2]),int(result[1]), int(points_to_award))
-            await ctx.channel.send(f'The new rank for {username_to_award} is {new_rank} and XP is {new_xp}')
-            update_query = f"UPDATE rank SET experience=?, level=?  WHERE user_id=?"
-            db.mutation_query(update_query, (new_xp, new_rank, userid_to_award))
-        else:
-            await ctx.channel.send('Not a member of this class')
-                
+        id_query = f"SELECT * FROM rank where user_id=?"
+        result = db.select_query(id_query, (userid_to_award,))
+        result = result.fetchone()
+        try:
+            points = int(points)
+        except:
+            await ctx.send('Invalid points argument. Try again...')
+            return
+        new_rank, new_xp = award_update_rank_and_xp(int(result[2]),int(result[1]), points)
+        await ctx.channel.send(f'The new rank for {username_to_award} is {new_rank} and XP is {new_xp}')
+        update_query = f"UPDATE rank SET experience=?, level=?  WHERE user_id=?"
+        db.mutation_query(update_query, (new_xp, new_rank, userid_to_award))
+        
     else:
         await ctx.channel.send('Not a valid command for this channel')  
 
