@@ -76,21 +76,18 @@ To run tests on the Teacher's Pet, follow instructions in the [Installation and 
 <a name="commands"></a>
 <h2> Bot Commands </h2>
 
-<h3> Bot commands from iteration V </h3>
-
-
-
-<br>
-<h3> Bot commands from iteration I, II, III, IV </h3>  
-
+<h3> Bot commands from iteration V </h3>   
+  
 `!Leaderboard` any user can run to see the leaderboard of top 10 rankers  
 
 `!Penalize XP` can use this new command to reduce XP (Instructor command)    
 
 `!Award XP` can use this in the instructor channel to award XP to users (Instructor command)   
 
-`!unblock_user` Allows instructors to have the power to unblock users (Instructor command)   
-
+`!unblock_user` Allows instructors to have the power to unblock users (Instructor command)
+<br>
+<h3> Bot commands from iteration I, II, III, IV </h3>    
+  
 `set_spam_settings command` Set the spam_settings (Instructor command)   
 
 `!setInstructor <@member>` Set a server member to be an instructor (Instructor command)  
