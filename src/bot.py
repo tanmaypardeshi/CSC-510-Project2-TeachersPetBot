@@ -149,7 +149,8 @@ async def on_ready():
                 timeout_min             INT,
                 timeout_hour            INT,
                 timeout_day             INT,
-                kicked_out_violations     INT
+                kicked_out_violations     INT,
+                penalty_value           INT
             )
         ''')
     # db.mutation_query('''
@@ -186,6 +187,7 @@ async def on_ready():
         # update_explicit_table_query = f"INSERT into explicit_content_violations (user_id, violation_num) VALUES(?, ?)"
         # db.mutation_query(update_explicit_table_query, (general_ids[i], 0))
     # access to the bot and clearing starts
+    print(general_members)
     print("Ranking system initialized!")
     print('Logged in as')
     print(bot.user.name)
