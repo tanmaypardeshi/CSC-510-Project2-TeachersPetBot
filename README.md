@@ -37,7 +37,7 @@ https://youtu.be/wzObedlYgho
 
 
   
-<h2>Software Engineering Project for CSC 510 : Phase IV</h2>
+<h2>Software Engineering Project for CSC 510 : Phase V</h2>
 
 
 Teacher's Pet is a Discord Bot for class instructors to streamline their Discord servers. Discord is a great tool for communication and its functionalities can be enhanced by bots and integrations. 
@@ -49,7 +49,7 @@ For 4.0, we created new tools for instructors and students to use to improve cou
 <a name="features"></a>
 <h2>Bot Features</h2>
 
-[Click here to see the features of iterations I, II and III.](docs/feature-history.md)
+[Click here to see the features of iterations I, II and III, IV.](docs/feature-history.md)
 
 <h4>Bard AI</h4>
 Experience the power of AI and engage in informative and creative conversations with Bard through our !Aichat feature. Ask questions, spark creativity, and enjoy intelligent interactions—all at your fingertips.
@@ -119,13 +119,14 @@ To run tests on the Teacher's Pet, follow instructions in the [Installation and 
 <a name="commands"></a>
 <h2> Bot Commands </h2>
 
-<h3> Bot commands from iteration IV </h3>
+<h3> Bot commands from iteration V </h3>
 
 
-:open_file_folder: [!set_spam_settings command](docs/spam/set_spam_settings.md)
 
 <br>
 <h3> Bot commands from iteration I, II and III </h3>
+
+`set_spam_settings command` Set the spam_settings as instructor
 
 `!setInstructor <@member>` Set a server member to be an instructor (Instructor command)
 
