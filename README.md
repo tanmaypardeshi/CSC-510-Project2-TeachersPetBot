@@ -51,50 +51,7 @@ For 4.0, we created new tools for instructors and students to use to improve cou
 
 [Click here to see the features of iterations I, II and III, IV.](docs/feature-history.md)
 
-<h4>Bard AI</h4>
-Experience the power of AI and engage in informative and creative conversations with Bard through our !Aichat feature. Ask questions, spark creativity, and enjoy intelligent interactions—all at your fingertips.
-Google Bard can answer your questions, generate text, translate languages, and write different kinds of creative content.
-To use this feature, simply type !Aichat in any channel. Bard will then start a chat session with you. You can type anything you want,
-<p align="left"><img width=65% src="https://github.com/tanmaypardeshi/CSC-510-Project2-TeachersPetBot/assets/102000543/fe0a0388-e95e-4c42-9b8b-18d2b26ffb9c"></p>
-
-With this feature 
-  - we Provide users with a fun and engaging way to interact with the bot.
-  - Help them learn new things and get answers to their questions.
-  - Generate creative content.
-
-<p align="left"><img width=65% src="https://github.com/tanmaypardeshi/CSC-510-Project2-TeachersPetBot/assets/102000543/65f3bf75-bdf8-4784-addd-5e0c9d0c603d"></p>
-Tpye exit to exit from the AI chat mode.
-
-<h4>Upgraded Spam Detection</h4>
-This feature is used to detect spam in message channels. First instructors have the ability to fully customize their spam detection settings. 
-
-<p align="left"><img width=65% src="docs/media/set_spam.gif"></p>
-
-When a user tries to send too many messages to the channel, it gives a warning. When a warned user continues to spam after this, they will be temporarily put in timeout, effectively ending their spam. This is a good feature to help keep rogue students in check, while also stopping students from spamming for rank. 
-
-<p align="left"><img width=65% src="docs/media/spam.gif"></p>
-
-<hr />
-
-<h4>User ranking on the server</h4>
-This feature is added so that users can interact more on the server and the server becomes more engaging overall. The rank of the user describes how active they are on the server and the more the user messages on the server, it increases their XP which increases the level of the user. The highest level users have the best rank on the server. The spam detection feature plugged with this feature will ensure that the students are not sending rogue messages or spamming on the server just to level up.
-
-<br/>
-
-<p align="left"><img width=65% src="docs/media/rank.gif"></p>
-
-When a user runs command !rank, it shows the user their own rank, XP and level on a card. Similarly, if the user runs the command !rank @username, it will display the rank, XP and level for that particular user if the user exists on the server. Otherwise, it will show that the user doesn't exist.
-
-<p align="left"><img width=65% src="docs/media/rank2.gif"></p>
-
-<p align="left"><img width=65% src="docs/media/rank3.gif"></p>
-
-<hr />
-
-<h4>Interactive Greetings: Elevating the Welcome Message with Important Links</h4>
-This feature guarantees that whenever a new member joins, they are greeted with a warm and inclusive welcome message that not only extends a friendly reception but also provides them with all the necessary and significant links to get started and navigate the guild effectively. 
-<p align="left"><img width=65% src="https://github.com/tanmaypardeshi/CSC-510-Project2-TeachersPetBot/assets/144291380/ddfeec14-211a-4a74-aed1-7f66f0d13d88"></p>
-
+## WILL BE ADDING OUR OWN FEATURES HERE  
 
 <a name="instrun"></a>
 <h2> Installation and Running </h2>
