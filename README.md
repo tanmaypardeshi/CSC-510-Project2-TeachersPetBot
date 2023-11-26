@@ -13,6 +13,7 @@
 ![Lines of code](https://tokei.rs/b1/github/tanmaypardeshi/CSC-510-Project2-TeachersPetBot)
 [![codecov](https://codecov.io/gh/tanmaypardeshi/CSC-510-Project2-TeachersPetBot/branch/main/graph/badge.svg?token=QTKU51PZSO)](https://codecov.io/gh/tanmaypardeshi/CSC-510-Project2-TeachersPetBot)
 [![GitHub Workflow Status](https://github.com/tanmaypardeshi/CSC-510-Project2-TeachersPetBot/actions/workflows/test.yml/badge.svg)](https://github.com/tanmaypardeshi/CSC-510-Project2-TeachersPetBot/actions/workflows/test.yml)
+[![codecov](https://codecov.io/gh/psvkaushik/CSC-510-Project2-TeachersPetBotv2.0/graph/badge.svg?token=3QCL57IUZF)](https://codecov.io/gh/psvkaushik/CSC-510-Project2-TeachersPetBotv2.0)
 
 <!-- I am not sure about this parameter yet. Any idea what to do about this? -->
 <!-- ![GitHub deployments](https://img.shields.io/github/deployments/Ashwinshankar98/TeachersPetBot/discord-bot-phase2)<br/> -->
