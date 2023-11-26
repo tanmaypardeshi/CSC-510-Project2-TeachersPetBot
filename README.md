@@ -64,13 +64,13 @@ For 5.0, we created new tools for instructors and students to use to improve cou
    Users receive 10XP penalty for spamming, enhancing the XP-based ranking system and receiving timeouts for improper behavior  
 6. **NSFW violation penalty**
    Custom XP penalties set by instructors for users posting NSFW messages in chat channels  
-7. **!Award XP**
+7. **!Award XP**  
    Instructors award XP to users in the instructor channel for encouraging positive behaviors  
-8. **!Penalize XP**
+8. **!Penalize XP**  
    Instructors can reduce XP for reasons like invalid input or irrelevant discussions  
-9. **!Leaderboard**
+9. **!Leaderboard**  
     Users access top 10 rankers' leaderboard based on their ranks and XP  
-10. **!unblock\_user**
+10. **!unblock\_user**  
     Instructors gain authority to unblock users by usernames, allowing banned individuals to rejoin  
       
 <a name="instrun"></a>
