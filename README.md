@@ -52,7 +52,7 @@ For 5.0, we created new tools for instructors and students to use to improve cou
 
 [Click here to see the features of iterations I, II, III and IV.](docs/feature-history.md)   
 
-1. Custom profanity settings     
+** 1. Custom profanity settings**
 2. Persistent Block from server    
 3. !unblock\_user  
 4. DB initialization
