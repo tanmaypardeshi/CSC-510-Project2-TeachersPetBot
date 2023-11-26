@@ -8,6 +8,7 @@ from datetime import datetime, timedelta
 import json
 from psutil import Process, virtual_memory
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from leaderboard_card import draw_leaderboard
 
 import discord
 from discord import Embed
