@@ -523,6 +523,34 @@ async def get_rank(ctx, member_id=None):
             await ctx.channel.send(file=file)
         except Exception as e:
             await ctx.channel.send(f"No {member_id} in the database")
+####get leaderboard####
+@bot.command(name='leaderboard', help='Display leaderboard')
+async def display_leaderboard(ctx):
+    ##conn = sqlite3.connect('C:\\Users\\vaivi\\CSC-510-Project2-TeachersPetBotv2.0\\db.sqlite')
+    ##cursor = conn.cursor()
+    #cursor.execute("SELECT * FROM rank ORDER BY level DESC, experience DESC LIMIT 10")
+    # rows = cursor.fetchall()
+    query = "SELECT * FROM rank ORDER BY level DESC, experience DESC LIMIT 10"
+    result = db.select_query(query)
+    rows = result.fetchall()
+    if not rows:
+        await ctx.send("No data found in the 'rank' table.")
+    else:
+        users = []
+        for index, row in enumerate(rows, start=1):
+            user_id = row[0]
+            user = await bot.fetch_user(user_id)
+            username = user.name if user else "Unknown User"
+            user_data = {
+                'name': username,
+                'xp': row[1],
+                'level': row[2],
+                'image_url': user.avatar.url if user.avatar else user.default_avatar.url,
+            }
+            users.append(user_data)
+        leaderboard_image = await draw_leaderboard(users)
+        file = discord.File(leaderboard_image, filename="leaderboard.png")
+        await ctx.send(file=file)
 ###########################
 # Function: get_instructor
 # Description: Command used to give Instructor role out by instructors
