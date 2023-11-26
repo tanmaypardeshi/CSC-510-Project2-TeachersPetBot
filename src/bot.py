@@ -35,6 +35,7 @@ import regrade
 import spam
 from rank_card import draw_card
 from award import award_update_rank_and_xp
+from penalize import penalize_update_rank_and_xp
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '1'
 
@@ -1194,6 +1195,51 @@ async def award_member(ctx, member, points):
         
     else:
         await ctx.channel.send('Not a valid command for this channel')  
+
+###########################
+# Function: penalize
+# Description: Penalize a not-so-worthy member with XP points as an instructor. 
+# Inputs:
+#      - ctx: context of the command
+###########################
+@bot.command(name='penalize', help='Penalize a not-so-bright member.')
+@commands.has_role('Instructor')
+async def penalize_member(ctx, member, points):
+    ''' penalize member command '''
+    guild = bot.get_guild(guild_id)
+    channel_name = 'general'
+    general_channel = discord.utils.get(guild.channels, name=channel_name, type=discord.ChannelType.text)
+    general_members = general_channel.members
+    # Get the general user_ids, make sure the bot is ignored
+    general_ids = [i.id for i in general_members if i.bot == False]
+    if ctx.channel.name == 'instructor-commands':
+        
+        username_to_penalize = member
+        userid_to_penalize = None
+        for member in general_members:
+            if member.name == username_to_penalize:
+                userid_to_penalize= member.id
+                
+        if not userid_to_penalize:
+            await ctx.send('Invalid username. Try again...')
+            return
+                
+        id_query = f"SELECT * FROM rank where user_id=?"
+        result = db.select_query(id_query, (userid_to_penalize,))
+        result = result.fetchone()
+        try:
+            points = int(points)
+        except:
+            await ctx.send('Invalid points argument. Try again...')
+            return
+        await ctx.channel.send(f'The previous rank for {username_to_penalize} is {result[2]} and XP is {result[1]}')
+        new_rank, new_xp = penalize_update_rank_and_xp(int(result[2]),int(result[1]), points)
+        await ctx.channel.send(f'The new rank for {username_to_penalize} is {new_rank} and XP is {new_xp}')
+        update_query = f"UPDATE rank SET experience=?, level=?  WHERE user_id=?"
+        db.mutation_query(update_query, (new_xp, new_rank, userid_to_penalize))
+        
+    else:
+        await ctx.channel.send('Not a valid command for this channel')
 
 if __name__ == '__main__':
     bot.run(TOKEN)
