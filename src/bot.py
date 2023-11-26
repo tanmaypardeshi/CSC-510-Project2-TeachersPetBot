@@ -34,7 +34,7 @@ import help_command
 import regrade
 import spam
 from rank_card import draw_card
-
+from award import award_update_rank_and_xp
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '1'
 
@@ -1149,6 +1149,58 @@ async def end_tests(ctx):
     # TODO maybe use ctx.bot.logout()
     await ctx.bot.close()
     # quit(0)
+
+############## AWARD
+@bot.command(name='awardMember', help='Award a bright member.')
+@commands.has_role('Instructor')
+async def award_member(ctx):
+    ''' award member command '''
+    guild = bot.get_guild(guild_id)
+    channel_name = 'general'
+    general_channel = discord.utils.get(guild.channels, name=channel_name, type=discord.ChannelType.text)
+    general_members = general_channel.members
+    # Get the general user_ids, make sure the bot is ignored
+    general_ids = [i.id for i in general_members if i.bot == False]
+    if ctx.channel.name == 'instructor-commands':
+        await ctx.send('Which user do you want to award?')
+        try:
+            username_to_award = str((await bot.wait_for('message', timeout=60.0, check=lambda x:
+                x.channel.name ==
+                    'instructor-commands' and x.author.id != bot.user.id)).content)
+        except:
+            await ctx.send('Invalid entry. Try again...')
+            return
+        userid_to_award = None
+        for member in general_members:
+            if member.name == username_to_award:
+                userid_to_award= member.id
+                
+        if not userid_to_award:
+            await ctx.send('Invalid entry. Try again...')
+            return
+                
+        if userid_to_award in general_ids:
+            await ctx.send('How many XP points do you want to award?')
+            try:
+                points_to_award = int((await bot.wait_for('message', timeout=60.0, check=lambda x:
+                    x.channel.name ==
+                        'instructor-commands' and x.author.id != bot.user.id)).content)
+            except:
+                await ctx.send('Invalid entry. Try again...')
+                return
+            id_query = f"SELECT * FROM rank where user_id=?"
+            result = db.select_query(id_query, (userid_to_award,))
+            result = result.fetchone()
+            new_rank, new_xp = award_update_rank_and_xp(int(result[2]),int(result[1]), int(points_to_award))
+            await ctx.channel.send(f'The new rank for {username_to_award} is {new_rank} and XP is {new_xp}')
+            update_query = f"UPDATE rank SET experience=?, level=?  WHERE user_id=?"
+            db.mutation_query(update_query, (new_xp, new_rank, userid_to_award))
+        else:
+            await ctx.channel.send('Not a member of this class')
+                
+    else:
+        await ctx.channel.send('Not a valid command for this channel')  
+
 if __name__ == '__main__':
     bot.run(TOKEN)
 ###########################
@@ -1158,3 +1210,4 @@ if __name__ == '__main__':
 def test_dummy():
     ''' run bot command '''
     bot.run(TOKEN)
+
