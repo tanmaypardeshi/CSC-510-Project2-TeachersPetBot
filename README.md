@@ -51,8 +51,19 @@ For 5.0, we created new tools for instructors and students to use to improve cou
 
 [Click here to see the features of iterations I, II, III and IV.](docs/feature-history.md)
 
-## WILL BE ADDING OUR OWN FEATURES HERE  
+# New Features:
 
+1. Custom profanity settings     
+2. Persistent Block from server    
+3. !unblock\_user  
+4. DB initialization
+5. Spam Violation penalty  
+6. NSFW violation penalty  
+7. !Award XP  
+8. !Penalize XP  
+9. !Leaderboard  
+10. QNA Channel
+    
 <a name="instrun"></a>
 <h2> Installation and Running </h2>
 
