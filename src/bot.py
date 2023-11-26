@@ -416,10 +416,19 @@ async def on_message(message):
 @bot.event
 async def on_message_edit(before, after):
     ''' run on message edited '''
+    ctx = await bot.get_context(after)
+    member = after.guild.get_member(after.author.id)
+    instructor = False
+    for role in member.roles:
+        if role.name == 'Instructor':
+            instructor = True
     if check_profanity(after.content):
         await after.channel.send(after.author.name + ' says: ' +
             censor_profanity(after.content))
         await after.delete()
+        if not instructor:
+            await profanity_custom.handle_profanity(after, ctx, guild_id)
+    await bot.process_commands(after)
 
 ###########################
 # Function: test
