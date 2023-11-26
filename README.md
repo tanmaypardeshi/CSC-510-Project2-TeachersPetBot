@@ -52,17 +52,27 @@ For 5.0, we created new tools for instructors and students to use to improve cou
 
 [Click here to see the features of iterations I, II, III and IV.](docs/feature-history.md)   
 
-** 1. Custom profanity settings**
-2. Persistent Block from server    
-3. !unblock\_user  
-4. DB initialization
-5. Spam Violation penalty  
-6. NSFW violation penalty  
-7. !Award XP  
-8. !Penalize XP  
-9. !Leaderboard  
-10. QNA Channel
-    
+1. **Custom profanity settings**  
+   Users entering NSFW messages can be warned, timed-out, or banned based on instructor-defined or default settings—warning, timeout, followed by server ban    
+2. **Persistent Block from server**  
+   Banned users remain blocked; when the bot restarts, attempting reentry leads to an automatic kick if the bot is offline. Online attempts are barred  
+3. **Instructor Channel**  
+    Tagging instructors results in questions being posted in the instructor QNA channel; replies posted back to the main channel, ensuring no question goes unnoticed  
+4. **DB initialization**
+    Proper integration with databases ensures new user entry upon bot restart; detects and creates missing user database entries on server join    
+5. **Spam Violation penalty**
+   Users receive 10XP penalty for spamming, enhancing the XP-based ranking system and receiving timeouts for improper behavior  
+6. **NSFW violation penalty**
+   Custom XP penalties set by instructors for users posting NSFW messages in chat channels  
+7. **!Award XP**
+   Instructors award XP to users in the instructor channel for encouraging positive behaviors  
+8. **!Penalize XP**
+   Instructors can reduce XP for reasons like invalid input or irrelevant discussions  
+9. **!Leaderboard**
+    Users access top 10 rankers' leaderboard based on their ranks and XP  
+10. **!unblock\_user**
+    Instructors gain authority to unblock users by usernames, allowing banned individuals to rejoin  
+      
 <a name="instrun"></a>
 <h2> Installation and Running </h2>
 
