@@ -48,10 +48,7 @@ For 5.0, we created new tools for instructors and students to use to improve cou
 
 <a name="features"></a>
 <h2>Bot Features</h2>
-
-[Click here to see the features of iterations I, II, III and IV.](docs/feature-history.md)
-
-# New Features:
+[Click here to see the features of iterations I, II, III and IV.](docs/feature-history.md)   
 
 1. Custom profanity settings     
 2. Persistent Block from server    
