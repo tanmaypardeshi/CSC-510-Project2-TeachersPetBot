@@ -2,6 +2,24 @@ _This File describes each source file and details of all classes, methods and fu
 
 ### <u> bot.py </u>
 
+1. **_Function_**: display_leaderboard
+
+   **_Description_**: Command used to get the top 10 rankers based on their ranks and XP in the group.
+
+2. **_Function_**: set_spam_settings
+
+   **_Description_**: Command available to instructors to set spam settings
+
+3. **_Function_**: 
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------  
 **Description**: What this does
 
 1. **_Function_**: on_ready
