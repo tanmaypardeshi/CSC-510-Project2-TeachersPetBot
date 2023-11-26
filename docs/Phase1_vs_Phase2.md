@@ -14,17 +14,17 @@
 | Text channels recreating | If the bot is added to a server it recreated some default channels each time again and again. | Code changes to check for the existence of the channel before adding it. |
 | Help | Used inbuild discord help | Added custom help command to better suite the usage. |
 
-# Phase IV  
+# Phase V  
 |  New Commands/ Features | Details |
 | ------------ |------------ |
 | Custom profanity settings | Whenever a user enters an nsfw message, the user can be warned, timed-out and even blocked from the server as per the settings of the instructor or the default settings which is warning, followed by timeout followed by ban from server.|
-| Persistent Block from server | Shows stats like version of BOT, python and discord.py and also display Uptime, CPU time, Memory Usage and Number of Users. |
-| !unblock_user | Send the new member a personal welcome message when joining the server in which bot is alreay present. |
-| DB initialization | Displays a message when a member leaves a guild in which bot is alreay present. |
-| Spam Violation penalty | Command used to check the Instructors in the guild. |
-| NSFW violation penalty | Command used to remove a user from Instructor role by instructors. |
-| !Award XP | Functionality for instructors to host polls with deadline by which students can respond. |
-| !Penalize XP | Finds attendees and absentees of class. |
-| !Leaderboard | Define a word to be added to the profanity filter. |
-| QNA Channel | It check the events at a particular time and send outs notification about deadlines in the next 24hrs to the members. |
+| Persistent Block from server |  If a user is banned and kicked out from the server they remain blocked, if they try to join the server when the bot is not running, it will kick them out when the bot starts up. If they try to join again when the bot is running, it will not let them join the server.|
+| !unblock_user | A new command which allows instructors to have the power to unblock users just by using their usernames to allow banned people to join back in.|
+| DB initialization | The bot was integrated properly with the DBs in use, as any new user joins when the bot is not running or so, it makes no entry of the user and struggles with error. In the initialization phase, we have even set up to detect all the users in the server and make database entries for each user whose entry does not exist |
+| Spam Violation penalty | Each user gets some points for sending a message which increases the xp and at each 100 xp it goes up a rank. However, they were never penalized for improper behavior. Now if the user spams, they get a penalty of 10xp. Along with getting timeouts.|
+| NSFW violation penalty | Each user is given a custom penalty to their XP set by the instructor when they post a NSFW message on the chat channel.|
+| !Award XP | Instructors can use this in the instructor channel to award XP to users for encouraging some behaviors.|
+| !Penalize XP | Instructor can use this new command to reduce XP for any reason they seem fit such as invalid input or irrelevant discussion.|
+| !Leaderboard | There is a new command that any user can run to see the leaderboard of top 10 rankers based on their ranks and XP in the group.|
+| QNA Channel |  If any user tags any instructor or refer instructors, the Question will pop up in the instructor QNA channel and once they reply to the message in that channel it will be posted back to the main channel. It will help ensure that no question goes unnoticed as all the questions are available to see at one glance with no clutter in a separate channel.|
 
