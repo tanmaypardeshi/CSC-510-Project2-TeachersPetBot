@@ -49,7 +49,7 @@ For 4.0, we created new tools for instructors and students to use to improve cou
 <a name="features"></a>
 <h2>Bot Features</h2>
 
-[Click here to see the features of iterations I, II and III, IV.](docs/feature-history.md)
+[Click here to see the features of iterations I, II, III and IV.](docs/feature-history.md)
 
 ## WILL BE ADDING OUR OWN FEATURES HERE  
 
@@ -177,17 +177,17 @@ The project is licensed under the [MIT License](https://github.com/tanmaypardesh
 
 <h3> Team Members </h3>
 
-[Tanmay Pardeshi](https://github.com/tanmaypardeshi)
-
-[Chandana Ray](https://github.com/cray94)
-
-[Abhinav Sinha](https://github.com/abhinav110595)
-
-[Sam Kwiatkowski-Martin](https://github.com/ExtremeMachine12)
+- :octocat: [Ayush Agarwal](https://github.com/ayush-ai8)
+- :octocat: [Kaushik Pillalamarri](https://github.com/psvkaushik)
+- :octocat: [Surya Upadyayula](https://github.com/SuryaUpadyayula)
+- :octocat: [Vaishnavi Naik](https://github.com/VaishnaviNaik96)
 
 <h3> Previous Authors </h3>
 
-
+#### Sam Kwiatkowski-Martin
+#### Abhinav Sinha
+#### Chandana Ray
+#### Tanmay Pardeshi
 #### Sandesh Aladhalli Shivarudre Gowda
 #### Chandatahas Reddy Mandapati
 #### Sri Pallavi Damuluri
@@ -198,3 +198,9 @@ The project is licensed under the [MIT License](https://github.com/tanmaypardesh
 #### Kailash Singaravelu
 #### Saikaushik Kalyanaraman
 #### Shakthi Nandana Govindan
+
+# Contact us
+
+For any questions and contribution please contact: ncsuse23@gmail.com
+
+Made with ❤️ on GitHub.
