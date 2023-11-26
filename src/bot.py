@@ -1210,8 +1210,6 @@ async def penalize_member(ctx, member, points):
     channel_name = 'general'
     general_channel = discord.utils.get(guild.channels, name=channel_name, type=discord.ChannelType.text)
     general_members = general_channel.members
-    # Get the general user_ids, make sure the bot is ignored
-    general_ids = [i.id for i in general_members if i.bot == False]
     if ctx.channel.name == 'instructor-commands':
         
         username_to_penalize = member
