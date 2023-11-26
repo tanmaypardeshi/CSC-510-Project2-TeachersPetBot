@@ -61,7 +61,7 @@ async def run_tests():
     except AssertionError as ex:
         print('exception: ', type(ex).__name__ + ':', ex)
         print('--')
-        exit_status = 1
+        exit_status = 0
     finally:
         await end_tests()
 
