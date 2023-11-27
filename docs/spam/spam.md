@@ -19,7 +19,6 @@ This function takes a bot as an argument and uses that bot to set the bot for th
         timeout_day = 0  # days in timeout
         time_between_clears = 15  # time threshold mentioned above
 
-
 These values are then inserted into the database if values weren't already there.
 
 async def clear_spam():
