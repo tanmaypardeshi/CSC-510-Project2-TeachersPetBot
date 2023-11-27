@@ -177,11 +177,26 @@ async def on_ready():
     instructor_members = instructor_channel.members
     # Get the instructor user_ids, make sure the bot is ignored
     instructor_ids = [i.id for i in instructor_members if i.bot == False]
+
+    for member in general_members:
+        blocked = False
+        if member.id not in instructor_ids:
+            with open("blocked_user.txt", "r+", encoding='utf-8') as f:
+                for line in f:
+                    if line.strip("\n").split(" ")[0] == str(member.id):
+                        await member.kick()
+                        channel = get(member.guild.text_channels, name='general')
+                        await channel.send(f"A blocked user {member} tried to join the server but was kicked out!! ")
+                        blocked = True
+                        break
+            if blocked == False:
+                update_rank_table_query = f"INSERT into rank (user_id, level, experience, violation_num) VALUES(?, ?, ?, ?)"
+                db.mutation_query(update_rank_table_query, (member.id, 0, 0, 0))
     
-    for i in range(len(general_ids)):
-        if general_ids[i] not in instructor_ids:
-            update_rank_table_query = f"INSERT into rank (user_id, level, experience, violation_num) VALUES(?, ?, ?, ?)"
-            db.mutation_query(update_rank_table_query, (general_ids[i], 0, 0, 0))
+    # for i in range(len(general_ids)):
+    #     if general_ids[i] not in instructor_ids:
+    #         update_rank_table_query = f"INSERT into rank (user_id, level, experience, violation_num) VALUES(?, ?, ?, ?)"
+    #         db.mutation_query(update_rank_table_query, (general_ids[i], 0, 0, 0))
         # else:
         #     update_rank_table_query = f"INSERT into rank (user_id, level, experience) VALUES(?, ?, ?)"
         #     db.mutation_query(update_rank_table_query, (general_ids[i], 0, 0))
