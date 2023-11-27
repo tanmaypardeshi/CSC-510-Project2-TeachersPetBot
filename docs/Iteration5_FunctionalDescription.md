@@ -1,8 +1,9 @@
 _This File describes each source file and details of all classes, methods and functions in each file_
 
 ### <u> bot.py </u>
-Iteration 5  
-   
+
+Iteration 5
+
 1. **_Function_**: display_leaderboard
 
    **_Description_**: Command used to get the top 10 rankers based on their ranks and XP in the group.
@@ -11,15 +12,14 @@ Iteration 5
 
    **_Description_**: Command available to instructors to set spam settings
 
-3. **_Function_**: 
-
+3. **_Function_**:
 
 ### <u> db.py </u>
 
 1. **_Function_**: connect
 
    **_Description_**: Called during startup of the bot. Connect program to database file db.sqlite
-   
+
 2. **_Function_**: select_query
 
    **_Description_**: Called from bot.py to send SQL to the database and get the response
@@ -29,18 +29,20 @@ Iteration 5
    **_Description_**: Called from bot.py for mutation on the database
 
 ### <u> profanity_help.py </u>
+
 1. **_Function_**: check_profanity
 
-    **_Description_**: checks if message contains profanity through profanity module
+   **_Description_**: checks if message contains profanity through profanity module
 
 2. **_Function_**: censor_profanity
 
    **_Description_**: takes action on the profanity by censoring it
 
 ### <u> spam.py </u>
+
 1. **_Function_**: set
 
-    **_Description_**: 
+   **_Description_**:
 
 2. **_Function_**: clear_spam
 
@@ -54,12 +56,8 @@ Iteration 5
 
    **_Description_**:
 
+---
 
-
-
-
-
-------------------------------------------------------------------------------------------------------------------------------------------------------------  
 **Description**: What this does
 
 1. **_Function_**: on_ready
