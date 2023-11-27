@@ -22,8 +22,8 @@ if platform.system() == 'Windows':
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
 load_dotenv()
-TOKEN = os.getenv('TESTING_BOT_TOKEN')
-TEST_GUILD_ID = int(os.getenv('TEST_GUILD_ID'))
+TOKEN = ${{secrets.TESTING_BOT_TOKEN}}
+TEST_GUILD_ID = ${{secrets.TEST_GUILD_ID}}
 intents = discord.Intents.all() ## needed to give the testing bot ability to do everything it needs
 testing_bot = discord.Client(intents=intents)
 
