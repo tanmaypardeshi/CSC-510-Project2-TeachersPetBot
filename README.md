@@ -74,6 +74,10 @@ When a user tries to send too many messages to the channel, it gives a warning. 
 
 <p align="left"><img width=65% src="docs/media/spam.gif"></p>
 
+<h4>Interactive Greetings: Elevating the Welcome Message with Important Links</h4>
+This feature guarantees that whenever a new member joins, they are greeted with a warm and inclusive welcome message that not only extends a friendly reception but also provides them with all the necessary and significant links to get started and navigate the guild effectively. 
+<p align="left"><img width=65% src="https://github.com/tanmaypardeshi/CSC-510-Project2-TeachersPetBot/assets/144291380/ddfeec14-211a-4a74-aed1-7f66f0d13d88"></p>
+
 <hr />
 
 <h4>User ranking on the server</h4>
